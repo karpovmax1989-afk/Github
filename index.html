@@ -1,0 +1,1100 @@
+<title>DASMANN — Джинсовая одежда собственного производства</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="DASMANN — российский бренд джинсовой одежды собственного производства. Качественный деним, честные цены, индивидуальный подход.">
+
+<style>
+  /* ── Tokens ── */
+  :root {
+    --indigo: #1B2A4A;
+    --indigo-deep: #12203A;
+    --brass: #B8963E;
+    --brass-light: #D4B35C;
+    --chalk: #F5F3EF;
+    --stone: #EAE7E1;
+    --warm-white: #FAFAF8;
+    --text: #12161F;
+    --text-secondary: #4A4E58;
+    --text-light: #7A7E88;
+    --slate: #2C3E5A;
+    --bg: var(--warm-white);
+    --bg-alt: var(--chalk);
+    --bg-hero: var(--indigo);
+    --card-bg: #fff;
+    --card-border: #e5e2dc;
+    --footer-bg: var(--indigo-deep);
+    --footer-text: #c8ccd4;
+    --input-bg: #fff;
+    --input-border: #d0cdc6;
+    --overlay: rgba(18, 32, 58, 0.55);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111318;
+      --bg-alt: #191C22;
+      --bg-hero: #0D1520;
+      --text: #E4E6EA;
+      --text-secondary: #A0A4AE;
+      --text-light: #6A6E78;
+      --card-bg: #1A1D24;
+      --card-border: #2A2D34;
+      --footer-bg: #0A0E16;
+      --footer-text: #8A8E98;
+      --input-bg: #1A1D24;
+      --input-border: #2A2D34;
+      --overlay: rgba(10, 14, 22, 0.7);
+      --stone: #1E2128;
+      --chalk: #191C22;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111318;
+    --bg-alt: #191C22;
+    --bg-hero: #0D1520;
+    --text: #E4E6EA;
+    --text-secondary: #A0A4AE;
+    --text-light: #6A6E78;
+    --card-bg: #1A1D24;
+    --card-border: #2A2D34;
+    --footer-bg: #0A0E16;
+    --footer-text: #8A8E98;
+    --input-bg: #1A1D24;
+    --input-border: #2A2D34;
+    --overlay: rgba(10, 14, 22, 0.7);
+    --stone: #1E2128;
+    --chalk: #191C22;
+  }
+  :root[data-theme="light"] {
+    --bg: #FAFAF8;
+    --bg-alt: #F5F3EF;
+    --bg-hero: #1B2A4A;
+    --text: #12161F;
+    --text-secondary: #4A4E58;
+    --text-light: #7A7E88;
+    --card-bg: #fff;
+    --card-border: #e5e2dc;
+    --footer-bg: #12203A;
+    --footer-text: #c8ccd4;
+    --input-bg: #fff;
+    --input-border: #d0cdc6;
+    --overlay: rgba(18, 32, 58, 0.55);
+    --stone: #EAE7E1;
+    --chalk: #F5F3EF;
+  }
+
+  /* ── Reset & Base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.65;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+
+  .sr-only {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0,0,0,0); border: 0;
+  }
+
+  /* ── Typography ── */
+  h1, h2, h3, h4 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 700;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  .eyebrow {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brass);
+  }
+
+  /* ── Header ── */
+  .site-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(27, 42, 74, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    color: #fff;
+    text-transform: uppercase;
+  }
+
+  .logo span {
+    color: var(--brass);
+    font-weight: 400;
+  }
+
+  nav { display: flex; gap: 2rem; align-items: center; }
+
+  nav a {
+    color: rgba(255,255,255,0.75);
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  nav a:hover, nav a:focus-visible { color: #fff; }
+  nav a:focus-visible { outline: 2px solid var(--brass); outline-offset: 4px; border-radius: 2px; }
+
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+  .nav-toggle svg { display: block; }
+
+  /* ── Hero ── */
+  .hero {
+    background: var(--bg-hero);
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(255,255,255,0.015) 2px,
+        rgba(255,255,255,0.015) 3px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 1px,
+        rgba(255,255,255,0.008) 1px,
+        rgba(255,255,255,0.008) 2px
+      );
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, transparent 40%, rgba(12,20,40,0.5));
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 8rem 2rem 6rem;
+    max-width: 800px;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    color: var(--brass);
+    margin-bottom: 2rem;
+    font-weight: 500;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    color: #fff;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: rgba(255,255,255,0.65);
+    max-width: 520px;
+    margin: 0 auto 3rem;
+    line-height: 1.7;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    padding: 1rem 3rem;
+    border: 1.5px solid var(--brass);
+    color: var(--brass);
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .hero-cta:hover {
+    background: var(--brass);
+    color: var(--indigo-deep);
+  }
+  .hero-cta:focus-visible {
+    outline: 2px solid var(--brass-light);
+    outline-offset: 4px;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    color: rgba(255,255,255,0.35);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-scroll::after {
+    content: '';
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 1; transform: scaleY(1); }
+    50% { opacity: 0.4; transform: scaleY(0.6); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-scroll::after { animation: none; }
+  }
+
+  /* ── Sections ── */
+  .section {
+    padding: 6rem 2rem;
+  }
+
+  .section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .section-header h2 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 0.75rem;
+  }
+
+  .section-header p {
+    max-width: 560px;
+    margin: 1.25rem auto 0;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .bg-alt { background: var(--bg-alt); }
+
+  /* ── Categories ── */
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .category-card {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .category-visual {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s ease;
+  }
+
+  .category-card:hover .category-visual {
+    transform: scale(1.03);
+  }
+
+  .cat-women {
+    background: linear-gradient(135deg, #2E4A7A 0%, #1B2A4A 40%, #3A5A8A 100%);
+  }
+
+  .cat-men {
+    background: linear-gradient(135deg, #1F3355 0%, #0F1F3A 40%, #2C4570 100%);
+  }
+
+  .cat-acc {
+    background: linear-gradient(135deg, #3A4A6A 0%, #222E48 40%, #4A5A7A 100%);
+  }
+
+  .category-icon {
+    opacity: 0.15;
+  }
+
+  .category-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: var(--overlay);
+    transition: background 0.3s;
+  }
+
+  .category-card:hover .category-overlay {
+    background: rgba(18, 32, 58, 0.4);
+  }
+
+  .category-overlay h3 {
+    font-size: 1.6rem;
+    color: #fff;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .category-overlay .cat-link {
+    font-size: 0.72rem;
+    color: var(--brass);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--brass);
+    transition: color 0.2s;
+  }
+
+  /* ── Products ── */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .product-card {
+    text-align: center;
+  }
+
+  .product-image {
+    aspect-ratio: 3 / 4;
+    background: var(--stone);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    transition: box-shadow 0.3s;
+  }
+
+  .product-card:hover .product-image {
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  }
+
+  .jeans-svg {
+    width: 45%;
+    height: auto;
+    opacity: 0.85;
+    transition: transform 0.4s ease;
+  }
+
+  .product-card:hover .jeans-svg {
+    transform: translateY(-4px);
+  }
+
+  .product-name {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    letter-spacing: 0.03em;
+  }
+
+  .product-desc {
+    font-size: 0.82rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .product-price {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── About ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .about-visual {
+    aspect-ratio: 4 / 5;
+    background: linear-gradient(145deg, var(--indigo) 0%, var(--slate) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 8px,
+        rgba(255,255,255,0.02) 8px,
+        rgba(255,255,255,0.02) 9px
+      );
+  }
+
+  .about-visual-text {
+    font-family: Georgia, serif;
+    font-size: clamp(3rem, 6vw, 5rem);
+    color: rgba(255,255,255,0.08);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    writing-mode: vertical-lr;
+    position: relative;
+  }
+
+  .about-content h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    letter-spacing: 0.04em;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-content p {
+    color: var(--text-secondary);
+    margin-bottom: 1.25rem;
+    line-height: 1.8;
+  }
+
+  .about-content p:last-of-type {
+    margin-bottom: 2rem;
+  }
+
+  .about-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 2.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--card-border);
+  }
+
+  .stat-number {
+    font-family: Georgia, serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--brass);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+  }
+
+  /* ── Advantages ── */
+  .advantages-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .advantage-card {
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .advantage-card:hover {
+    border-color: var(--brass);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+
+  .advantage-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 1.5rem;
+    color: var(--brass);
+  }
+
+  .advantage-card h4 {
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .advantage-card p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ── Newsletter ── */
+  .newsletter {
+    background: var(--indigo);
+    padding: 5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .newsletter::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 3px,
+        rgba(255,255,255,0.01) 3px,
+        rgba(255,255,255,0.01) 4px
+      );
+  }
+
+  .newsletter-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .newsletter h2 {
+    font-size: 1.8rem;
+    color: #fff;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .newsletter p {
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: 0;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .newsletter-form input {
+    flex: 1;
+    padding: 1rem 1.25rem;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+    font-size: 0.9rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .newsletter-form input::placeholder {
+    color: rgba(255,255,255,0.35);
+  }
+
+  .newsletter-form input:focus {
+    border-color: var(--brass);
+  }
+
+  .newsletter-form button {
+    padding: 1rem 2rem;
+    background: var(--brass);
+    color: var(--indigo-deep);
+    border: none;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  .newsletter-form button:hover {
+    background: var(--brass-light);
+  }
+
+  .newsletter-form button:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  /* ── Footer ── */
+  .site-footer {
+    background: var(--footer-bg);
+    padding: 4rem 2rem 2rem;
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .footer-brand .logo {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .footer-brand p {
+    color: var(--footer-text);
+    font-size: 0.85rem;
+    line-height: 1.7;
+    max-width: 300px;
+  }
+
+  .footer-col h4 {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 1.25rem;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 600;
+  }
+
+  .footer-col ul { list-style: none; }
+
+  .footer-col li {
+    margin-bottom: 0.6rem;
+  }
+
+  .footer-col a {
+    color: var(--footer-text);
+    font-size: 0.85rem;
+    transition: color 0.2s;
+  }
+
+  .footer-col a:hover { color: #fff; }
+  .footer-col a:focus-visible { outline: 1px solid var(--brass); outline-offset: 2px; }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+    color: rgba(255,255,255,0.25);
+    font-size: 0.78rem;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  .footer-social a {
+    color: rgba(255,255,255,0.35);
+    transition: color 0.2s;
+  }
+
+  .footer-social a:hover { color: var(--brass); }
+  .footer-social a:focus-visible { outline: 1px solid var(--brass); outline-offset: 4px; }
+
+  /* ── Mobile ── */
+  @media (max-width: 900px) {
+    .categories-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .category-card { aspect-ratio: 16 / 9; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-visual { aspect-ratio: 16 / 9; }
+    .advantages-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  }
+
+  @media (max-width: 600px) {
+    .section { padding: 4rem 1.25rem; }
+    nav { display: none; }
+    .nav-toggle { display: block; }
+    nav.open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 64px; left: 0; right: 0;
+      background: rgba(27, 42, 74, 0.97);
+      padding: 1.5rem 2rem;
+      gap: 1rem;
+    }
+    .products-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .advantages-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    .about-stats { flex-direction: column; gap: 1.5rem; }
+    .newsletter-form { flex-direction: column; }
+    .newsletter-form button { padding: 1rem; }
+    .hero-content { padding: 7rem 1.5rem 5rem; }
+  }
+</style>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#" class="logo">DAS<span>MANN</span></a>
+    <button class="nav-toggle" aria-label="Меню" onclick="document.querySelector('nav').classList.toggle('open')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <nav>
+      <a href="#collection">Коллекция</a>
+      <a href="#products">Хиты продаж</a>
+      <a href="#about">О бренде</a>
+      <a href="#advantages">Преимущества</a>
+      <a href="#contact">Контакты</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <p class="hero-eyebrow eyebrow">Собственное производство · Россия</p>
+    <h1>Деним,<br>который<br>рассказывает<br>историю</h1>
+    <p class="hero-sub">Авторская джинсовая одежда от Ирины Дасманн. Каждая вещь — это честный крой, настоящий деним и внимание к деталям, которое чувствуется при первом прикосновении.</p>
+    <a href="#collection" class="hero-cta">Смотреть коллекцию</a>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">Scroll</div>
+</section>
+
+<!-- Categories -->
+<section class="section" id="collection">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="eyebrow">Коллекция 2026</p>
+      <h2>Выберите свой стиль</h2>
+      <p>От классических прямых силуэтов до современных зауженных моделей — деним Dasmann подчёркивает индивидуальность каждого.</p>
+    </div>
+    <div class="categories-grid">
+      <div class="category-card">
+        <div class="category-visual cat-women">
+          <svg class="category-icon" width="120" height="200" viewBox="0 0 120 200" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.5">
+            <path d="M40 10 L30 80 L20 190 M80 10 L90 80 L100 190 M40 10 Q60 5 80 10 M30 80 Q60 85 90 80"/>
+            <path d="M35 45 Q60 50 85 45" stroke-dasharray="4 3"/>
+          </svg>
+        </div>
+        <div class="category-overlay">
+          <h3>Женская</h3>
+          <span class="cat-link">Перейти</span>
+        </div>
+      </div>
+      <div class="category-card">
+        <div class="category-visual cat-men">
+          <svg class="category-icon" width="120" height="200" viewBox="0 0 120 200" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.5">
+            <path d="M38 10 L35 80 L30 190 M82 10 L85 80 L90 190 M38 10 Q60 5 82 10 M35 80 Q60 82 85 80"/>
+            <path d="M40 45 Q60 48 80 45" stroke-dasharray="4 3"/>
+          </svg>
+        </div>
+        <div class="category-overlay">
+          <h3>Мужская</h3>
+          <span class="cat-link">Перейти</span>
+        </div>
+      </div>
+      <div class="category-card">
+        <div class="category-visual cat-acc">
+          <svg class="category-icon" width="160" height="120" viewBox="0 0 160 120" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.5">
+            <rect x="20" y="25" width="120" height="70" rx="4"/>
+            <path d="M50 25 Q80 10 110 25"/>
+            <line x1="60" y1="55" x2="100" y2="55"/>
+            <circle cx="80" cy="75" r="5"/>
+          </svg>
+        </div>
+        <div class="category-overlay">
+          <h3>Аксессуары</h3>
+          <span class="cat-link">Перейти</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Products -->
+<section class="section bg-alt" id="products">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="eyebrow">Хиты продаж</p>
+      <h2>Бестселлеры сезона</h2>
+      <p>Модели, которые выбирают снова и снова — проверены временем и сотнями довольных клиентов.</p>
+    </div>
+    <div class="products-grid">
+
+      <div class="product-card">
+        <div class="product-image">
+          <svg class="jeans-svg" viewBox="0 0 100 180" fill="none">
+            <path d="M25 8 L22 70 L15 172 L48 172 L50 90 L52 172 L85 172 L78 70 L75 8 Z" fill="var(--indigo)" opacity="0.8"/>
+            <path d="M25 8 Q50 3 75 8" stroke="var(--brass)" stroke-width="1.5" fill="none"/>
+            <path d="M28 35 Q50 38 72 35" stroke="rgba(255,255,255,0.15)" stroke-width="0.8" fill="none"/>
+            <path d="M50 70 L50 90" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+            <rect x="42" y="12" width="16" height="10" rx="1" fill="none" stroke="var(--brass)" stroke-width="0.8" opacity="0.5"/>
+          </svg>
+        </div>
+        <p class="product-name">Classic Straight</p>
+        <p class="product-desc">Прямой крой, тёмный индиго</p>
+        <p class="product-price">8 900 ₽</p>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image">
+          <svg class="jeans-svg" viewBox="0 0 100 180" fill="none">
+            <path d="M28 8 L25 70 L22 172 L47 172 L50 85 L53 172 L78 172 L75 70 L72 8 Z" fill="var(--slate)" opacity="0.8"/>
+            <path d="M28 8 Q50 3 72 8" stroke="var(--brass)" stroke-width="1.5" fill="none"/>
+            <path d="M30 35 Q50 38 70 35" stroke="rgba(255,255,255,0.15)" stroke-width="0.8" fill="none"/>
+            <rect x="42" y="12" width="16" height="10" rx="1" fill="none" stroke="var(--brass)" stroke-width="0.8" opacity="0.5"/>
+            <circle cx="35" cy="22" r="2" fill="var(--brass)" opacity="0.4"/>
+          </svg>
+        </div>
+        <p class="product-name">Slim Fit</p>
+        <p class="product-desc">Зауженные, серый деним</p>
+        <p class="product-price">9 500 ₽</p>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image">
+          <svg class="jeans-svg" viewBox="0 0 100 180" fill="none">
+            <path d="M22 8 L18 70 L10 172 L48 172 L50 95 L52 172 L90 172 L82 70 L78 8 Z" fill="#3A5A8A" opacity="0.8"/>
+            <path d="M22 8 Q50 3 78 8" stroke="var(--brass)" stroke-width="1.5" fill="none"/>
+            <path d="M24 35 Q50 38 76 35" stroke="rgba(255,255,255,0.15)" stroke-width="0.8" fill="none"/>
+            <rect x="42" y="12" width="16" height="10" rx="1" fill="none" stroke="var(--brass)" stroke-width="0.8" opacity="0.5"/>
+          </svg>
+        </div>
+        <p class="product-name">Wide Leg</p>
+        <p class="product-desc">Широкие, светлый wash</p>
+        <p class="product-price">10 200 ₽</p>
+      </div>
+
+      <div class="product-card">
+        <div class="product-image">
+          <svg class="jeans-svg" viewBox="0 0 120 160" fill="none">
+            <path d="M20 20 L15 60 L15 75 L25 75 L25 65 L30 30 L90 30 L95 65 L95 75 L105 75 L105 60 L100 20 Z" fill="var(--indigo)" opacity="0.8"/>
+            <path d="M30 30 L30 155 L90 155 L90 30" fill="var(--indigo)" opacity="0.7"/>
+            <path d="M20 20 Q60 14 100 20" stroke="var(--brass)" stroke-width="1.5" fill="none"/>
+            <line x1="60" y1="30" x2="60" y2="155" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+            <rect x="50" y="50" width="20" height="14" rx="2" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/>
+            <circle cx="48" cy="38" r="2.5" fill="var(--brass)" opacity="0.5"/>
+            <circle cx="72" cy="38" r="2.5" fill="var(--brass)" opacity="0.5"/>
+          </svg>
+        </div>
+        <p class="product-name">Trucker Jacket</p>
+        <p class="product-desc">Классическая куртка</p>
+        <p class="product-price">14 800 ₽</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-visual">
+        <span class="about-visual-text">DASMANN</span>
+      </div>
+      <div class="about-content">
+        <p class="eyebrow">О бренде</p>
+        <h2>Джинсы, которые создаются с душой</h2>
+        <p>Dasmann — это авторский бренд джинсовой одежды, основанный Ириной Дасманн. Каждая модель разрабатывается и отшивается на собственном производстве в России с использованием отборного денима из Японии, Италии и Турции.</p>
+        <p>Мы верим, что хорошие джинсы не нуждаются в громких лейблах. Они говорят за себя — посадкой, которая сидит с первого дня, качеством швов, которые выдерживают годы носки, и тканью, которая становится только лучше со временем.</p>
+        <p>Небольшие тиражи позволяют нам контролировать каждый этап — от выбора ткани до финальной обработки. Это не масс-маркет. Это вещи, которые приятно носить и не стыдно рекомендовать.</p>
+        <div class="about-stats">
+          <div>
+            <p class="stat-number">7+</p>
+            <p class="stat-label">Лет на рынке</p>
+          </div>
+          <div>
+            <p class="stat-number">12 000</p>
+            <p class="stat-label">Довольных клиентов</p>
+          </div>
+          <div>
+            <p class="stat-number">100%</p>
+            <p class="stat-label">Своё производство</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Advantages -->
+<section class="section bg-alt" id="advantages">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="eyebrow">Почему Dasmann</p>
+      <h2>Наши преимущества</h2>
+    </div>
+    <div class="advantages-grid">
+      <div class="advantage-card">
+        <svg class="advantage-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M24 4 L44 14 L44 34 L24 44 L4 34 L4 14 Z"/>
+          <path d="M24 4 L24 44 M4 14 L44 14"/>
+          <circle cx="24" cy="24" r="6" fill="none"/>
+        </svg>
+        <h4>Премиум деним</h4>
+        <p>Используем ткани от лучших мировых фабрик — японский selvedge, итальянский стрейч, турецкий органический хлопок.</p>
+      </div>
+      <div class="advantage-card">
+        <svg class="advantage-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="24" cy="20" r="10"/>
+          <path d="M8 42 Q8 32 24 32 Q40 32 40 42"/>
+          <path d="M20 18 L22 22 L28 16" stroke-width="2"/>
+        </svg>
+        <h4>Индивидуальный подход</h4>
+        <p>Подберём модель и размер под вашу фигуру. Доступна корректировка длины и посадки по вашим меркам.</p>
+      </div>
+      <div class="advantage-card">
+        <svg class="advantage-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="6" y="12" width="36" height="24" rx="3"/>
+          <path d="M6 20 L42 20"/>
+          <path d="M12 28 L22 28"/>
+          <circle cx="36" cy="28" r="3"/>
+        </svg>
+        <h4>Честные цены</h4>
+        <p>Без наценок за бренд и посредников. Вы платите за качество ткани и работу, а не за рекламу и упаковку.</p>
+      </div>
+      <div class="advantage-card">
+        <svg class="advantage-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M8 38 L8 10 L22 10 L26 14 L40 14 L40 38 Z"/>
+          <path d="M18 26 L22 30 L30 22" stroke-width="2"/>
+        </svg>
+        <h4>Гарантия качества</h4>
+        <p>Даём гарантию 12 месяцев на все изделия. Бесплатный ремонт швов и замена фурнитуры в течение гарантийного срока.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="newsletter" id="contact">
+  <div class="newsletter-inner">
+    <p class="eyebrow" style="margin-bottom: 1rem;">Будьте в курсе</p>
+    <h2>Подпишитесь на обновления</h2>
+    <p>Новые модели, лимитированные коллекции и специальные предложения — раньше всех, прямо в вашу почту.</p>
+    <form class="newsletter-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Готово!'; setTimeout(()=>this.querySelector('button').textContent='Подписаться',2000)">
+      <input type="email" placeholder="Ваш e-mail" required aria-label="E-mail для подписки">
+      <button type="submit">Подписаться</button>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <p class="logo">DAS<span>MANN</span></p>
+        <p>Авторская джинсовая одежда собственного производства. Создаём деним, который хочется носить каждый день.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Каталог</h4>
+        <ul>
+          <li><a href="#">Женские джинсы</a></li>
+          <li><a href="#">Мужские джинсы</a></li>
+          <li><a href="#">Куртки</a></li>
+          <li><a href="#">Рубашки</a></li>
+          <li><a href="#">Аксессуары</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Покупателям</h4>
+        <ul>
+          <li><a href="#">Доставка и оплата</a></li>
+          <li><a href="#">Таблица размеров</a></li>
+          <li><a href="#">Возврат и обмен</a></li>
+          <li><a href="#">Уход за денимом</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Контакты</h4>
+        <ul>
+          <li><a href="tel:+79001234567">+7 (900) 123-45-67</a></li>
+          <li><a href="mailto:info@dasmann.ru">info@dasmann.ru</a></li>
+          <li><a href="#">Telegram</a></li>
+          <li><a href="#">WhatsApp</a></li>
+          <li><a href="#">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Dasmann. Все права защищены.</span>
+      <div class="footer-social">
+        <a href="#" aria-label="Telegram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+        <a href="#" aria-label="VK">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13.162 18.994c.5 0 .5-.001.5-.001s.08-.003.5-.001c4.5-.02 7.088-3.088 7.2-8.305.025-1.126.026-2.252 0-3.378C21.2 3.104 18.2.198 13.8.008 12.918-.025 11.082-.025 10.2.008 5.8.198 2.8 3.104 2.638 7.309c-.026 1.126-.025 2.252 0 3.378.112 5.217 2.7 8.285 7.2 8.305.42-.002.5.001.5.001s0 .001.5.001h2.324zm-3.3-4.323c-.2 0-.338-.09-.468-.268-1.15-1.575-1.6-3.506-1.325-5.472.15-.87.58-1.322 1.296-1.383.62-.053 1.17.275 1.38.82.22.57.3 1.178.244 1.788-.1.99-.5 1.9-1.127 2.515z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
