@@ -465,6 +465,69 @@
     font-variant-numeric: tabular-nums;
   }
 
+  /* ── Gallery ── */
+  .gallery-section {
+    background: var(--bg);
+    padding: 6rem 2rem;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background: var(--stone);
+    border: 1px solid var(--card-border);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .gallery-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(18,32,58,0.8) 0%, transparent 60%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .gallery-item:hover .gallery-overlay {
+    opacity: 1;
+  }
+
+  .gallery-overlay h3 {
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .gallery-overlay p {
+    color: rgba(255,255,255,0.75);
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
   /* ── About ── */
   .about-grid {
     display: grid;
@@ -1414,6 +1477,33 @@
         <p class="product-price">14 800 ₽</p>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- Gallery / Lookbook -->
+<section class="gallery-section" id="lookbook">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="eyebrow">Lookbook</p>
+      <h2>Стиль Dasmann</h2>
+      <p>Наша коллекция в реальной жизни. Джинсы и одежда, которые вписываются в любой образ.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="images/videoframe_10846.jpg" alt="Мужской образ с рубашкой и джинсами">
+        <div class="gallery-overlay">
+          <h3>Универсальный образ</h3>
+          <p>Белая рубашка + серые джинсы Dasmann = идеальный casual</p>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/a886dd04a2ea807cb0abc389f03ab69d.jpg" alt="Деталь пуховика Dasmann">
+        <div class="gallery-overlay">
+          <h3>Качество деталей</h3>
+          <p>Каждая молния, пуговица и шов сделаны с любовью к делу</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
