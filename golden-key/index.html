@@ -6,6 +6,102 @@
 <title>Golden Key — Люксовая недвижимость | Найдите дом своей мечты</title>
 <meta name="description" content="Golden Key — премиальное агентство недвижимости. Эксклюзивные объекты в лучших локациях. Более 10 лет опыта, 550+ люксовых объектов, 1200+ довольных клиентов.">
 <link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+#canvas-3d {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+#3d-tour {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+#3d-tour .section-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.info-3d {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  background: rgba(11,14,19,0.9);
+  border: 2px solid #C9A24B;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 350px;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+}
+.info-3d h3 {
+  font-size: 1.8rem;
+  color: #C9A24B;
+  margin-bottom: 15px;
+}
+.info-3d p {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.95rem;
+  color: #A9B0BC;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+.controls-3d {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(11,14,19,0.9);
+  border: 1px solid #232A35;
+  padding: 20px 30px;
+  border-radius: 30px;
+  backdrop-filter: blur(10px);
+  display: flex;
+  gap: 15px;
+  z-index: 10;
+}
+.control-btn-3d {
+  background: linear-gradient(135deg, #E4C777, #C9A24B);
+  color: #17130A;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-family: 'Jost', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+}
+.control-btn-3d:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(201,162,75,0.3);
+}
+.control-btn-3d.active {
+  background: #C9A24B;
+}
+.top-right-3d {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  background: rgba(11,14,19,0.9);
+  border: 1px solid #232A35;
+  padding: 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  z-index: 10;
+  text-align: center;
+}
+.top-right-3d p {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.85rem;
+  color: #A9B0BC;
+  margin-top: 10px;
+}
+</style>
 </head>
 <body>
 
@@ -30,6 +126,7 @@
       <a href="#catalog">Объекты</a>
       <a href="#about">О нас</a>
       <a href="#services">Услуги</a>
+      <a href="#3d-tour">3D Тур</a>
       <a href="#blog">Блог</a>
       <a href="#contacts">Контакты</a>
     </nav>
@@ -524,6 +621,30 @@
   </div>
 </section>
 
+<!-- 3D Tour -->
+<section class="section bg-alt" id="3d-tour">
+  <div class="section-inner" style="padding: 0; height: 100vh;">
+    <div id="canvas-3d"></div>
+    <div class="info-3d">
+      <h3>Люксовая вилла</h3>
+      <p>🏠 Современный архитектурный стиль</p>
+      <p>💎 Эксклюзивный дизайн с панорамными окнами</p>
+      <p>💡 Интерактивное 3D представление объекта</p>
+      <p style="margin-top: 20px; font-size: 0.85rem; color: #6C7481;">Используй мышь для вращения • Колесо для масштабирования</p>
+    </div>
+    <div class="top-right-3d">
+      <span style="color: #C9A24B; font-weight: bold;">$12,500,000</span>
+      <p>Стоимость объекта</p>
+    </div>
+    <div class="controls-3d">
+      <button class="control-btn-3d active" onclick="toggleAnimation()">▶ Анимация</button>
+      <button class="control-btn-3d" onclick="toggleWireframe()">⚡ Каркас</button>
+      <button class="control-btn-3d" onclick="resetView()">🔄 Сброс</button>
+      <button class="control-btn-3d" onclick="toggleLighting()">💡 Свет</button>
+    </div>
+  </div>
+</section>
+
 <!-- Blog -->
 <section class="section bg-alt" id="blog">
   <div class="section-inner">
@@ -643,5 +764,294 @@
 </footer>
 
 <script src="main.js"></script>
+
+<script>
+// 3D Scene setup for villa visualization
+const container3D = document.getElementById('canvas-3d');
+if (container3D) {
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0B0E13);
+  scene.fog = new THREE.Fog(0x0B0E13, 100, 200);
+
+  const camera = new THREE.PerspectiveCamera(75, container3D.clientWidth / container3D.clientHeight, 0.1, 1000);
+  camera.position.set(15, 12, 15);
+  camera.lookAt(0, 3, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container3D.clientWidth, container3D.clientHeight);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFShadowShadowMap;
+  renderer.outputEncoding = THREE.sRGBColorSpace;
+  container3D.appendChild(renderer.domElement);
+
+  // Lighting
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  scene.add(ambientLight);
+
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+  directionalLight.position.set(20, 25, 15);
+  directionalLight.castShadow = true;
+  directionalLight.shadow.mapSize.width = 2048;
+  directionalLight.shadow.mapSize.height = 2048;
+  directionalLight.shadow.camera.far = 100;
+  directionalLight.shadow.camera.left = -50;
+  directionalLight.shadow.camera.right = 50;
+  directionalLight.shadow.camera.top = 50;
+  directionalLight.shadow.camera.bottom = -50;
+  scene.add(directionalLight);
+
+  // Golden accent light
+  const pointLight = new THREE.PointLight(0xC9A24B, 1.5, 50);
+  pointLight.position.set(-15, 8, -15);
+  scene.add(pointLight);
+
+  // Ground
+  const groundGeometry = new THREE.PlaneGeometry(60, 60);
+  const groundMaterial = new THREE.MeshStandardMaterial({
+    color: 0x1a1f2e,
+    roughness: 0.8,
+    metalness: 0.1
+  });
+  const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+  ground.rotation.x = -Math.PI / 2;
+  ground.receiveShadow = true;
+  scene.add(ground);
+
+  // Main building - Central structure
+  const mainWallGeometry = new THREE.BoxGeometry(12, 8, 10);
+  const mainWallMaterial = new THREE.MeshStandardMaterial({
+    color: 0x3a4556,
+    roughness: 0.6,
+    metalness: 0.2
+  });
+  const mainWall = new THREE.Mesh(mainWallGeometry, mainWallMaterial);
+  mainWall.position.y = 4;
+  mainWall.castShadow = true;
+  mainWall.receiveShadow = true;
+  scene.add(mainWall);
+
+  // Roof - Central
+  const roofGeometry = new THREE.ConeGeometry(8.5, 3, 4);
+  const roofMaterial = new THREE.MeshStandardMaterial({
+    color: 0x2a3344,
+    roughness: 0.7,
+    metalness: 0.3
+  });
+  const roof = new THREE.Mesh(roofGeometry, roofMaterial);
+  roof.position.set(0, 11.5, 0);
+  roof.castShadow = true;
+  roof.receiveShadow = true;
+  scene.add(roof);
+
+  // Left wing
+  const leftWingGeometry = new THREE.BoxGeometry(4, 7, 8);
+  const leftWing = new THREE.Mesh(leftWingGeometry, mainWallMaterial);
+  leftWing.position.set(-5, 3.5, 0);
+  leftWing.castShadow = true;
+  leftWing.receiveShadow = true;
+  scene.add(leftWing);
+
+  // Right wing
+  const rightWingGeometry = new THREE.BoxGeometry(4, 7, 8);
+  const rightWing = new THREE.Mesh(rightWingGeometry, mainWallMaterial);
+  rightWing.position.set(5, 3.5, 0);
+  rightWing.castShadow = true;
+  rightWing.receiveShadow = true;
+  scene.add(rightWing);
+
+  // Windows - Main building
+  const windowMaterial = new THREE.MeshStandardMaterial({
+    color: 0xFDD89C,
+    emissive: 0xE4C777,
+    emissiveIntensity: 0.8,
+    roughness: 0.1,
+    metalness: 0.9
+  });
+
+  function addWindows(parent, positions) {
+    positions.forEach(pos => {
+      const windowGeometry = new THREE.BoxGeometry(1.2, 1.5, 0.2);
+      const window = new THREE.Mesh(windowGeometry, windowMaterial);
+      window.position.copy(pos);
+      window.castShadow = true;
+      parent.add(window);
+    });
+  }
+
+  // Main windows
+  const mainWindowPositions = [
+    new THREE.Vector3(-3, 6, 5.2),
+    new THREE.Vector3(0, 6, 5.2),
+    new THREE.Vector3(3, 6, 5.2),
+    new THREE.Vector3(-3, 3, 5.2),
+    new THREE.Vector3(0, 3, 5.2),
+    new THREE.Vector3(3, 3, 5.2),
+  ];
+  addWindows(mainWall, mainWindowPositions);
+
+  // Left wing windows
+  const leftWindowPositions = [
+    new THREE.Vector3(0, 6, 4),
+    new THREE.Vector3(0, 3, 4),
+  ];
+  addWindows(leftWing, leftWindowPositions);
+
+  // Right wing windows
+  const rightWindowPositions = [
+    new THREE.Vector3(0, 6, 4),
+    new THREE.Vector3(0, 3, 4),
+  ];
+  addWindows(rightWing, rightWindowPositions);
+
+  // Pool
+  const poolGeometry = new THREE.BoxGeometry(10, 0.5, 6);
+  const poolMaterial = new THREE.MeshStandardMaterial({
+    color: 0x1a4d6d,
+    roughness: 0.2,
+    metalness: 0.8,
+    emissive: 0x0d2d4d,
+    emissiveIntensity: 0.3
+  });
+  const pool = new THREE.Mesh(poolGeometry, poolMaterial);
+  pool.position.set(0, 0.25, -8);
+  pool.castShadow = true;
+  pool.receiveShadow = true;
+  scene.add(pool);
+
+  // Surrounding lights
+  const lightPositions = [
+    new THREE.Vector3(-8, 1, -10),
+    new THREE.Vector3(8, 1, -10),
+    new THREE.Vector3(-8, 1, 8),
+    new THREE.Vector3(8, 1, 8)
+  ];
+
+  lightPositions.forEach(pos => {
+    const lightGeometry = new THREE.CylinderGeometry(0.3, 0.3, 0.8);
+    const lightMaterial = new THREE.MeshStandardMaterial({
+      color: 0xC9A24B,
+      emissive: 0xFFD700,
+      emissiveIntensity: 1
+    });
+    const light = new THREE.Mesh(lightGeometry, lightMaterial);
+    light.position.copy(pos);
+    light.castShadow = true;
+    scene.add(light);
+  });
+
+  // Mouse controls
+  let isDragging = false;
+  let previousMousePosition = { x: 0, y: 0 };
+  let rotation = { x: 0, y: 0 };
+
+  renderer.domElement.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    previousMousePosition = { x: e.clientX, y: e.clientY };
+  });
+
+  renderer.domElement.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+      const deltaX = e.clientX - previousMousePosition.x;
+      const deltaY = e.clientY - previousMousePosition.y;
+
+      rotation.y += deltaX * 0.005;
+      rotation.x += deltaY * 0.005;
+
+      mainWall.rotation.y = rotation.y;
+      mainWall.rotation.x = rotation.x;
+      leftWing.rotation.y = rotation.y;
+      leftWing.rotation.x = rotation.x;
+      rightWing.rotation.y = rotation.y;
+      rightWing.rotation.x = rotation.x;
+      roof.rotation.y = rotation.y;
+      roof.rotation.x = rotation.x;
+      pool.rotation.y = rotation.y;
+      pool.rotation.x = rotation.x;
+
+      previousMousePosition = { x: e.clientX, y: e.clientY };
+    }
+  });
+
+  renderer.domElement.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
+
+  renderer.domElement.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    camera.position.z += e.deltaY * 0.01;
+    camera.position.z = Math.max(5, Math.min(50, camera.position.z));
+  });
+
+  // Animation controls
+  let animationEnabled = true;
+  let wireframeMode = false;
+  let lightingMode = true;
+  let windowAnimationTime = 0;
+
+  window.toggleAnimation = function() {
+    animationEnabled = !animationEnabled;
+    document.querySelectorAll('.control-btn-3d')[0].classList.toggle('active');
+  }
+
+  window.toggleWireframe = function() {
+    wireframeMode = !wireframeMode;
+    mainWall.material.wireframe = wireframeMode;
+    leftWing.material.wireframe = wireframeMode;
+    rightWing.material.wireframe = wireframeMode;
+    document.querySelectorAll('.control-btn-3d')[1].classList.toggle('active');
+  }
+
+  window.resetView = function() {
+    rotation = { x: 0, y: 0 };
+    mainWall.rotation.set(0, 0, 0);
+    leftWing.rotation.set(0, 0, 0);
+    rightWing.rotation.set(0, 0, 0);
+    roof.rotation.set(0, 0, 0);
+    pool.rotation.set(0, 0, 0);
+    camera.position.set(15, 12, 15);
+    camera.lookAt(0, 3, 0);
+  }
+
+  window.toggleLighting = function() {
+    lightingMode = !lightingMode;
+    directionalLight.intensity = lightingMode ? 1.2 : 0.3;
+    pointLight.intensity = lightingMode ? 1.5 : 0.3;
+    document.querySelectorAll('.control-btn-3d')[3].classList.toggle('active');
+  }
+
+  // Animation loop
+  function animate() {
+    requestAnimationFrame(animate);
+
+    if (animationEnabled) {
+      const autoRotation = 0.0005;
+      mainWall.rotation.y += autoRotation;
+      leftWing.rotation.y += autoRotation;
+      rightWing.rotation.y += autoRotation;
+      roof.rotation.y += autoRotation;
+      pool.rotation.y += autoRotation;
+      rotation.y += autoRotation;
+    }
+
+    windowAnimationTime += 0.03;
+    const windowIntensity = 0.6 + Math.sin(windowAnimationTime) * 0.2;
+    windowMaterial.emissiveIntensity = windowIntensity;
+
+    renderer.render(scene, camera);
+  }
+
+  // Handle window resize
+  window.addEventListener('resize', () => {
+    const w = container3D.clientWidth;
+    const h = container3D.clientHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+
+  animate();
+}
+</script>
+
 </body>
 </html>
