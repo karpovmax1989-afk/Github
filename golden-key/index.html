@@ -3,629 +3,447 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Golden Key — Агентство недвижимости №1 | Покупка, продажа, аренда</title>
-<meta name="description" content="Golden Key — надёжное агентство недвижимости с опытом более 10 лет. Более 3000 довольных клиентов, 50%+ сделок на рынке проходит через нас. Покупка, продажа и аренда недвижимости под ключ.">
-<link rel="stylesheet" href="styles-enhanced.css">
-<style>
-  html { scroll-behavior: smooth; }
-  .page-hero { display: none; }
-  .catalog-layout { display: grid; grid-template-columns: 280px 1fr; gap: 2.5rem; align-items: start; }
-  .filters { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-lg); padding: 1.75rem; position: sticky; top: 92px; }
-  .filters h3 { font-size: 1.1rem; margin-bottom: 1.25rem; }
-  .filter-group { margin-bottom: 1.25rem; }
-  .filter-group label { display:block; font-size:0.72rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-light); margin-bottom:0.4rem; }
-  .filter-group select, .filter-group input { width:100%; padding:0.7rem 0.9rem; border:1.5px solid var(--input-border); border-radius:var(--radius); background:var(--input-bg); color:var(--text); font-size:0.9rem; font-family:inherit; outline:none; }
-  .filter-group select:focus, .filter-group input:focus { border-color: var(--gold); }
-  .catalog-toolbar { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem; }
-  .catalog-count { color: var(--text-secondary); font-size:0.92rem; }
-  .blog-featured { display:grid; grid-template-columns:1.2fr 1fr; gap:0; background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius-lg); overflow:hidden; margin-bottom:3rem; }
-  .blog-featured .bf-visual { min-height:320px; }
-  .blog-featured .bf-visual svg { width:100%; height:100%; }
-  .blog-featured .bf-body { padding:2.5rem; display:flex; flex-direction:column; justify-content:center; }
-  .blog-cat { display:inline-block; align-self:flex-start; background:rgba(201,162,39,0.14); color:var(--gold-deep); font-size:0.7rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.8rem; border-radius:6px; margin-bottom:1rem; }
-  .blog-featured h2 { font-size:clamp(1.5rem,3vw,2rem); margin-bottom:1rem; }
-  .blog-featured p { color:var(--text-secondary); margin-bottom:1.5rem; }
-  .blog-meta { font-size:0.82rem; color:var(--text-light); display:flex; gap:1rem; }
-  .blog-filters { display:flex; gap:0.6rem; flex-wrap:wrap; justify-content:center; margin-bottom:2.5rem; }
-  .blog-filter { padding:0.5rem 1.2rem; border:1.5px solid var(--card-border); border-radius:100px; background:transparent; color:var(--text-secondary); font-size:0.82rem; font-family:inherit; cursor:pointer; transition:all 0.25s; }
-  .blog-filter:hover { border-color:var(--gold); color:var(--gold); }
-  .blog-filter.active { background:var(--gold); border-color:var(--gold); color:var(--navy-deep); font-weight:600; }
-  .blog-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
-  .blog-card { background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius-lg); overflow:hidden; display:flex; flex-direction:column; transition:transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease; }
-  .blog-card:hover { transform:translateY(-6px); box-shadow:var(--shadow-lg); }
-  .blog-card .bc-visual { aspect-ratio:16/10; overflow:hidden; }
-  .blog-card .bc-visual svg { width:100%; height:100%; transition:transform 0.6s cubic-bezier(0.22,1,0.36,1); }
-  .blog-card:hover .bc-visual svg { transform:scale(1.06); }
-  .blog-card .bc-body { padding:1.5rem; display:flex; flex-direction:column; flex:1; }
-  .blog-card h3 { font-size:1.12rem; margin-bottom:0.6rem; }
-  .blog-card p { font-size:0.9rem; color:var(--text-secondary); margin-bottom:1.25rem; flex:1; }
-  .blog-readmore { color:var(--gold-deep); font-size:0.82rem; font-weight:600; letter-spacing:0.04em; }
-  .contact-layout { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start; }
-  .contact-info-card { display:flex; gap:1rem; padding:1.5rem; background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius-lg); margin-bottom:1.25rem; }
-  .contact-info-card .ci-icon { width:48px; height:48px; flex-shrink:0; border-radius:12px; background:linear-gradient(135deg,rgba(201,162,39,0.15),rgba(201,162,39,0.05)); color:var(--gold); display:flex; align-items:center; justify-content:center; font-size:1.3rem; }
-  .contact-info-card h4 { font-size:0.95rem; margin-bottom:0.25rem; font-family:inherit; }
-  .contact-info-card p, .contact-info-card a { font-size:0.9rem; color:var(--text-secondary); }
-  .contact-info-card a:hover { color:var(--gold); }
-  .contact-form { background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius-lg); padding:2rem; }
-  .contact-form h3 { font-size:1.3rem; margin-bottom:1.5rem; }
-  .form-field { margin-bottom:1.25rem; }
-  .form-field label { display:block; font-size:0.72rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-light); margin-bottom:0.4rem; }
-  .form-field input, .form-field select, .form-field textarea { width:100%; padding:0.8rem 1rem; border:1.5px solid var(--input-border); border-radius:var(--radius); background:var(--input-bg); color:var(--text); font-size:0.92rem; font-family:inherit; outline:none; transition:border-color 0.2s; }
-  .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color:var(--gold); }
-  .form-field textarea { resize:vertical; min-height:110px; }
-  .map-placeholder { margin-top:1.25rem; border-radius:var(--radius-lg); overflow:hidden; border:1px solid var(--card-border); }
-  .service-row { display:grid; grid-template-columns: 1fr 1fr; gap:3rem; align-items:center; margin-bottom:4rem; }
-  .service-row:nth-child(even) .service-visual { order: -1; }
-  .service-visual { aspect-ratio:4/3; border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-md); }
-  .service-steps { list-style:none; margin-top:1.25rem; }
-  .service-steps li { display:flex; gap:0.75rem; margin-bottom:0.7rem; color:var(--text-secondary); font-size:0.95rem; }
-  .service-steps li::before { content:'✓'; color:var(--gold); font-weight:700; flex-shrink:0; }
-  .price-note { margin-top:1.25rem; font-size:0.9rem; color:var(--text-light); }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
-  .rating-summary { display:grid; grid-template-columns:auto 1fr; gap:2.5rem; align-items:center; background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius-lg); padding:2.5rem; margin-bottom:3rem; }
-  .rating-big { text-align:center; }
-  .rating-big .r-num { font-family:Georgia,serif; font-size:4rem; font-weight:700; color:var(--gold); line-height:1; }
-  .rating-big .r-stars { color:var(--gold); font-size:1.2rem; letter-spacing:3px; margin:0.5rem 0; }
-  .rating-big .r-count { font-size:0.85rem; color:var(--text-light); }
-  .rating-bars { display:flex; flex-direction:column; gap:0.6rem; }
-  .rating-bar { display:flex; align-items:center; gap:1rem; font-size:0.85rem; color:var(--text-secondary); }
-  .rating-bar .bar-track { flex:1; height:8px; background:var(--stone); border-radius:4px; overflow:hidden; }
-  .rating-bar .bar-fill { height:100%; background:var(--gold); border-radius:4px; }
-  .case-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(420px,1fr)); gap:2rem; }
-  .case-card { background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius-lg); padding:2.25rem; display:flex; flex-direction:column; gap:1.5rem; transition:transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease; }
-  .case-card:hover { transform:translateY(-8px); box-shadow:var(--shadow-lg); }
-  .case-title { font-size:1.35rem; font-weight:700; color:var(--text); }
-  .case-result { display:inline-block; background:rgba(201,162,39,0.14); color:var(--gold-deep); font-size:0.7rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.35rem 0.95rem; border-radius:100px; width:fit-content; }
-  .case-description { color:var(--text-secondary); line-height:1.65; }
-  .case-meta { display:flex; gap:1.5rem; flex-wrap:wrap; font-size:0.9rem; color:var(--text-light); border-top:1px solid var(--card-border); padding-top:1.5rem; }
-  .team-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.75rem; }
-  .team-card { background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius-lg); padding:1.75rem; text-align:center; transition:transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease; }
-  .team-card:hover { transform:translateY(-6px); box-shadow:var(--shadow-lg); }
-  .team-avatar { width:100px; height:100px; margin:0 auto 1rem; border-radius:12px; background:linear-gradient(135deg,rgba(201,162,39,0.2),rgba(201,162,39,0.05)); display:flex; align-items:center; justify-content:center; font-size:2.5rem; font-weight:700; color:var(--gold); }
-  .team-card h3 { font-size:1.1rem; margin-bottom:0.25rem; }
-  .team-role { color:var(--gold); font-size:0.8rem; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:0.8rem; }
-  .team-bio { color:var(--text-secondary); font-size:0.9rem; line-height:1.5; }
-  @media (max-width:900px){
-    .blog-grid{ grid-template-columns:1fr 1fr; }
-    .blog-featured{ grid-template-columns:1fr; }
-    .blog-featured .bf-visual{ min-height:220px; }
-    .service-row{ grid-template-columns:1fr; gap:1.75rem; margin-bottom:3rem; }
-    .service-row:nth-child(even) .service-visual{ order:0; }
-    .grid-2{ grid-template-columns:1fr; }
-    .rating-summary{ grid-template-columns:1fr; gap:1.5rem; text-align:center; }
-    .catalog-layout { grid-template-columns: 1fr; }
-    .filters { position: static; }
-    .contact-layout{ grid-template-columns:1fr; gap:2rem; }
-  }
-  @media (max-width:600px){
-    .blog-grid{ grid-template-columns:1fr; }
-  }
-</style>
+<title>Golden Key — Люксовая недвижимость | Найдите дом своей мечты</title>
+<meta name="description" content="Golden Key — премиальное агентство недвижимости. Эксклюзивные объекты в лучших локациях. Более 10 лет опыта, 550+ люксовых объектов, 1200+ довольных клиентов.">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <!-- Header -->
-<header class="site-header">
+<header class="site-header" id="siteHeader">
   <div class="header-inner">
     <a href="#hero" class="logo" aria-label="Golden Key — на главную">
-      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="11" cy="11" r="7" stroke="#C9A227" stroke-width="2.4"/>
-        <circle cx="11" cy="11" r="2.4" fill="#C9A227"/>
-        <path d="M16 16 L27 27 M23 23 L26 20 M20 20 L23 17" stroke="#C9A227" stroke-width="2.4" stroke-linecap="round"/>
+      <svg class="logo-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6" y="4" width="28" height="32" rx="2" stroke="#C9A24B" stroke-width="1.5"/>
+        <path d="M13 36 V16 L20 11 L27 16 V36" stroke="#C9A24B" stroke-width="1.5"/>
+        <line x1="20" y1="11" x2="20" y2="36" stroke="#C9A24B" stroke-width="1.5"/>
+        <line x1="16.5" y1="14" x2="16.5" y2="36" stroke="#C9A24B" stroke-width="1"/>
+        <line x1="23.5" y1="14" x2="23.5" y2="36" stroke="#C9A24B" stroke-width="1"/>
       </svg>
-      GOLDEN<span>KEY</span>
+      <span class="logo-text"><span class="lt-name">GOLDEN KEY</span><span class="lt-sub">Luxury Estate Group</span></span>
     </a>
     <button class="nav-toggle" data-nav-toggle aria-label="Открыть меню">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C9A24B" stroke-width="1.6"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
-    <nav class="main-nav">
-      <a href="#hero">Главная</a>
-      <a href="#about">О компании</a>
-      <a href="#catalog">Каталог</a>
+    <nav class="main-nav" data-nav>
+      <a href="#hero" class="active">Главная</a>
+      <a href="#catalog">Объекты</a>
+      <a href="#about">О нас</a>
       <a href="#services">Услуги</a>
-      <a href="#cases">Кейсы</a>
-      <a href="#reviews">Отзывы</a>
-      <a href="#team">Команда</a>
       <a href="#blog">Блог</a>
       <a href="#contacts">Контакты</a>
     </nav>
     <div class="header-cta">
       <button class="theme-toggle" data-theme-toggle aria-label="Сменить тему">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"/><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"/><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"/><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"/><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"/></svg>
       </button>
       <a href="#contacts" class="btn btn-primary">Консультация</a>
     </div>
   </div>
 </header>
 
-<!-- Hero Section -->
+<!-- Hero -->
 <section class="hero" id="hero">
+  <div class="hero-bg">
+    <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="heroSky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#1a2438"/><stop offset="45%" stop-color="#2a3550"/><stop offset="100%" stop-color="#3d4a68"/>
+        </linearGradient>
+        <linearGradient id="heroVilla" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2d3648"/><stop offset="100%" stop-color="#1a2030"/>
+        </linearGradient>
+        <linearGradient id="heroGlow" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#E4C777"/><stop offset="100%" stop-color="#C9A24B"/>
+        </linearGradient>
+        <linearGradient id="heroWater" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2a3550"/><stop offset="100%" stop-color="#141c2c"/>
+        </linearGradient>
+      </defs>
+      <rect width="1440" height="900" fill="url(#heroSky)"/>
+      <circle cx="1180" cy="180" r="90" fill="#E4C777" opacity="0.12"/>
+      <circle cx="1180" cy="180" r="55" fill="#E4C777" opacity="0.15"/>
+      <!-- Villa structure -->
+      <rect x="620" y="340" width="620" height="360" fill="url(#heroVilla)"/>
+      <rect x="560" y="420" width="180" height="280" fill="#242d3e"/>
+      <rect x="1140" y="400" width="180" height="300" fill="#242d3e"/>
+      <!-- Roof lines -->
+      <rect x="600" y="330" width="660" height="16" fill="#3a4560"/>
+      <rect x="540" y="410" width="220" height="14" fill="#323c52"/>
+      <!-- Warm lit windows -->
+      <g opacity="0.92">
+        <rect x="650" y="380" width="70" height="90" fill="url(#heroGlow)" opacity="0.85"/>
+        <rect x="740" y="380" width="70" height="90" fill="url(#heroGlow)" opacity="0.7"/>
+        <rect x="830" y="380" width="70" height="90" fill="url(#heroGlow)" opacity="0.88"/>
+        <rect x="920" y="380" width="70" height="90" fill="url(#heroGlow)" opacity="0.72"/>
+        <rect x="1010" y="380" width="70" height="90" fill="url(#heroGlow)" opacity="0.85"/>
+        <rect x="1100" y="380" width="70" height="90" fill="url(#heroGlow)" opacity="0.7"/>
+        <rect x="650" y="500" width="70" height="100" fill="url(#heroGlow)" opacity="0.8"/>
+        <rect x="740" y="500" width="70" height="100" fill="url(#heroGlow)" opacity="0.9"/>
+        <rect x="830" y="500" width="160" height="130" fill="url(#heroGlow)" opacity="0.75"/>
+        <rect x="1010" y="500" width="70" height="100" fill="url(#heroGlow)" opacity="0.85"/>
+        <rect x="1100" y="500" width="70" height="100" fill="url(#heroGlow)" opacity="0.7"/>
+        <rect x="580" y="450" width="60" height="80" fill="url(#heroGlow)" opacity="0.7"/>
+        <rect x="660" y="450" width="60" height="80" fill="url(#heroGlow)" opacity="0.6"/>
+        <rect x="1160" y="440" width="60" height="90" fill="url(#heroGlow)" opacity="0.75"/>
+        <rect x="1240" y="440" width="60" height="90" fill="url(#heroGlow)" opacity="0.6"/>
+      </g>
+      <!-- Pool / water reflection -->
+      <rect x="560" y="700" width="880" height="200" fill="url(#heroWater)"/>
+      <g opacity="0.35">
+        <rect x="650" y="710" width="70" height="120" fill="url(#heroGlow)"/>
+        <rect x="830" y="710" width="160" height="150" fill="url(#heroGlow)"/>
+        <rect x="1010" y="710" width="70" height="120" fill="url(#heroGlow)"/>
+      </g>
+      <!-- Landscape lights -->
+      <circle cx="600" cy="690" r="4" fill="#E4C777"/><circle cx="700" cy="690" r="4" fill="#E4C777"/>
+      <circle cx="1300" cy="690" r="4" fill="#E4C777"/><circle cx="1380" cy="690" r="4" fill="#E4C777"/>
+      <!-- Palm silhouettes -->
+      <path d="M480 700 Q470 560 490 500 M490 500 Q450 490 430 510 M490 500 Q530 490 550 510 M490 500 Q460 470 470 440 M490 500 Q520 470 515 440" stroke="#141c2c" stroke-width="6" fill="none" opacity="0.7"/>
+    </svg>
+  </div>
   <div class="hero-inner">
     <div class="hero-content">
-      <span class="eyebrow">Агентство недвижимости №1</span>
-      <h1>Найдём <span>ключ</span> к вашей идеальной недвижимости</h1>
-      <p class="lead">Более 10 лет мы помогаем покупать, продавать и арендовать недвижимость безопасно и выгодно. Через Golden Key проходит более половины сделок на рынке.</p>
+      <span class="eyebrow">Люксовая жизнь заново</span>
+      <h1>Найдите дом<br>вашей <span class="accent">мечты.</span></h1>
+      <p class="lead">Эксклюзивные объекты недвижимости в самых престижных локациях. Мы открываем двери туда, где начинается настоящая роскошь.</p>
       <div class="hero-actions">
-        <a href="#catalog" class="btn btn-primary">Смотреть объекты</a>
-        <a href="#services" class="btn btn-outline">Оценить недвижимость</a>
+        <a href="#catalog" class="btn btn-primary">Смотреть объекты →</a>
       </div>
     </div>
-    <div class="hero-search">
-      <h3>Быстрый поиск</h3>
-      <form>
-        <div class="search-field">
-          <label for="deal">Тип сделки</label>
-          <select id="deal">
-            <option>Покупка</option>
-            <option>Аренда</option>
-            <option>Инвестиции</option>
-          </select>
-        </div>
-        <div class="search-field">
-          <label for="type">Тип недвижимости</label>
-          <select id="type">
-            <option>Квартира</option>
-            <option>Дом / коттедж</option>
-            <option>Коммерческая</option>
-            <option>Земельный участок</option>
-          </select>
-        </div>
-        <div class="search-field">
-          <label for="area">Район</label>
-          <select id="area">
-            <option>Центральный</option>
-            <option>Северный</option>
-            <option>Западный</option>
-            <option>Приморский</option>
-          </select>
-        </div>
-        <div class="search-row">
-          <div class="search-field">
-            <label for="pmin">Цена от, ₽</label>
-            <input id="pmin" type="text" placeholder="3 000 000" inputmode="numeric">
-          </div>
-          <div class="search-field">
-            <label for="pmax">Цена до, ₽</label>
-            <input id="pmax" type="text" placeholder="15 000 000" inputmode="numeric">
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:0.5rem;">Найти объекты</button>
-      </form>
+  </div>
+  <div class="hero-badge">
+    <div class="crown">♔</div>
+    <div class="hb-1">НЕДВИЖИМОСТЬ</div>
+    <div class="hb-2">высшего</div>
+    <div class="hb-3">УРОВНЯ</div>
+  </div>
+</section>
+
+<!-- Search bar -->
+<div class="search-bar">
+  <form class="search-inner">
+    <div class="search-cell">
+      <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <div class="search-field-group"><label>Локация</label><select><option>Любая локация</option><option>Центральный район</option><option>Приморский район</option><option>Западный район</option></select></div>
+    </div>
+    <div class="search-cell">
+      <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M6 21V9l6-4 6 4v12"/></svg>
+      <div class="search-field-group"><label>Тип объекта</label><select><option>Любой тип</option><option>Вилла</option><option>Пентхаус</option><option>Особняк</option><option>Апартаменты</option></select></div>
+    </div>
+    <div class="search-cell">
+      <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5a2.5 2 0 0 1 5 0c0 1.5-2.5 1.5-2.5 3"/></svg>
+      <div class="search-field-group"><label>Цена</label><select><option>500К – 50М+ ₽</option><option>до 10М ₽</option><option>10М – 30М ₽</option><option>30М+ ₽</option></select></div>
+    </div>
+    <div class="search-cell">
+      <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12V7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5M3 12h18M3 12v5M21 12v5M6 12V9a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3"/></svg>
+      <div class="search-field-group"><label>Спальни</label><select><option>Любое</option><option>1–2</option><option>3–4</option><option>5+</option></select></div>
+    </div>
+    <button type="submit" class="btn btn-primary">Найти объект 🔍</button>
+  </form>
+</div>
+
+<!-- Stats -->
+<section class="stats">
+  <div class="stats-inner reveal">
+    <div class="stat">
+      <svg class="stat-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M6 3l6 18M18 3l-6 18M2 9h20"/></svg>
+      <div><div class="stat-num">10+</div><div class="stat-label">Лет опыта</div></div>
+    </div>
+    <div class="stat">
+      <svg class="stat-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 21h18M5 21V10l7-5 7 5v11"/><path d="M9 21v-6h6v6"/></svg>
+      <div><div class="stat-num">550+</div><div class="stat-label">Люкс-объектов</div></div>
+    </div>
+    <div class="stat">
+      <svg class="stat-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6"/><path d="M17 8a4 4 0 0 1 0 6M20 21c0-3-1.5-4.5-3-5"/></svg>
+      <div><div class="stat-num">1200+</div><div class="stat-label">Клиентов</div></div>
+    </div>
+    <div class="stat">
+      <svg class="stat-icon" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+      <div><div class="stat-num">25+</div><div class="stat-label">Премиум-локаций</div></div>
     </div>
   </div>
 </section>
 
-<!-- Stats strip -->
-<section class="stats-strip">
-  <div class="stats-grid">
-    <div class="stat-item"><div class="stat-num">10+</div><div class="stat-label">Лет на рынке</div></div>
-    <div class="stat-item"><div class="stat-num">3000+</div><div class="stat-label">Довольных клиентов</div></div>
-    <div class="stat-item"><div class="stat-num">50%+</div><div class="stat-label">Доля сделок на рынке</div></div>
-    <div class="stat-item"><div class="stat-num">4.9/5</div><div class="stat-label">Средняя оценка</div></div>
-  </div>
-</section>
-
-<!-- Why us -->
-<section class="section">
+<!-- Featured Properties -->
+<section class="section" id="catalog">
   <div class="section-inner">
-    <div class="section-header reveal">
-      <span class="eyebrow">Почему Golden Key</span>
-      <h2>Причины доверить недвижимость нам</h2>
-      <p>Мы объединили экспертизу, прозрачность и полное юридическое сопровождение, чтобы каждая сделка была безопасной.</p>
-    </div>
-    <div class="feature-grid">
-      <div class="feature-card reveal">
-        <div class="feature-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2L4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4" stroke-width="2"/></svg></div>
-        <h3>Безопасность сделок</h3>
-        <p>Юридическая проверка каждого объекта и полное сопровождение сделки — от задатка до регистрации права собственности.</p>
+    <div class="section-head">
+      <div class="sh-left">
+        <span class="eyebrow">Подобрано для вас</span>
+        <h2>Избранные объекты</h2>
       </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M6 21V9l6-4 6 4v12M10 21v-6h4v6"/></svg></div>
-        <h3>Огромная база объектов</h3>
-        <p>Более 5000 актуальных предложений: квартиры, дома, коммерческая недвижимость и земельные участки во всех районах.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/></svg></div>
-        <h3>Личный эксперт</h3>
-        <p>За вами закрепляется персональный агент, который знает рынок и ведёт вас на каждом этапе до получения ключей.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div>
-        <h3>Выгодная цена</h3>
-        <p>Оцениваем объект по рынку и ведём переговоры в ваших интересах — клиенты экономят в среднем 7–12% от стартовой цены.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M8 4v4M16 4v4"/></svg></div>
-        <h3>Ипотека под ключ</h3>
-        <p>Подбираем ипотечную программу и одобряем заявку в банках-партнёрах на льготных условиях — без беготни и очередей.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-        <h3>Поддержка после сделки</h3>
-        <p>Помогаем с переоформлением, страхованием и налоговым вычетом. С Golden Key вы не остаётесь один на один с бумагами.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Featured properties -->
-<section class="section bg-alt">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <span class="eyebrow">Витрина</span>
-      <h2>Избранные предложения</h2>
-      <p>Лучшие объекты недели, отобранные нашими экспертами.</p>
+      <a href="#contacts" class="btn btn-ghost">Все объекты →</a>
     </div>
     <div class="property-grid">
+
       <article class="property-card reveal">
         <div class="property-image">
           <span class="property-badge">Продажа</span>
-          <button class="property-fav" aria-label="В избранное"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
-          <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#4A6FA5;stop-opacity:1"/><stop offset="100%" style="stop-color:#2C3E5A;stop-opacity:1"/></linearGradient><filter id="shadow1"><feGaussianBlur in="SourceGraphic" stdDeviation="3"/></filter></defs><rect width="400" height="300" fill="#E8EEF7"/><rect x="40" y="80" width="320" height="170" fill="url(#g1)" filter="url(#shadow1)"/><polygon points="40,80 200,20 360,80" fill="#3A5A8F"/><rect x="70" y="110" width="50" height="60" fill="#87CEEB" opacity="0.8"/><rect x="140" y="110" width="50" height="60" fill="#87CEEB" opacity="0.6"/><rect x="210" y="110" width="50" height="60" fill="#87CEEB" opacity="0.8"/><rect x="280" y="110" width="50" height="60" fill="#87CEEB" opacity="0.6"/><rect x="100" y="180" width="40" height="70" fill="#8B6F47"/><rect x="250" y="180" width="40" height="70" fill="#8B6F47"/><circle cx="95" cy="135" r="4" fill="#FFD700"/><circle cx="165" cy="135" r="4" fill="#FFD700"/><circle cx="235" cy="135" r="4" fill="#FFD700"/><circle cx="305" cy="135" r="4" fill="#FFD700"/><path d="M40 80 L40 250 L360 250 L360 80" stroke="#1A3A52" stroke-width="2" fill="none"/></svg>
+          <button class="property-fav" aria-label="В избранное"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+          <svg viewBox="0 0 400 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="p1s" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3a4560"/><stop offset="100%" stop-color="#28324a"/></linearGradient><linearGradient id="p1g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E4C777"/><stop offset="100%" stop-color="#C9A24B"/></linearGradient></defs><rect width="400" height="320" fill="url(#p1s)"/><rect x="40" y="120" width="320" height="150" fill="#1e2636"/><rect x="40" y="110" width="320" height="14" fill="#2c374e"/><rect x="70" y="150" width="60" height="70" fill="url(#p1g)" opacity="0.85"/><rect x="150" y="150" width="60" height="70" fill="url(#p1g)" opacity="0.65"/><rect x="230" y="150" width="100" height="70" fill="url(#p1g)" opacity="0.8"/><rect x="160" y="235" width="70" height="35" fill="#0f1520"/><rect x="30" y="270" width="340" height="50" fill="#151d2c"/><rect x="70" y="278" width="260" height="30" fill="url(#p1g)" opacity="0.2"/></svg>
         </div>
         <div class="property-body">
-          <div class="property-price">12 500 000 ₽</div>
-          <h3 class="property-title">3-комнатная квартира, 92 м²</h3>
-          <p class="property-address">📍 ул. Пушкина, 12, Центральный район</p>
-          <div class="property-features">
-            <span>🛏 3 комнаты</span><span>📐 92 м²</span><span>🏢 7/16 этаж</span>
-          </div>
+          <h3 class="property-title">Вилла «Океанвью»</h3>
+          <p class="property-address"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Приморский район</p>
+          <div class="property-specs"><span>🛏 5</span><span>🛁 6</span><span>📐 720 м²</span></div>
+          <div class="property-price">89 500 000 ₽</div>
         </div>
       </article>
 
       <article class="property-card reveal">
         <div class="property-image">
           <span class="property-badge">Продажа</span>
-          <button class="property-fav" aria-label="В избранное"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
-          <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="cottage" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#C8A882;stop-opacity:1"/><stop offset="100%" style="stop-color:#A0866F;stop-opacity:1"/></linearGradient><filter id="shadow2"><feGaussianBlur in="SourceGraphic" stdDeviation="4"/></filter></defs><rect width="400" height="300" fill="#D4E8D4"/><polygon points="50,140 200,40 350,140" fill="#8B5A3C"/><rect x="50" y="140" width="300" height="110" fill="url(#cottage)" filter="url(#shadow2)"/><rect x="80" y="170" width="50" height="70" fill="#87CEEB" opacity="0.7"/><rect x="160" y="170" width="50" height="70" fill="#87CEEB" opacity="0.7"/><rect x="240" y="170" width="50" height="70" fill="#87CEEB" opacity="0.7"/><rect x="150" y="220" width="60" height="30" fill="#654321"/><circle cx="100" cy="150" r="3" fill="#FFD700"/><circle cx="200" cy="150" r="3" fill="#FFD700"/><circle cx="300" cy="150" r="3" fill="#FFD700"/><rect x="60" y="250" width="35" height="20" fill="#90EE90"/><rect x="305" y="250" width="35" height="20" fill="#90EE90"/><path d="M50 140 L50 250 L350 250 L350 140" stroke="#6B4423" stroke-width="2" fill="none"/></svg>
+          <button class="property-fav" aria-label="В избранное"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+          <svg viewBox="0 0 400 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="p2s" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#42506e"/><stop offset="100%" stop-color="#2a3550"/></linearGradient><linearGradient id="p2g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E4C777"/><stop offset="100%" stop-color="#C9A24B"/></linearGradient></defs><rect width="400" height="320" fill="url(#p2s)"/><polygon points="60,130 200,60 340,130" fill="#1e2636"/><rect x="70" y="130" width="260" height="150" fill="#242d40"/><rect x="110" y="160" width="45" height="120" fill="url(#p2g)" opacity="0.8"/><rect x="245" y="160" width="45" height="120" fill="url(#p2g)" opacity="0.7"/><rect x="170" y="185" width="60" height="95" fill="url(#p2g)" opacity="0.9"/><rect x="185" y="200" width="30" height="80" fill="#0f1520"/><rect x="60" y="280" width="280" height="40" fill="#151d2c"/></svg>
         </div>
         <div class="property-body">
-          <div class="property-price">28 900 000 ₽</div>
-          <h3 class="property-title">Дом с участком, 210 м²</h3>
-          <p class="property-address">📍 КП «Приморский», Приморский район</p>
-          <div class="property-features">
-            <span>🛏 5 комнат</span><span>📐 210 м²</span><span>🌳 12 соток</span>
-          </div>
+          <h3 class="property-title">Особняк «Модерн»</h3>
+          <p class="property-address"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Центральный район</p>
+          <div class="property-specs"><span>🛏 6</span><span>🛁 7</span><span>📐 910 м²</span></div>
+          <div class="property-price">125 000 000 ₽</div>
         </div>
       </article>
 
       <article class="property-card reveal">
         <div class="property-image">
-          <span class="property-badge rent">Аренда</span>
-          <button class="property-fav" aria-label="В избранное"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
-          <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="apt" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6B7AA0;stop-opacity:1"/><stop offset="100%" style="stop-color:#4A5A7A;stop-opacity:1"/></linearGradient><filter id="shadow3"><feGaussianBlur in="SourceGraphic" stdDeviation="3"/></filter></defs><rect width="400" height="300" fill="#E0E8F0"/><rect x="70" y="60" width="260" height="200" fill="url(#apt)" filter="url(#shadow3)"/><rect x="100" y="90" width="45" height="50" fill="#87CEEB" opacity="0.8"/><rect x="160" y="90" width="45" height="50" fill="#87CEEB" opacity="0.7"/><rect x="220" y="90" width="45" height="50" fill="#87CEEB" opacity="0.8"/><rect x="280" y="90" width="45" height="50" fill="#87CEEB" opacity="0.7"/><rect x="100" y="155" width="45" height="50" fill="#87CEEB" opacity="0.7"/><rect x="160" y="155" width="45" height="50" fill="#87CEEB" opacity="0.8"/><rect x="220" y="155" width="45" height="50" fill="#87CEEB" opacity="0.7"/><rect x="280" y="155" width="45" height="50" fill="#87CEEB" opacity="0.8"/><line x1="70" y1="145" x2="330" y2="145" stroke="#3A4A6A" stroke-width="1"/><rect x="175" y="230" width="50" height="30" fill="#654321"/><circle cx="122" cy="110" r="2" fill="#FFD700"/><circle cx="182" cy="110" r="2" fill="#FFD700"/><circle cx="242" cy="110" r="2" fill="#FFD700"/><circle cx="302" cy="110" r="2" fill="#FFD700"/></svg>
+          <span class="property-badge">Продажа</span>
+          <button class="property-fav" aria-label="В избранное"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+          <svg viewBox="0 0 400 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="p3s" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3d5245"/><stop offset="100%" stop-color="#28362c"/></linearGradient><linearGradient id="p3g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E4C777"/><stop offset="100%" stop-color="#C9A24B"/></linearGradient></defs><rect width="400" height="320" fill="url(#p3s)"/><rect x="50" y="140" width="300" height="140" fill="#1f2a22"/><rect x="50" y="130" width="300" height="12" fill="#2d3c30"/><rect x="80" y="165" width="70" height="80" fill="url(#p3g)" opacity="0.82"/><rect x="170" y="165" width="120" height="80" fill="url(#p3g)" opacity="0.7"/><rect x="310" y="165" width="30" height="80" fill="url(#p3g)" opacity="0.6"/><rect x="30" y="280" width="340" height="40" fill="#141c14"/><ellipse cx="380" cy="180" rx="20" ry="50" fill="#141c14" opacity="0.6"/></svg>
         </div>
         <div class="property-body">
-          <div class="property-price">85 000 ₽<span style="font-size:0.9rem;color:var(--text-light);font-family:inherit;font-weight:400;"> / мес</span></div>
-          <h3 class="property-title">2-комнатная квартира, 64 м²</h3>
-          <p class="property-address">📍 пр. Мира, 45, Западный район</p>
-          <div class="property-features">
-            <span>🛏 2 комнаты</span><span>📐 64 м²</span><span>🏢 4/9 этаж</span>
-          </div>
+          <h3 class="property-title">Резиденция «Хиллсайд»</h3>
+          <p class="property-address"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Западный район</p>
+          <div class="property-specs"><span>🛏 4</span><span>🛁 5</span><span>📐 550 м²</span></div>
+          <div class="property-price">47 500 000 ₽</div>
         </div>
       </article>
+
+      <article class="property-card reveal">
+        <div class="property-image">
+          <span class="property-badge">Аренда</span>
+          <button class="property-fav" aria-label="В избранное"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+          <svg viewBox="0 0 400 320" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="p4s" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4a3f5a"/><stop offset="100%" stop-color="#2c2540"/></linearGradient><linearGradient id="p4g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E4C777"/><stop offset="100%" stop-color="#C9A24B"/></linearGradient></defs><rect width="400" height="320" fill="url(#p4s)"/><rect x="60" y="60" width="280" height="220" fill="#231d33"/><rect x="90" y="90" width="50" height="55" fill="url(#p4g)" opacity="0.85"/><rect x="155" y="90" width="50" height="55" fill="url(#p4g)" opacity="0.65"/><rect x="220" y="90" width="50" height="55" fill="url(#p4g)" opacity="0.85"/><rect x="285" y="90" width="30" height="55" fill="url(#p4g)" opacity="0.6"/><rect x="90" y="165" width="50" height="55" fill="url(#p4g)" opacity="0.7"/><rect x="155" y="165" width="115" height="55" fill="url(#p4g)" opacity="0.8"/><rect x="285" y="165" width="30" height="55" fill="url(#p4g)" opacity="0.6"/><rect x="60" y="280" width="280" height="40" fill="#151122"/></svg>
+        </div>
+        <div class="property-body">
+          <h3 class="property-title">Пентхаус «Скайлайн»</h3>
+          <p class="property-address"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Центральный район</p>
+          <div class="property-specs"><span>🛏 3</span><span>🛁 4</span><span>📐 320 м²</span></div>
+          <div class="property-price">450 000 ₽<span class="per"> / мес</span></div>
+        </div>
+      </article>
+
     </div>
   </div>
 </section>
 
-<!-- Process -->
-<section class="section">
+<!-- Virtual Tour -->
+<section class="section bg-alt">
   <div class="section-inner">
-    <div class="section-header reveal">
-      <span class="eyebrow">Как мы работаем</span>
-      <h2>Путь к вашим ключам — 4 шага</h2>
-    </div>
-    <div class="feature-grid">
-      <div class="feature-card reveal">
-        <div class="feature-icon" style="font-family:Georgia,serif;font-size:1.5rem;font-weight:700;">1</div>
-        <h3>Заявка и консультация</h3>
-        <p>Вы оставляете заявку — мы бесплатно консультируем, определяем задачу и подбираем персонального агента.</p>
+    <div class="tour reveal">
+      <div class="tour-visual">
+        <svg viewBox="0 0 600 480" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="tourBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2a3346"/><stop offset="100%" stop-color="#161d2a"/></linearGradient><linearGradient id="tourGlow" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E4C777"/><stop offset="100%" stop-color="#C9A24B"/></linearGradient></defs><rect width="600" height="480" fill="url(#tourBg)"/><rect x="380" y="40" width="200" height="280" fill="#1a2230" opacity="0.8"/><g opacity="0.5"><rect x="400" y="60" width="160" height="240" fill="url(#tourGlow)" opacity="0.15"/><line x1="400" y1="120" x2="560" y2="120" stroke="#C9A24B" stroke-width="1" opacity="0.3"/><line x1="400" y1="180" x2="560" y2="180" stroke="#C9A24B" stroke-width="1" opacity="0.3"/><line x1="480" y1="60" x2="480" y2="300" stroke="#C9A24B" stroke-width="1" opacity="0.3"/></g><rect x="60" y="300" width="260" height="120" rx="8" fill="#2d3648"/><rect x="80" y="290" width="220" height="20" rx="6" fill="#3a4560"/><circle cx="130" cy="260" r="35" fill="#1a2230"/><rect x="115" y="200" width="30" height="60" fill="#2d3648"/><ellipse cx="130" cy="270" rx="50" ry="12" fill="#C9A24B" opacity="0.25"/><path d="M60 250 h50 v-20 a20 20 0 0 1 40 0 v20" fill="none" stroke="#C9A24B" stroke-width="2" opacity="0.4"/><rect x="380" y="340" width="180" height="90" rx="6" fill="#2d3648"/><circle cx="470" cy="300" r="8" fill="url(#tourGlow)" opacity="0.6"/></svg>
+        <div class="tour-360"><span>360°</span><small>ТУР</small></div>
       </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon" style="font-family:Georgia,serif;font-size:1.5rem;font-weight:700;">2</div>
-        <h3>Подбор объектов</h3>
-        <p>Формируем подборку под ваш бюджет и требования, организуем просмотры в удобное время.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon" style="font-family:Georgia,serif;font-size:1.5rem;font-weight:700;">3</div>
-        <h3>Проверка и сделка</h3>
-        <p>Проводим юридическую проверку, ведём переговоры о цене и готовим все документы для сделки.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon" style="font-family:Georgia,serif;font-size:1.5rem;font-weight:700;">4</div>
-        <h3>Ключи и поддержка</h3>
-        <p>Регистрируем право собственности, передаём ключи и помогаем с оформлением после сделки.</p>
+      <div class="tour-body">
+        <span class="eyebrow">Иммерсивный опыт</span>
+        <h2>Виртуальный тур</h2>
+        <p>Изучите наши эксклюзивные объекты, не выходя из дома. Полное погружение с 360°-турами по каждой комнате.</p>
+        <a href="#contacts" class="btn btn-primary">Начать виртуальный тур 🎬</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- About Section -->
+<!-- Meet Our Top Agents -->
+<section class="section" id="team">
+  <div class="section-inner">
+    <div class="section-head">
+      <div class="sh-left">
+        <span class="eyebrow">Экспертная поддержка</span>
+        <h2>Наши лучшие агенты</h2>
+      </div>
+      <a href="#contacts" class="btn btn-ghost">Вся команда →</a>
+    </div>
+    <div class="agent-grid">
+
+      <article class="agent-card reveal">
+        <div class="agent-photo">
+          <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="a1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2a3446"/><stop offset="100%" stop-color="#171e2a"/></linearGradient></defs><rect width="300" height="300" fill="url(#a1)"/><circle cx="150" cy="115" r="52" fill="#3a4560"/><circle cx="150" cy="112" r="50" fill="#4a5570"/><path d="M60 300 c0 -75 40 -110 90 -110 s90 35 90 110" fill="#1f2937"/><path d="M108 100 q42 -30 84 0 v20 q-42 -14 -84 0z" fill="#232d3d"/><rect x="132" y="200" width="36" height="50" fill="#e8e4dc"/><path d="M132 200 l18 30 l18 -30 v-14 h-36z" fill="#c9a24b" opacity="0.3"/></svg>
+        </div>
+        <div class="agent-body">
+          <h3 class="agent-name">Дмитрий Волков</h3>
+          <div class="agent-role">Специалист по люкс-объектам</div>
+          <div class="agent-social">
+            <a href="tel:+78001234567" aria-label="Телефон"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a>
+            <a href="mailto:info@goldenkey.ru" aria-label="Email"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7L22 6"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.3c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8V21H9z"/></svg></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="agent-card reveal">
+        <div class="agent-photo">
+          <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="a2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2e2a3f"/><stop offset="100%" stop-color="#1a1726"/></linearGradient></defs><rect width="300" height="300" fill="url(#a2)"/><circle cx="150" cy="112" r="50" fill="#4a4560"/><path d="M60 300 c0 -75 40 -110 90 -110 s90 35 90 110" fill="#241f33"/><path d="M100 95 q50 -45 100 0 q5 45 -10 70 q-8 -50 -40 -50 t-40 50 q-15 -25 -10 -70z" fill="#1f1b2e"/><rect x="132" y="198" width="36" height="52" fill="#e0dce8"/><path d="M132 198 l18 34 l18 -34 v-12 h-36z" fill="#c9a24b" opacity="0.3"/></svg>
+        </div>
+        <div class="agent-body">
+          <h3 class="agent-name">София Мартынова</h3>
+          <div class="agent-role">Консультант по недвижимости</div>
+          <div class="agent-social">
+            <a href="tel:+78001234567" aria-label="Телефон"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a>
+            <a href="mailto:info@goldenkey.ru" aria-label="Email"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7L22 6"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.3c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8V21H9z"/></svg></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="agent-card reveal">
+        <div class="agent-photo">
+          <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="a3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#243040"/><stop offset="100%" stop-color="#141c26"/></linearGradient></defs><rect width="300" height="300" fill="url(#a3)"/><circle cx="150" cy="112" r="50" fill="#465068"/><path d="M60 300 c0 -75 40 -110 90 -110 s90 35 90 110" fill="#1e2733"/><path d="M106 98 q44 -32 88 0 v18 q-44 -12 -88 0z" fill="#212a38"/><rect x="132" y="200" width="36" height="50" fill="#e8e4dc"/><path d="M132 200 l18 30 l18 -30 v-14 h-36z" fill="#c9a24b" opacity="0.3"/></svg>
+        </div>
+        <div class="agent-body">
+          <h3 class="agent-name">Артём Крылов</h3>
+          <div class="agent-role">Эксперт по инвестициям</div>
+          <div class="agent-social">
+            <a href="tel:+78001234567" aria-label="Телефон"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a>
+            <a href="mailto:info@goldenkey.ru" aria-label="Email"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7L22 6"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.3c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8V21H9z"/></svg></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="agent-card reveal">
+        <div class="agent-photo">
+          <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="a4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3a2e2a"/><stop offset="100%" stop-color="#221a17"/></linearGradient></defs><rect width="300" height="300" fill="url(#a4)"/><circle cx="150" cy="112" r="50" fill="#5a4d45"/><path d="M60 300 c0 -75 40 -110 90 -110 s90 35 90 110" fill="#2a201c"/><path d="M98 95 q52 -42 104 0 q8 55 -12 80 q-6 -55 -40 -55 t-40 55 q-20 -25 -12 -80z" fill="#241b18"/><rect x="132" y="198" width="36" height="52" fill="#e8e0d4"/><path d="M132 198 l18 34 l18 -34 v-12 h-36z" fill="#c9a24b" opacity="0.3"/></svg>
+        </div>
+        <div class="agent-body">
+          <h3 class="agent-name">Ольга Тарасова</h3>
+          <div class="agent-role">Специалист по аренде</div>
+          <div class="agent-social">
+            <a href="tel:+78001234567" aria-label="Телефон"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg></a>
+            <a href="mailto:info@goldenkey.ru" aria-label="Email"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7L22 6"/></svg></a>
+            <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.6 4.7 6V21h-4v-5.3c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8V21H9z"/></svg></a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- Awards strip -->
+<section class="awards">
+  <div class="awards-inner">
+    <div class="award"><span class="aw-name">Forbes</span><span class="aw-sub">Global Properties</span></div>
+    <div class="award"><span class="aw-name">LUXURY</span><span class="aw-sub">Real Estate</span></div>
+    <div class="award"><span class="aw-name">Leading</span><span class="aw-sub">Companies of the World</span></div>
+    <div class="award"><span class="aw-name">LPI</span><span class="aw-sub">Luxury Portfolio Intl.</span></div>
+    <div class="award"><span class="aw-name">MAYFAIR</span><span class="aw-sub">International Realty</span></div>
+  </div>
+</section>
+
+<!-- About -->
 <section class="section bg-alt" id="about">
   <div class="section-inner">
     <div class="grid-2">
       <div class="reveal">
         <span class="eyebrow">О компании</span>
-        <h2 style="font-size:clamp(1.6rem,3.5vw,2.3rem);margin:0.75rem 0 1.25rem;">С 2015 года — рядом с теми, кто ищет свой дом</h2>
-        <p style="color:var(--text-secondary);margin-bottom:1rem;">Golden Key начинался как небольшая команда из трёх риелторов, объединённых одной идеей: сделать сделки с недвижимостью честными и понятными. Мы устали от рынка, где клиента вводят в заблуждение, и решили работать иначе.</p>
-        <p style="color:var(--text-secondary);margin-bottom:1rem;">За 10 лет мы выросли в одно из ведущих агентств региона. Сегодня в команде более 40 экспертов, а через нас проходит свыше половины сделок на локальном рынке. Но принцип остался прежним — интересы клиента превыше всего.</p>
-        <p style="color:var(--text-secondary);">Мы гордимся тем, что 7 из 10 клиентов приходят к нам по рекомендации. Это лучшая оценка нашей работы.</p>
+        <h2>С 2015 года — стандарт роскоши на рынке недвижимости</h2>
+        <p>Golden Key начинался как бутик-агентство с одной идеей: сделать премиальную недвижимость доступной для тех, кто ценит качество и безупречный сервис.</p>
+        <p>Сегодня мы — одно из ведущих люкс-агентств региона. Более 40 экспертов, эксклюзивный портфель объектов и репутация, которой доверяют. 7 из 10 клиентов приходят к нам по рекомендации.</p>
+        <div style="display:flex;gap:1rem;margin-top:2rem;">
+          <a href="#contacts" class="btn btn-primary">Связаться с нами</a>
+          <a href="#services" class="btn btn-outline">Наши услуги</a>
+        </div>
       </div>
-      <div class="reveal" style="aspect-ratio:4/3;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md);">
-        <svg viewBox="0 0 400 300" style="width:100%;height:100%" xmlns="http://www.w3.org/2000/svg">
-          <rect width="400" height="300" fill="#14233F"/>
-          <rect x="40" y="120" width="90" height="150" fill="#2C3E5A"/>
-          <rect x="150" y="80" width="100" height="190" fill="#3A4E6E"/>
-          <rect x="270" y="140" width="90" height="130" fill="#2C3E5A"/>
-          <rect x="60" y="140" width="20" height="20" fill="#C9A227" opacity="0.6"/><rect x="95" y="140" width="20" height="20" fill="#C9A227" opacity="0.4"/>
-          <rect x="170" y="100" width="22" height="22" fill="#C9A227" opacity="0.6"/><rect x="210" y="100" width="22" height="22" fill="#C9A227" opacity="0.5"/>
-          <rect x="170" y="150" width="22" height="22" fill="#C9A227" opacity="0.4"/><rect x="210" y="150" width="22" height="22" fill="#C9A227" opacity="0.6"/>
-          <rect x="290" y="160" width="20" height="20" fill="#C9A227" opacity="0.5"/><rect x="325" y="160" width="20" height="20" fill="#C9A227" opacity="0.6"/>
-          <circle cx="330" cy="60" r="24" fill="#C9A227" opacity="0.25"/>
-        </svg>
+      <div class="about-visual reveal">
+        <svg viewBox="0 0 500 440" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="abBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2a3346"/><stop offset="100%" stop-color="#141c28"/></linearGradient><linearGradient id="abG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E4C777"/><stop offset="100%" stop-color="#C9A24B"/></linearGradient></defs><rect width="500" height="440" fill="url(#abBg)"/><rect x="50" y="180" width="120" height="200" fill="#1e2836"/><rect x="190" y="120" width="130" height="260" fill="#28324a"/><rect x="340" y="200" width="120" height="180" fill="#1e2836"/><g opacity="0.85"><rect x="70" y="200" width="30" height="30" fill="url(#abG)" opacity="0.7"/><rect x="115" y="200" width="30" height="30" fill="url(#abG)" opacity="0.5"/><rect x="70" y="250" width="30" height="30" fill="url(#abG)" opacity="0.6"/><rect x="115" y="250" width="30" height="30" fill="url(#abG)" opacity="0.75"/><rect x="210" y="145" width="35" height="35" fill="url(#abG)" opacity="0.8"/><rect x="260" y="145" width="35" height="35" fill="url(#abG)" opacity="0.6"/><rect x="210" y="200" width="35" height="35" fill="url(#abG)" opacity="0.55"/><rect x="260" y="200" width="35" height="35" fill="url(#abG)" opacity="0.8"/><rect x="210" y="255" width="85" height="55" fill="url(#abG)" opacity="0.5"/><rect x="360" y="225" width="30" height="35" fill="url(#abG)" opacity="0.7"/><rect x="405" y="225" width="30" height="35" fill="url(#abG)" opacity="0.55"/></g><circle cx="410" cy="90" r="40" fill="url(#abG)" opacity="0.12"/><rect x="0" y="380" width="500" height="60" fill="#0f1520"/></svg>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Services Section -->
+<!-- Services / Why us -->
 <section class="section" id="services">
   <div class="section-inner">
-    <div class="section-header reveal">
-      <span class="eyebrow">Услуги</span>
-      <h2>Полный спектр услуг с недвижимостью</h2>
-      <p>От первой консультации до получения ключей — Golden Key берёт на себя все этапы.</p>
+    <div class="section-head center">
+      <span class="eyebrow">Почему Golden Key</span>
+      <h2>Полный спектр премиум-услуг</h2>
+      <p>Мы сопровождаем каждую сделку от первого показа до вручения ключей — безупречно и конфиденциально.</p>
     </div>
-
-    <div class="feature-grid" style="margin-bottom: 4rem;">
-      <div class="feature-card reveal"><div class="feature-icon">🔑</div><h3>Покупка</h3><p>Подбор объекта, проверка, переговоры и сопровождение сделки до регистрации права.</p></div>
-      <div class="feature-card reveal"><div class="feature-icon">🏷</div><h3>Продажа</h3><p>Оценка по рынку, профессиональные фото, реклама и поиск покупателя в кратчайшие сроки.</p></div>
-      <div class="feature-card reveal"><div class="feature-icon">📋</div><h3>Аренда</h3><p>Подбор арендатора или объекта, проверка, составление договора и приёмка.</p></div>
-      <div class="feature-card reveal"><div class="feature-icon">📊</div><h3>Оценка недвижимости</h3><p>Точная рыночная оценка на основе актуальных данных и реальных сделок.</p></div>
-      <div class="feature-card reveal"><div class="feature-icon">🏦</div><h3>Ипотека</h3><p>Подбор программы, сбор документов и одобрение заявки в банках-партнёрах.</p></div>
-      <div class="feature-card reveal"><div class="feature-icon">⚖️</div><h3>Юридическое сопровождение</h3><p>Полная юридическая проверка объекта и безопасное оформление сделки.</p></div>
-    </div>
-
-    <div class="service-row reveal" style="background: var(--card-bg); padding: 2.5rem; border-radius: var(--radius-lg);">
-      <div>
-        <span class="eyebrow">Покупка недвижимости</span>
-        <h2 style="font-size:clamp(1.5rem,3vw,2.1rem);margin:0.6rem 0 0.8rem;">Купите уверенно и без переплат</h2>
-        <p style="color:var(--text-secondary);">Мы подбираем объекты под ваш бюджет, проверяем юридическую чистоту и ведём переговоры, чтобы вы получили лучшую цену.</p>
-        <ul class="service-steps">
-          <li>Бесплатная консультация и подбор объектов</li>
-          <li>Организация просмотров в удобное время</li>
-          <li>Юридическая проверка и оценка рисков</li>
-          <li>Переговоры о цене в ваших интересах</li>
-          <li>Оформление сделки и регистрация права</li>
-        </ul>
-        <p class="price-note">Стоимость услуги обсуждается индивидуально. Первая консультация — бесплатно.</p>
+    <div class="feature-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L4 6v6c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>Безопасность сделок</h3>
+        <p>Полная юридическая проверка каждого объекта и сопровождение сделки через защищённые эскроу-счета.</p>
       </div>
-    </div>
-
-    <div class="service-row reveal" style="background: var(--card-bg); padding: 2.5rem; border-radius: var(--radius-lg);">
-      <div>
-        <span class="eyebrow">Продажа недвижимости</span>
-        <h2 style="font-size:clamp(1.5rem,3vw,2.1rem);margin:0.6rem 0 0.8rem;">Продайте быстро и по максимальной цене</h2>
-        <p style="color:var(--text-secondary);">Правильная оценка, качественная реклама и наша база покупателей позволяют продавать объекты в среднем за 3–4 недели.</p>
-        <ul class="service-steps">
-          <li>Рыночная оценка и стратегия продажи</li>
-          <li>Профессиональная фото- и видеосъёмка</li>
-          <li>Размещение на всех площадках и в нашей базе</li>
-          <li>Организация показов и работа с покупателями</li>
-          <li>Сопровождение сделки до получения денег</li>
-        </ul>
-        <p class="price-note">Комиссия только по факту успешной сделки.</p>
+      <div class="feature-card reveal">
+        <div class="feature-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M6 21V9l6-4 6 4v12"/></svg></div>
+        <h3>Эксклюзивный портфель</h3>
+        <p>Виллы, пентхаусы и особняки в самых востребованных локациях — многие вне открытого рынка.</p>
       </div>
-    </div>
-
-    <div class="service-row reveal" style="background: var(--card-bg); padding: 2.5rem; border-radius: var(--radius-lg);">
-      <div>
-        <span class="eyebrow">Ипотека под ключ</span>
-        <h2 style="font-size:clamp(1.5rem,3vw,2.1rem);margin:0.6rem 0 0.8rem;">Одобрим ипотеку на выгодных условиях</h2>
-        <p style="color:var(--text-secondary);">Мы аккредитованы в 50+ банках и подберём программу с минимальной ставкой. Возьмём на себя всю бумажную работу.</p>
-        <ul class="service-steps">
-          <li>Анализ вашей ситуации и подбор банка</li>
-          <li>Помощь со сбором и подготовкой документов</li>
-          <li>Подача заявок в несколько банков одновременно</li>
-          <li>Сопровождение до подписания кредитного договора</li>
-          <li>Помощь с получением налогового вычета</li>
-        </ul>
-        <p class="price-note">Одобряем даже сложные заявки. Ставки от партнёров ниже рыночных.</p>
+      <div class="feature-card reveal">
+        <div class="feature-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/></svg></div>
+        <h3>Персональный эксперт</h3>
+        <p>За вами закрепляется личный консультант, который знает рынок и сопровождает вас на каждом этапе.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div>
+        <h3>Инвестиционная аналитика</h3>
+        <p>Точная оценка доходности и перспектив роста для тех, кто рассматривает недвижимость как актив.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M8 4v4M16 4v4"/></svg></div>
+        <h3>Ипотека под ключ</h3>
+        <p>Индивидуальные программы с банками-партнёрами и ставки ниже рыночных для наших клиентов.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h3>Поддержка после сделки</h3>
+        <p>Помощь с переоформлением, дизайном интерьера, страхованием и управлением недвижимостью.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Catalog Section -->
-<section class="section bg-alt" id="catalog">
+<!-- Cases -->
+<section class="section bg-alt" id="cases">
   <div class="section-inner">
-    <div class="section-header reveal">
-      <span class="eyebrow">Каталог</span>
-      <h2>Актуальная недвижимость</h2>
-      <p>Более 5000 проверенных объектов. Выберите то, что подходит именно вам.</p>
+    <div class="section-head center">
+      <span class="eyebrow">Наши результаты</span>
+      <h2>Реальные истории успеха</h2>
+      <p>Как Golden Key решает задачи клиентов — от быстрой продажи до сложных инвестиционных портфелей.</p>
     </div>
-
-    <div class="catalog-layout">
-      <aside class="filters">
-        <h3>Фильтры</h3>
-        <form>
-          <div class="filter-group">
-            <label for="f-deal">Тип сделки</label>
-            <select id="f-deal"><option>Все</option><option>Покупка</option><option>Аренда</option></select>
-          </div>
-          <div class="filter-group">
-            <label for="f-type">Тип недвижимости</label>
-            <select id="f-type"><option>Все</option><option>Квартира</option><option>Дом / коттедж</option><option>Коммерческая</option><option>Участок</option></select>
-          </div>
-          <div class="filter-group">
-            <label for="f-area">Район</label>
-            <select id="f-area"><option>Все районы</option><option>Центральный</option><option>Северный</option><option>Западный</option><option>Приморский</option></select>
-          </div>
-          <div class="filter-group">
-            <label for="f-rooms">Комнат</label>
-            <select id="f-rooms"><option>Не важно</option><option>1</option><option>2</option><option>3</option><option>4+</option></select>
-          </div>
-          <div class="filter-group">
-            <label for="f-pmin">Цена от, ₽</label>
-            <input id="f-pmin" type="text" placeholder="0" inputmode="numeric">
-          </div>
-          <div class="filter-group">
-            <label for="f-pmax">Цена до, ₽</label>
-            <input id="f-pmax" type="text" placeholder="100 000 000" inputmode="numeric">
-          </div>
-          <button type="submit" class="btn btn-primary" style="width:100%;">Применить</button>
-        </form>
-      </aside>
-
-      <div>
-        <div class="catalog-toolbar">
-          <span class="catalog-count">Найдено <strong>6</strong> объектов</span>
-          <select style="padding:0.6rem 0.9rem;border:1.5px solid var(--input-border);border-radius:var(--radius);background:var(--input-bg);color:var(--text);font-family:inherit;">
-            <option>Сначала популярные</option><option>Сначала дешёвые</option><option>Сначала дорогие</option><option>Сначала новые</option>
-          </select>
-        </div>
-
-        <div class="property-grid">
-          <article class="property-card reveal">
-            <div class="property-image"><span class="property-badge">Продажа</span><button class="property-fav" aria-label="В избранное"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
-              <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#2C3E5A"/><rect x="60" y="90" width="280" height="150" fill="#3A4E6E"/><rect x="80" y="120" width="50" height="50" fill="#C9A227" opacity="0.5"/><rect x="150" y="120" width="50" height="50" fill="#C9A227" opacity="0.35"/><rect x="220" y="120" width="50" height="50" fill="#C9A227" opacity="0.5"/><path d="M60 90 L200 30 L340 90 Z" fill="#233350"/></svg>
-            </div>
-            <div class="property-body"><div class="property-price">12 500 000 ₽</div><h3 class="property-title">3-комн. квартира, 92 м²</h3><p class="property-address">📍 ул. Пушкина, 12, Центральный</p><div class="property-features"><span>🛏 3</span><span>📐 92 м²</span><span>🏢 7/16</span></div></div>
-          </article>
-
-          <article class="property-card reveal">
-            <div class="property-image"><span class="property-badge">Продажа</span><button class="property-fav" aria-label="В избранное"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
-              <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#1F3A2E"/><rect x="70" y="140" width="260" height="110" fill="#F0EDE4"/><path d="M60 140 L200 60 L340 140 Z" fill="#8A6A3A"/><rect x="110" y="170" width="45" height="80" fill="#3A4E6E"/><rect x="245" y="170" width="45" height="80" fill="#3A4E6E"/><rect x="175" y="180" width="50" height="70" fill="#C9A227" opacity="0.6"/></svg>
-            </div>
-            <div class="property-body"><div class="property-price">28 900 000 ₽</div><h3 class="property-title">Дом с участком, 210 м²</h3><p class="property-address">📍 КП «Приморский»</p><div class="property-features"><span>🛏 5</span><span>📐 210 м²</span><span>🌳 12 сот</span></div></div>
-          </article>
-
-          <article class="property-card reveal">
-            <div class="property-image"><span class="property-badge rent">Аренда</span><button class="property-fav" aria-label="В избранное"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
-              <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="apt-grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6B8CC7;stop-opacity:1"/><stop offset="50%" style="stop-color:#4A6FA5;stop-opacity:1"/><stop offset="100%" style="stop-color:#2C3E5A;stop-opacity:1"/></linearGradient><filter id="apt-shadow"><feGaussianBlur in="SourceGraphic" stdDeviation="2"/><feOffset dx="1" dy="2"/></filter></defs><rect width="400" height="300" fill="#E8F0FB"/><rect x="40" y="80" width="320" height="170" fill="url(#apt-grad)" filter="url(#apt-shadow)"/><polygon points="40,80 200,20 360,80" fill="#4A7BA7"/><g id="windows"><rect x="70" y="110" width="45" height="45" fill="#87CEEB" opacity="0.85"/><rect x="135" y="110" width="45" height="45" fill="#87CEEB" opacity="0.72"/><rect x="200" y="110" width="45" height="45" fill="#87CEEB" opacity="0.85"/><rect x="265" y="110" width="45" height="45" fill="#87CEEB" opacity="0.72"/><rect x="70" y="175" width="45" height="45" fill="#87CEEB" opacity="0.72"/><rect x="135" y="175" width="45" height="45" fill="#87CEEB" opacity="0.85"/><rect x="200" y="175" width="45" height="45" fill="#87CEEB" opacity="0.72"/><rect x="265" y="175" width="45" height="45" fill="#87CEEB" opacity="0.85"/></g><circle cx="75" cy="132" r="2" fill="#FFD700" opacity="0.6"/><circle cx="140" cy="132" r="2" fill="#FFD700" opacity="0.6"/><circle cx="205" cy="132" r="2" fill="#FFD700" opacity="0.6"/><circle cx="270" cy="132" r="2" fill="#FFD700" opacity="0.6"/><rect x="140" y="230" width="120" height="20" fill="#8B6F47"/><line x1="40" y1="80" x2="40" y2="250" stroke="#1A3A52" stroke-width="1.5"/><line x1="360" y1="80" x2="360" y2="250" stroke="#1A3A52" stroke-width="1.5"/></svg>
-            </div>
-            <div class="property-body"><div class="property-price">85 000 ₽<span style="font-size:0.9rem;color:var(--text-light);font-weight:400;"> /мес</span></div><h3 class="property-title">2-комн. квартира, 64 м²</h3><p class="property-address">📍 пр. Мира, 45, Западный</p><div class="property-features"><span>🛏 2</span><span>📐 64 м²</span><span>🏢 4/9</span></div></div>
-          </article>
-
-          <article class="property-card reveal">
-            <div class="property-image"><span class="property-badge">Продажа</span><button class="property-fav" aria-label="В избранное"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
-              <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#233350"/><rect x="100" y="60" width="200" height="200" fill="#2C3E5A"/><rect x="120" y="80" width="70" height="70" fill="#C9A227" opacity="0.5"/><rect x="210" y="80" width="70" height="70" fill="#C9A227" opacity="0.4"/><rect x="120" y="170" width="70" height="70" fill="#C9A227" opacity="0.4"/><rect x="210" y="170" width="70" height="70" fill="#C9A227" opacity="0.55"/></svg>
-            </div>
-            <div class="property-body"><div class="property-price">7 200 000 ₽</div><h3 class="property-title">1-комн. квартира, 42 м²</h3><p class="property-address">📍 ул. Садовая, 8, Северный</p><div class="property-features"><span>🛏 1</span><span>📐 42 м²</span><span>🏢 12/22</span></div></div>
-          </article>
-
-          <article class="property-card reveal">
-            <div class="property-image"><span class="property-badge">Продажа</span><button class="property-fav" aria-label="В избранное"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
-              <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#3A3524"/><rect x="50" y="110" width="300" height="140" fill="#4A4530"/><rect x="70" y="130" width="40" height="40" fill="#C9A227" opacity="0.5"/><rect x="130" y="130" width="40" height="40" fill="#C9A227" opacity="0.4"/><rect x="190" y="130" width="40" height="40" fill="#C9A227" opacity="0.5"/><rect x="250" y="130" width="40" height="40" fill="#C9A227" opacity="0.4"/><rect x="180" y="190" width="50" height="60" fill="#233350"/></svg>
-            </div>
-            <div class="property-body"><div class="property-price">18 000 000 ₽</div><h3 class="property-title">Коммерческое помещение, 120 м²</h3><p class="property-address">📍 ул. Ленина, 30, Центральный</p><div class="property-features"><span>🏬 Street-retail</span><span>📐 120 м²</span><span>🚪 2 входа</span></div></div>
-          </article>
-
-          <article class="property-card reveal">
-            <div class="property-image"><span class="property-badge">Продажа</span><button class="property-fav" aria-label="В избранное"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
-              <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#2C3E5A"/><rect x="60" y="90" width="280" height="150" fill="#3A4E6E"/><rect x="80" y="120" width="50" height="50" fill="#C9A227" opacity="0.5"/><rect x="150" y="120" width="50" height="50" fill="#C9A227" opacity="0.35"/><rect x="220" y="120" width="50" height="50" fill="#C9A227" opacity="0.5"/><path d="M60 90 L200 30 L340 90 Z" fill="#233350"/></svg>
-            </div>
-            <div class="property-body"><div class="property-price">15 500 000 ₽</div><h3 class="property-title">2-комн. квартира, 68 м²</h3><p class="property-address">📍 ул. Набережная, 5, Центральный</p><div class="property-features"><span>🛏 2</span><span>📐 68 м²</span><span>🏢 3/12</span></div></div>
-          </article>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Cases Section -->
-<section class="section" id="cases">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <span class="eyebrow">Кейсы</span>
-      <h2>Как Golden Key решила 7 реальных задач</h2>
-      <p>От простых покупок до сложных инвестиций — вот как мы помогаем клиентам.</p>
-    </div>
-
     <div class="case-grid">
       <div class="case-card reveal">
-        <h3 class="case-title">Продажа дома: 98% от стоимости за 19 дней</h3>
         <span class="case-result">Успех</span>
-        <p class="case-description">Семья хотела продать частный дом, но не знала реальную цену. Мы оценили объект, сделали профессиональную съёмку и разместили на всех площадках. Результат: дом продан за 19 дней по цене, которая составила 98% от рыночной оценки. Клиент был поражён скоростью и качеством работы.</p>
-        <div class="case-meta">
-          <span>⏱ 19 дней</span>
-          <span>💰 Выше ожиданий</span>
-          <span>📍 Приморский р-н</span>
-        </div>
+        <h3 class="case-title">Продажа виллы за 98% цены за 19 дней</h3>
+        <p class="case-description">Профессиональная оценка, кинематографичная съёмка и таргетированный показ закрытому пулу покупателей. Результат — сделка за 19 дней по цене 98% от рыночной.</p>
+        <div class="case-meta"><span>⏱ 19 дней</span><span>💰 98% цены</span><span>📍 Приморский р-н</span></div>
       </div>
-
       <div class="case-card reveal">
-        <h3 class="case-title">Покупка первой квартиры с ипотекой: ставка 6.1%</h3>
-        <span class="case-result">Успех</span>
-        <p class="case-description">Молодая семья хотела купить первую квартиру, но беспокоилась о ставке по ипотеке и документах. Мы помогли с подбором программы в 50+ банков, клиент получил одобрение по ставке 6.1% (ниже рыночной), сбили цену на 600 тысяч и провели полную юридическую проверку. Семья получила ключи за неделю после одобрения.</p>
-        <div class="case-meta">
-          <span>⏱ 7 дней на одобрение</span>
-          <span>💰 −600 тыс. скидка</span>
-          <span>📍 Центр города</span>
-        </div>
-      </div>
-
-      <div class="case-card reveal">
-        <h3 class="case-title">Коммерческая недвижимость: рента 14% годовых</h3>
         <span class="case-result">Инвестиция</span>
-        <p class="case-description">Инвестор искал коммерческое помещение для сдачи в аренду. Мы нашли офис в центре города, проверили все документы, обеспечили эскроу-счёт и уже через месяц сдали помещение якорному арендатору. Первые два года приносят 14% годовых чистого дохода.</p>
-        <div class="case-meta">
-          <span>⏱ 30 дней до первого дохода</span>
-          <span>💰 14% доход в год</span>
-          <span>📍 Центральный р-н</span>
-        </div>
+        <h3 class="case-title">Коммерческий объект: 14% годовых</h3>
+        <p class="case-description">Подобрали помещение в центре, проверили документы, обеспечили эскроу и нашли якорного арендатора за месяц. Первые два года — 14% чистого дохода.</p>
+        <div class="case-meta"><span>⏱ 30 дней</span><span>💰 14% в год</span><span>📍 Центр</span></div>
       </div>
-
       <div class="case-card reveal">
-        <h3 class="case-title">Развод и разделение имущества: 3 сделки в один день</h3>
-        <span class="case-result">Сложный случай</span>
-        <p class="case-description">При разводе супругам нужно было продать 2 квартиры и купить 1 новую, не нарушив эскроу-счёта и права друг друга. Наша команда юристов с экспертами организовала все 3 сделки синхронно в один день. Ни одного конфликта, ни одной задержки. Каждый получил справедливую долю.</p>
-        <div class="case-meta">
-          <span>⏱ 1 день, 3 сделки</span>
-          <span>💰 Справедливо</span>
-          <span>📍 Разные районы</span>
-        </div>
-      </div>
-
-      <div class="case-card reveal">
-        <h3 class="case-title">Коммерческая аренда: офис 95 м² сдан за 9 дней</h3>
-        <span class="case-result">Рекорд</span>
-        <p class="case-description">Владелец офисного помещения (95 м²) хотел сдать его максимально быстро и по лучшей цене. Мы подготовили план помещения, сделали виртуальный тур, разместили на корпоративных площадках. За 9 дней нашли арендатора и подписали договор с премией +8% выше первоначальной цены. Офис приносит стабильный ежемесячный доход.</p>
-        <div class="case-meta">
-          <span>⏱ 9 дней</span>
-          <span>💰 +8% к цене</span>
-          <span>📍 Бизнес-центр</span>
-        </div>
-      </div>
-
-      <div class="case-card reveal">
-        <h3 class="case-title">Переезд из города в пригород: цепочка из 2 сделок</h3>
-        <span class="case-result">Успех</span>
-        <p class="case-description">Семья с двумя детьми хотела переехать в пригород, но в городе была квартира с ипотекой. Мы продали городскую квартиру, одновременно организовали ипотеку на коттедж в пригороде и синхронизировали эскроу-счета так, чтобы не было «окна» без жилья. Через 2 месяца семья уже жила в своём доме с участком.</p>
-        <div class="case-meta">
-          <span>⏱ 2 месяца</span>
-          <span>💰 Две ипотеки</span>
-          <span>📍 Город + пригород</span>
-        </div>
-      </div>
-
-      <div class="case-card reveal">
-        <h3 class="case-title">Инвестиционный портфель: 3 объекта, +11% прибыль в год</h3>
         <span class="case-result">Портфель</span>
-        <p class="case-description">Опытный инвестор собирал портфель недвижимости в разных районах. Мы помогли с подбором 3 объектов по стоимости 25, 18 и 12 млн рублей, провели полный анализ рынка аренды и регионального развития. Три объекта вместе приносят 11% годовой дохода и растут в цене на 5-7% ежегодно. Долгосрочная инвестиция, которая окупится за 10 лет.</p>
-        <div class="case-meta">
-          <span>⏱ Долгосрок</span>
-          <span>💰 11% + рост</span>
-          <span>📍 Разные р-ны</span>
-        </div>
+        <h3 class="case-title">Инвестпортфель из 3 объектов, +11%</h3>
+        <p class="case-description">Собрали портфель из трёх объектов в разных районах на 55 млн ₽. Анализ рынка аренды и развития территорий обеспечил 11% годовых плюс рост стоимости.</p>
+        <div class="case-meta"><span>⏱ Долгосрок</span><span>💰 11% + рост</span><span>📍 Разные р-ны</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Reviews Section -->
-<section class="section bg-alt" id="reviews">
+<!-- Reviews -->
+<section class="section" id="reviews">
   <div class="section-inner">
+    <div class="section-head center">
+      <span class="eyebrow">Отзывы</span>
+      <h2>Нам доверяют тысячи клиентов</h2>
+    </div>
     <div class="rating-summary reveal">
       <div class="rating-big">
         <div class="r-num">4.9</div>
@@ -640,174 +458,63 @@
         <div class="rating-bar"><span>1 ★</span><div class="bar-track"><div class="bar-fill" style="--w:0.2%"></div></div><span>0.2%</span></div>
       </div>
     </div>
-
     <div class="testimonial-grid">
-      <div class="testimonial-card reveal"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">«Купили первую квартиру через Golden Key. Агент Мария сопровождала нас на каждом шаге, проверила документы и помогла сбить цену на 600 тысяч.»</p><div class="testimonial-author"><div class="testimonial-avatar">АП</div><div><div class="testimonial-name">Анна Петрова</div><div class="testimonial-role">Покупка квартиры · март 2026</div></div></div></div>
-      <div class="testimonial-card reveal"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">«Продал дом за 3 недели, хотя сам не мог найти покупателя полгода. Грамотная оценка, хорошие фото и реальные показы.»</p><div class="testimonial-author"><div class="testimonial-avatar">ДС</div><div><div class="testimonial-name">Дмитрий Соколов</div><div class="testimonial-role">Продажа дома · февраль 2026</div></div></div></div>
-      <div class="testimonial-card reveal"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">«Оформляли ипотеку — думали, будет кошмар. Подобрали банк со ставкой ниже, собрали документы и всё одобрили за неделю.»</p><div class="testimonial-author"><div class="testimonial-avatar">ЕК</div><div><div class="testimonial-name">Елена Ковалёва</div><div class="testimonial-role">Ипотека · январь 2026</div></div></div></div>
-      <div class="testimonial-card reveal"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">«Инвестировал в коммерцию по совету агентства. Объект приносит стабильный доход с первого месяца. Профессионалы своего дела.»</p><div class="testimonial-author"><div class="testimonial-avatar">ИВ</div><div><div class="testimonial-name">Игорь Власов</div><div class="testimonial-role">Инвестиции · декабрь 2025</div></div></div></div>
-      <div class="testimonial-card reveal"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">«Сложный разъезд с обменом — три сделки в один день. Всё прошло гладко, ни одного нервного момента. Спасибо огромное!»</p><div class="testimonial-author"><div class="testimonial-avatar">ОМ</div><div><div class="testimonial-name">Ольга Морозова</div><div class="testimonial-role">Обмен квартиры · ноябрь 2025</div></div></div></div>
-      <div class="testimonial-card reveal"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">«Снимали квартиру через агентство — проверили собственника, составили нормальный договор. Чувствуешь себя защищённым.»</p><div class="testimonial-author"><div class="testimonial-avatar">РН</div><div><div class="testimonial-name">Роман Никитин</div><div class="testimonial-role">Аренда · ноябрь 2025</div></div></div></div>
-      <div class="testimonial-card reveal"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">«Второй раз обращаюсь и снова доволен. Честно говорят о минусах объектов, не втюхивают. За это и ценю.»</p><div class="testimonial-author"><div class="testimonial-avatar">СГ</div><div><div class="testimonial-name">Сергей Громов</div><div class="testimonial-role">Покупка · октябрь 2025</div></div></div></div>
-      <div class="testimonial-card reveal"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">«Продавали квартиру бабушки — куча нюансов с документами. Юрист агентства всё разрулил. Сделка прошла спокойно.»</p><div class="testimonial-author"><div class="testimonial-avatar">ТБ</div><div><div class="testimonial-name">Татьяна Белова</div><div class="testimonial-role">Продажа · октябрь 2025</div></div></div></div>
-      <div class="testimonial-card reveal"><div class="testimonial-stars">★★★★☆</div><p class="testimonial-text">«Хорошая работа, нашли то, что искали. Немного затянулся подбор, но результатом доволен — квартира отличная.»</p><div class="testimonial-author"><div class="testimonial-avatar">АФ</div><div><div class="testimonial-name">Алексей Фомин</div><div class="testimonial-role">Покупка · сентябрь 2025</div></div></div></div>
+      <div class="testimonial-card reveal"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">«Купили виллу мечты через Golden Key. Дмитрий сопровождал нас на каждом шаге, проверил документы и помог сбить цену. Безупречный сервис.»</p><div class="testimonial-author"><div class="testimonial-avatar">АП</div><div><div class="testimonial-name">Анна Петрова</div><div class="testimonial-role">Покупка виллы · март 2026</div></div></div></div>
+      <div class="testimonial-card reveal"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">«Продал особняк за 3 недели, хотя сам не мог найти покупателя полгода. Грамотная оценка и реальные показы состоятельным клиентам.»</p><div class="testimonial-author"><div class="testimonial-avatar">ДС</div><div><div class="testimonial-name">Дмитрий Соколов</div><div class="testimonial-role">Продажа особняка · февраль 2026</div></div></div></div>
+      <div class="testimonial-card reveal"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">«Инвестировала в коммерцию по совету агентства. Объект приносит стабильный доход с первого месяца. Настоящие профессионалы.»</p><div class="testimonial-author"><div class="testimonial-avatar">ЕК</div><div><div class="testimonial-name">Елена Ковалёва</div><div class="testimonial-role">Инвестиции · январь 2026</div></div></div></div>
     </div>
   </div>
 </section>
 
-<!-- Team Section -->
-<section class="section" id="team">
-  <div class="section-inner">
-    <div class="section-header reveal">
-      <span class="eyebrow">Команда</span>
-      <h2>Наши эксперты</h2>
-      <p>Более 40 профессионалов с опытом в разных сегментах рынка недвижимости.</p>
-    </div>
-
-    <div class="team-grid">
-      <div class="team-card reveal">
-        <div class="team-avatar">МД</div>
-        <h3>Мария Дорошенко</h3>
-        <div class="team-role">Директор</div>
-        <p class="team-bio">15 лет в недвижимости, основатель агентства. Специализируется на премиум-сегменте и инвестиционных проектах.</p>
-      </div>
-      <div class="team-card reveal">
-        <div class="team-avatar">АК</div>
-        <h3>Александр Кулаков</h3>
-        <div class="team-role">Главный риэлтор</div>
-        <p class="team-bio">12 лет опыта. Помог 500+ клиентам с покупкой квартир. Всегда находит лучшую цену и самые выгодные условия.</p>
-      </div>
-      <div class="team-card reveal">
-        <div class="team-avatar">ЕС</div>
-        <h3>Екатерина Смирнова</h3>
-        <div class="team-role">Специалист по ипотеке</div>
-        <p class="team-bio">8 лет работает с банками. Знает все программы и одобряет даже сложные заявки по минимальным ставкам.</p>
-      </div>
-      <div class="team-card reveal">
-        <div class="team-avatar">СВ</div>
-        <h3>Сергей Власов</h3>
-        <div class="team-role">Юрист, проверка сделок</div>
-        <p class="team-bio">10 лет судебной практики, 7 лет в сделках с недвижимостью. Ловит все юридические подводные камни.</p>
-      </div>
-      <div class="team-card reveal">
-        <div class="team-avatar">ОР</div>
-        <h3>Олег Ростовцев</h3>
-        <div class="team-role">Оценщик недвижимости</div>
-        <p class="team-bio">Сертифицированный оценщик. Определяет реальную рыночную стоимость по актуальным данным и аналогам.</p>
-      </div>
-      <div class="team-card reveal">
-        <div class="team-avatar">НП</div>
-        <h3>Наталья Прокофьева</h3>
-        <div class="team-role">Агент по продажам</div>
-        <p class="team-bio">Топ-продавец агентства. Специализируется на продаже домов и коттеджей. Находит идеальных покупателей.</p>
-      </div>
-      <div class="team-card reveal">
-        <div class="team-avatar">АИ</div>
-        <h3>Антон Иванов</h3>
-        <div class="team-role">Менеджер по аренде</div>
-        <p class="team-bio">5 лет в сегменте аренды. Подбирает арендаторов и объекты для инвесторов за считанные дни.</p>
-      </div>
-      <div class="team-card reveal">
-        <div class="team-avatar">ВФ</div>
-        <h3>Виктория Фёдорова</h3>
-        <div class="team-role">Маркетолог, фотограф</div>
-        <p class="team-bio">Делает фото и видео для объявлений. Каждый снимок привлекает покупателей. Ведёт соцсети агентства.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Blog Section -->
+<!-- Blog -->
 <section class="section bg-alt" id="blog">
   <div class="section-inner">
-    <article class="blog-featured reveal">
-      <div class="bf-visual"><svg viewBox="0 0 500 380" xmlns="http://www.w3.org/2000/svg"><rect width="500" height="380" fill="#14233F"/><rect x="70" y="150" width="130" height="180" fill="#2C3E5A"/><rect x="220" y="90" width="140" height="240" fill="#3A4E6E"/><rect x="380" y="180" width="90" height="150" fill="#2C3E5A"/><rect x="95" y="175" width="35" height="35" fill="#C9A227" opacity="0.6"/><rect x="150" y="175" width="35" height="35" fill="#C9A227" opacity="0.4"/><rect x="245" y="115" width="40" height="40" fill="#C9A227" opacity="0.6"/><rect x="300" y="115" width="40" height="40" fill="#C9A227" opacity="0.45"/><rect x="245" y="185" width="40" height="40" fill="#C9A227" opacity="0.45"/><rect x="300" y="185" width="40" height="40" fill="#C9A227" opacity="0.6"/><circle cx="410" cy="70" r="30" fill="#C9A227" opacity="0.25"/></svg></div>
-      <div class="bf-body">
-        <span class="blog-cat">Гид покупателя</span>
-        <h2>Как выбрать квартиру в 2026 году: чек-лист из 12 пунктов</h2>
-        <p>Рынок изменился: новые ставки, эскроу-счета и цифровые сделки. Мы собрали пошаговый чек-лист, который поможет не упустить важное — от проверки застройщика до оценки инфраструктуры района. Сохраните перед первым просмотром.</p>
-        <div class="blog-meta"><span>📅 10 июля 2026</span><span>⏱ 8 мин чтения</span><span>✍ Мария Дорошенко</span></div>
-      </div>
-    </article>
-
-    <div class="blog-filters reveal">
-      <button class="blog-filter active">Все</button>
-      <button class="blog-filter">Покупка</button>
-      <button class="blog-filter">Продажа</button>
-      <button class="blog-filter">Ипотека</button>
-      <button class="blog-filter">Инвестиции</button>
-      <button class="blog-filter">Право</button>
+    <div class="section-head center">
+      <span class="eyebrow">Полезное</span>
+      <h2>Блог о недвижимости</h2>
+      <p>Экспертные советы, разбор трендов и юридические тонкости — простым языком от команды Golden Key.</p>
     </div>
-
     <div class="blog-grid">
       <div class="blog-card reveal">
-        <div class="bc-visual"><svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="250" fill="#233350"/><rect x="60" y="80" width="280" height="120" fill="#3A4E6E"/><rect x="80" y="100" width="50" height="50" fill="#C9A227" opacity="0.5"/><rect x="170" y="100" width="50" height="50" fill="#C9A227" opacity="0.35"/><rect x="260" y="100" width="50" height="50" fill="#C9A227" opacity="0.5"/></svg></div>
+        <div class="bc-visual"><svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="b1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2a3346"/><stop offset="100%" stop-color="#161d2a"/></linearGradient></defs><rect width="400" height="250" fill="url(#b1)"/><rect x="60" y="80" width="280" height="120" fill="#1e2836"/><rect x="90" y="105" width="50" height="60" fill="#C9A24B" opacity="0.6"/><rect x="175" y="105" width="50" height="60" fill="#C9A24B" opacity="0.4"/><rect x="260" y="105" width="50" height="60" fill="#C9A24B" opacity="0.6"/></svg></div>
         <div class="bc-body">
-          <span class="blog-cat" style="font-size: 0.65rem;">Покупка</span>
-          <h3>Ипотека под 6% — миф или реальность в 2026?</h3>
-          <p>Актуальный обзор ставок, программ банков-партнёров и способов снизить процент за счёт коэффициентов. Узнайте, кто может получить лучшие условия.</p>
-          <a href="#" class="blog-readmore">Читать →</a>
+          <span class="blog-cat">Покупка</span>
+          <h3>Как выбрать виллу в 2026: чек-лист из 12 пунктов</h3>
+          <p>От проверки застройщика до оценки инфраструктуры — пошаговый гид перед первым просмотром.</p>
+          <div class="blog-meta"><span>📅 10 июля 2026</span><span>⏱ 8 мин</span></div>
         </div>
       </div>
-
       <div class="blog-card reveal">
-        <div class="bc-visual"><svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="250" fill="#1F3A2E"/><rect x="50" y="70" width="300" height="140" fill="#F0EDE4"/><path d="M40 70 L200 20 L360 70 Z" fill="#8A6A3A"/><rect x="80" y="100" width="40" height="80" fill="#3A4E6E"/><rect x="280" y="100" width="40" height="80" fill="#3A4E6E"/></svg></div>
+        <div class="bc-visual"><svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="b2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3d5245"/><stop offset="100%" stop-color="#1f2a22"/></linearGradient></defs><rect width="400" height="250" fill="url(#b2)"/><polygon points="50,90 200,30 350,90" fill="#141c14"/><rect x="80" y="90" width="240" height="110" fill="#243328"/><rect x="110" y="120" width="45" height="80" fill="#C9A24B" opacity="0.5"/><rect x="245" y="120" width="45" height="80" fill="#C9A24B" opacity="0.5"/></svg></div>
         <div class="bc-body">
-          <span class="blog-cat" style="font-size: 0.65rem;">Инвестиции</span>
-          <h3>Где искать апартаменты для дохода: топ-районы 2026</h3>
-          <p>Аналитика рынка: какие районы дают выше доход от аренды, где растут цены, какой ROI ожидать. Инвестиционный калькулятор внутри.</p>
-          <a href="#" class="blog-readmore">Читать →</a>
+          <span class="blog-cat">Инвестиции</span>
+          <h3>Топ-районы для доходной недвижимости 2026</h3>
+          <p>Где выше доход от аренды, где растут цены и какой ROI ожидать. С инвестиционным калькулятором.</p>
+          <div class="blog-meta"><span>📅 5 июля 2026</span><span>⏱ 6 мин</span></div>
         </div>
       </div>
-
       <div class="blog-card reveal">
-        <div class="bc-visual"><svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="250" fill="#3A2E44"/><rect x="80" y="60" width="240" height="160" fill="#4A3E58"/><rect x="100" y="80" width="50" height="50" fill="#C9A227" opacity="0.5"/><rect x="175" y="80" width="50" height="50" fill="#C9A227" opacity="0.4"/><rect x="250" y="80" width="50" height="50" fill="#C9A227" opacity="0.5"/></svg></div>
+        <div class="bc-visual"><svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="b3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3a2e44"/><stop offset="100%" stop-color="#1f1826"/></linearGradient></defs><rect width="400" height="250" fill="url(#b3)"/><rect x="80" y="60" width="240" height="150" fill="#251d30"/><rect x="105" y="85" width="55" height="55" fill="#C9A24B" opacity="0.5"/><rect x="175" y="85" width="55" height="55" fill="#C9A24B" opacity="0.4"/><rect x="245" y="85" width="55" height="55" fill="#C9A24B" opacity="0.55"/></svg></div>
         <div class="bc-body">
-          <span class="blog-cat" style="font-size: 0.65rem;">Право</span>
+          <span class="blog-cat">Право</span>
           <h3>Эскроу-счёт: как работает и на что смотреть</h3>
-          <p>Обязательный инструмент в 2026: как защищаются деньги покупателя, какие банки выбрать, куда обращаться при конфликте.</p>
-          <a href="#" class="blog-readmore">Читать →</a>
-        </div>
-      </div>
-
-      <div class="blog-card reveal">
-        <div class="bc-visual"><svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="250" fill="#2C3E5A"/><rect x="60" y="80" width="280" height="120" fill="#3A4E6E"/><rect x="100" y="110" width="40" height="40" fill="#C9A227" opacity="0.5"/><rect x="180" y="110" width="40" height="40" fill="#C9A227" opacity="0.35"/><rect x="260" y="110" width="40" height="40" fill="#C9A227" opacity="0.5"/></svg></div>
-        <div class="bc-body">
-          <span class="blog-cat" style="font-size: 0.65rem;">Продажа</span>
-          <h3>Как быстро продать квартиру: 5 ошибок владельцев</h3>
-          <p>Почему одни квартиры продаются за неделю, а другие годами? Разбираемся в цене, фото, времени показов и работе с покупателями.</p>
-          <a href="#" class="blog-readmore">Читать →</a>
-        </div>
-      </div>
-
-      <div class="blog-card reveal">
-        <div class="bc-visual"><svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="250" fill="#233350"/><rect x="70" y="70" width="260" height="150" fill="#2C3E5A"/><circle cx="70" cy="80" r="8" fill="#C9A227" opacity="0.6"/><circle cx="130" cy="80" r="8" fill="#C9A227" opacity="0.4"/><circle cx="190" cy="80" r="8" fill="#C9A227" opacity="0.6"/><circle cx="250" cy="80" r="8" fill="#C9A227" opacity="0.5"/><circle cx="310" cy="80" r="8" fill="#C9A227" opacity="0.6"/></svg></div>
-        <div class="bc-body">
-          <span class="blog-cat" style="font-size: 0.65rem;">Ипотека</span>
-          <h3>Налоговый вычет на ипотеку: как вернуть 260 тыс</h3>
-          <p>Пошаговая инструкция: кто имеет право, какие документы собрать, куда подавать, как не потерять деньги по старым договорам.</p>
-          <a href="#" class="blog-readmore">Читать →</a>
-        </div>
-      </div>
-
-      <div class="blog-card reveal">
-        <div class="bc-visual"><svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="250" fill="#3A3524"/><rect x="50" y="80" width="300" height="120" fill="#4A4530"/><rect x="70" y="100" width="35" height="35" fill="#C9A227" opacity="0.5"/><rect x="125" y="100" width="35" height="35" fill="#C9A227" opacity="0.4"/><rect x="180" y="100" width="35" height="35" fill="#C9A227" opacity="0.5"/><rect x="235" y="100" width="35" height="35" fill="#C9A227" opacity="0.4"/><rect x="290" y="100" width="35" height="35" fill="#C9A227" opacity="0.5"/></svg></div>
-        <div class="bc-body">
-          <span class="blog-cat" style="font-size: 0.65rem;">Инвестиции</span>
-          <h3>Риски при покупке коммерческой недвижимости</h3>
-          <p>Что скрывается в договорах аренды, как проверить историю объекта, на какие сроки соглашаться, как не потерять доход.</p>
-          <a href="#" class="blog-readmore">Читать →</a>
+          <p>Как защищаются деньги покупателя, какие банки выбрать и куда обращаться при конфликте.</p>
+          <div class="blog-meta"><span>📅 1 июля 2026</span><span>⏱ 5 мин</span></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Contacts Section -->
+<!-- CTA + Contacts -->
 <section class="section" id="contacts">
   <div class="section-inner">
+    <div class="section-head center">
+      <span class="eyebrow">Контакты</span>
+      <h2>Свяжитесь с нами</h2>
+      <p>Оставьте заявку или позвоните — персональный эксперт ответит в течение 15 минут.</p>
+    </div>
     <div class="contact-layout">
-      <!-- Contact info -->
       <div class="reveal">
         <div class="contact-info-card">
           <div class="ci-icon">📞</div>
@@ -825,52 +532,20 @@
           <div class="ci-icon">💬</div>
           <div><h4>Мессенджеры</h4><p><a href="#">Telegram</a> · <a href="#">WhatsApp</a></p><p>Быстрый ответ в рабочее время</p></div>
         </div>
-
         <div class="map-placeholder">
-          <svg viewBox="0 0 600 280" style="width:100%;display:block" xmlns="http://www.w3.org/2000/svg">
-            <rect width="600" height="280" fill="#1B2A3E"/>
-            <path d="M0 90 H600 M0 180 H600 M150 0 V280 M330 0 V280 M470 0 V280" stroke="#2C3E5A" stroke-width="6"/>
-            <path d="M0 140 H600" stroke="#C9A227" stroke-width="4" opacity="0.5"/>
-            <rect x="60" y="40" width="70" height="40" fill="#2C3E5A"/><rect x="360" y="200" width="90" height="55" fill="#2C3E5A"/><rect x="490" y="30" width="80" height="45" fill="#2C3E5A"/>
-            <circle cx="330" cy="140" r="14" fill="#C9A227"/><circle cx="330" cy="140" r="26" fill="none" stroke="#C9A227" stroke-width="2" opacity="0.5"/>
-            <path d="M330 128 a10 10 0 0 1 10 10 c0 8 -10 18 -10 18 s-10 -10 -10 -18 a10 10 0 0 1 10 -10z" fill="#14233F"/>
-          </svg>
+          <svg viewBox="0 0 600 240" style="width:100%;display:block" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="240" fill="#141c28"/><path d="M0 80 H600 M0 160 H600 M150 0 V240 M330 0 V240 M470 0 V240" stroke="#232a35" stroke-width="6"/><path d="M0 120 H600" stroke="#C9A24B" stroke-width="3" opacity="0.4"/><rect x="60" y="40" width="70" height="35" fill="#1e2836"/><rect x="360" y="175" width="90" height="45" fill="#1e2836"/><rect x="490" y="30" width="80" height="40" fill="#1e2836"/><circle cx="330" cy="120" r="12" fill="#C9A24B"/><circle cx="330" cy="120" r="24" fill="none" stroke="#C9A24B" stroke-width="2" opacity="0.5"/></svg>
         </div>
       </div>
-
-      <!-- Form -->
       <div class="contact-form reveal">
         <h3>Оставить заявку</h3>
         <form data-demo-form>
-          <div class="form-field">
-            <label for="name">Ваше имя</label>
-            <input id="name" type="text" placeholder="Иван Иванов" required>
-          </div>
-          <div class="form-field">
-            <label for="phone">Телефон</label>
-            <input id="phone" type="tel" placeholder="+7 (___) ___-__-__" required>
-          </div>
-          <div class="form-field">
-            <label for="email">Email</label>
-            <input id="email" type="email" placeholder="you@example.com">
-          </div>
-          <div class="form-field">
-            <label for="topic">Тип запроса</label>
-            <select id="topic">
-              <option>Покупка недвижимости</option>
-              <option>Продажа недвижимости</option>
-              <option>Аренда</option>
-              <option>Оценка недвижимости</option>
-              <option>Ипотека</option>
-              <option>Другое</option>
-            </select>
-          </div>
-          <div class="form-field">
-            <label for="message">Сообщение</label>
-            <textarea id="message" placeholder="Опишите вашу задачу..."></textarea>
-          </div>
+          <div class="form-field"><label for="name">Ваше имя</label><input id="name" type="text" placeholder="Иван Иванов" required></div>
+          <div class="form-field"><label for="phone">Телефон</label><input id="phone" type="tel" placeholder="+7 (___) ___-__-__" required></div>
+          <div class="form-field"><label for="email">Email</label><input id="email" type="email" placeholder="you@example.com"></div>
+          <div class="form-field"><label for="topic">Тип запроса</label><select id="topic"><option>Покупка недвижимости</option><option>Продажа недвижимости</option><option>Аренда</option><option>Инвестиции</option><option>Оценка</option><option>Другое</option></select></div>
+          <div class="form-field"><label for="message">Сообщение</label><textarea id="message" placeholder="Опишите вашу задачу..."></textarea></div>
           <button type="submit" class="btn btn-primary" style="width:100%;">Отправить заявку</button>
-          <p style="font-size:0.78rem;color:var(--text-light);margin-top:1rem;text-align:center;">Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных.</p>
+          <p style="font-size:0.76rem;color:var(--text-3);margin-top:1rem;text-align:center;">Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных.</p>
         </form>
       </div>
     </div>
@@ -882,17 +557,25 @@
   <div class="footer-inner">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="#hero" class="logo">GOLDEN<span>KEY</span></a>
-        <p>Надёжное агентство недвижимости с опытом более 10 лет. Помогаем покупать, продавать и арендовать недвижимость безопасно и выгодно.</p>
+        <a href="#hero" class="logo">
+          <svg class="logo-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="4" width="28" height="32" rx="2" stroke="#C9A24B" stroke-width="1.5"/><path d="M13 36 V16 L20 11 L27 16 V36" stroke="#C9A24B" stroke-width="1.5"/><line x1="20" y1="11" x2="20" y2="36" stroke="#C9A24B" stroke-width="1.5"/></svg>
+          <span class="logo-text"><span class="lt-name">GOLDEN KEY</span><span class="lt-sub">Luxury Estate Group</span></span>
+        </a>
+        <p>Премиальное агентство недвижимости с опытом более 10 лет. Открываем двери в мир роскошной жизни.</p>
         <ul class="footer-contacts">
           <li>📞 <a href="tel:+78001234567">8 (800) 123-45-67</a></li>
           <li>✉ <a href="mailto:info@goldenkey.ru">info@goldenkey.ru</a></li>
           <li>📍 г. Москва, ул. Тверская, 18, офис 401</li>
         </ul>
+        <div class="footer-social">
+          <a href="#" aria-label="Telegram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27z"/></svg></a>
+          <a href="#" aria-label="WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.8.9.9-2.8-.2-.3A8 8 0 1 1 12 20zm4.5-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.1-.2 0-.4.1-.5l.4-.5c.1-.2.1-.3 0-.5l-.7-1.7c-.2-.4-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3a2.8 2.8 0 0 0-.9 2.1c0 1.2.9 2.4 1 2.6.1.2 1.7 2.7 4.2 3.7 1.5.6 2.1.7 2.8.6.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.1-.2-.2-.4-.3z"/></svg></a>
+          <a href="#" aria-label="VK"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13.2 18.9c.5 0 .5 0 .5 0 4.5 0 7.1-3.1 7.2-8.3 0-.4-.3-.6-.7-.6h-1.9c-.4 0-.6.2-.7.5-.4 1.4-1.2 2.8-1.6 2.8-.3 0-.4-.3-.4-1V10c0-.6-.2-.9-.7-.9h-3c-.4 0-.6.3-.6.5 0 .5.8.6.8 2v1.4c0 .7-.1.8-.4.8-.7 0-2-1.5-2.7-3.2-.2-.4-.3-.6-.8-.6H4.5c-.4 0-.6.2-.6.5 0 .5.7 2.3 2.6 4.7 1.9 2.4 4.3 3.7 6.7 3.7z"/></svg></a>
+        </div>
       </div>
-      <div class="footer-col"><h4>Компания</h4><ul><li><a href="#about">О компании</a></li><li><a href="#team">Наша команда</a></li><li><a href="#cases">Кейсы</a></li><li><a href="#blog">Блог</a></li><li><a href="#reviews">Отзывы</a></li></ul></div>
-      <div class="footer-col"><h4>Услуги</h4><ul><li><a href="#services">Покупка</a></li><li><a href="#services">Продажа</a></li><li><a href="#services">Аренда</a></li><li><a href="#services">Ипотека</a></li></ul></div>
-      <div class="footer-col"><h4>Контакты</h4><ul><li><a href="tel:+78001234567">8 (800) 123-45-67</a></li><li><a href="mailto:info@goldenkey.ru">info@goldenkey.ru</a></li><li><a href="#contacts">Написать нам</a></li></ul></div>
+      <div class="footer-col"><h4>Компания</h4><ul><li><a href="#about">О нас</a></li><li><a href="#team">Команда</a></li><li><a href="#cases">Кейсы</a></li><li><a href="#reviews">Отзывы</a></li></ul></div>
+      <div class="footer-col"><h4>Услуги</h4><ul><li><a href="#services">Покупка</a></li><li><a href="#services">Продажа</a></li><li><a href="#services">Аренда</a></li><li><a href="#services">Инвестиции</a></li></ul></div>
+      <div class="footer-col"><h4>Ресурсы</h4><ul><li><a href="#catalog">Объекты</a></li><li><a href="#blog">Блог</a></li><li><a href="#contacts">Контакты</a></li></ul></div>
     </div>
     <div class="footer-bottom">
       <span>© 2026 Golden Key. Все права защищены.</span>

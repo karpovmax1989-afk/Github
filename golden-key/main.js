@@ -27,6 +27,34 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('[data-theme-toggle]').forEach(b => b.addEventListener('click', toggleTheme));
   document.querySelectorAll('[data-nav-toggle]').forEach(b => b.addEventListener('click', toggleNav));
 
+  // Закрытие мобильного меню при клике на ссылку
+  document.querySelectorAll('.main-nav a').forEach(a =>
+    a.addEventListener('click', () => document.querySelector('.main-nav')?.classList.remove('open'))
+  );
+
+  // Прилипающая шапка при скролле
+  const header = document.getElementById('siteHeader');
+  if (header) {
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 40);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  // Подсветка активного пункта навигации при скролле
+  const navLinks = [...document.querySelectorAll('.main-nav a')];
+  const sections = navLinks
+    .map(a => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
+  if (sections.length) {
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    sections.forEach(s => spy.observe(s));
+  }
+
   // Ступенчатое появление карточек в сетках (stagger)
   document.querySelectorAll('.feature-grid, .property-grid, .testimonial-grid, .team-grid').forEach(grid => {
     [...grid.children].forEach((child, i) => {
@@ -73,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
       countIO.unobserve(e.target);
     });
   }, { threshold: 0.4 });
-  document.querySelectorAll('.stats-strip, .rating-big, .case-metrics').forEach(el => countIO.observe(el));
+  document.querySelectorAll('.stats-inner, .stats-strip, .rating-big, .case-metrics').forEach(el => countIO.observe(el));
 
   // Форма обратной связи (демо)
   document.querySelectorAll('form[data-demo-form]').forEach(form => {
