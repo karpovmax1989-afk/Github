@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Услуги — Golden Key | Покупка, продажа, аренда, ипотека</title>
+<meta name="description" content="Полный спектр услуг Golden Key: покупка и продажа недвижимости, аренда, оценка, ипотечное и юридическое сопровождение, инвестиционные консультации.">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .service-row { display:grid; grid-template-columns: 1fr 1fr; gap:3rem; align-items:center; margin-bottom:4rem; }
+  .service-row:nth-child(even) .service-visual { order: -1; }
+  .service-visual { aspect-ratio:4/3; border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-md); }
+  .service-steps { list-style:none; margin-top:1.25rem; }
+  .service-steps li { display:flex; gap:0.75rem; margin-bottom:0.7rem; color:var(--text-secondary); font-size:0.95rem; }
+  .service-steps li::before { content:'✓'; color:var(--gold); font-weight:700; flex-shrink:0; }
+  .price-note { margin-top:1.25rem; font-size:0.9rem; color:var(--text-light); }
+  @media (max-width:820px){ .service-row{ grid-template-columns:1fr; gap:1.75rem; margin-bottom:3rem; } .service-row:nth-child(even) .service-visual{ order:0; } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo" aria-label="Golden Key — на главную">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="11" cy="11" r="7" stroke="#C9A227" stroke-width="2.4"/><circle cx="11" cy="11" r="2.4" fill="#C9A227"/><path d="M16 16 L27 27 M23 23 L26 20 M20 20 L23 17" stroke="#C9A227" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      GOLDEN<span>KEY</span>
+    </a>
+    <button class="nav-toggle" data-nav-toggle aria-label="Открыть меню">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <nav class="main-nav">
+      <a href="index.html">Главная</a>
+      <a href="about.html">О компании</a>
+      <a href="catalog.html">Каталог</a>
+      <a href="services.html" class="active">Услуги</a>
+      <a href="cases.html">Кейсы</a>
+      <a href="reviews.html">Отзывы</a>
+      <a href="team.html">Команда</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+    <div class="header-cta">
+      <button class="theme-toggle" data-theme-toggle aria-label="Сменить тему">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"/><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"/><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"/></svg>
+      </button>
+      <a href="contacts.html" class="btn btn-primary">Консультация</a>
+    </div>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <span class="eyebrow">Услуги</span>
+    <h1>Полный спектр услуг с недвижимостью</h1>
+    <p>От первой консультации до получения ключей — Golden Key берёт на себя все этапы.</p>
+    <div class="breadcrumb"><a href="index.html">Главная</a> / <span>Услуги</span></div>
+  </div>
+</section>
+
+<!-- Services overview cards -->
+<section class="section">
+  <div class="section-inner">
+    <div class="feature-grid">
+      <div class="feature-card reveal"><div class="feature-icon">🔑</div><h3>Покупка</h3><p>Подбор объекта, проверка, переговоры и сопровождение сделки до регистрации права.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">🏷</div><h3>Продажа</h3><p>Оценка по рынку, профессиональные фото, реклама и поиск покупателя в кратчайшие сроки.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">📋</div><h3>Аренда</h3><p>Подбор арендатора или объекта, проверка, составление договора и приёмка.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">📊</div><h3>Оценка недвижимости</h3><p>Точная рыночная оценка на основе актуальных данных и реальных сделок.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">🏦</div><h3>Ипотека</h3><p>Подбор программы, сбор документов и одобрение заявки в банках-партнёрах.</p></div>
+      <div class="feature-card reveal"><div class="feature-icon">⚖️</div><h3>Юридическое сопровождение</h3><p>Полная юридическая проверка объекта и безопасное оформление сделки.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Detailed services -->
+<section class="section bg-alt">
+  <div class="section-inner">
+
+    <div class="service-row reveal">
+      <div>
+        <span class="eyebrow">Покупка недвижимости</span>
+        <h2 style="font-size:clamp(1.5rem,3vw,2.1rem);margin:0.6rem 0 0.8rem;">Купите уверенно и без переплат</h2>
+        <p style="color:var(--text-secondary);">Мы подбираем объекты под ваш бюджет, проверяем юридическую чистоту и ведём переговоры, чтобы вы получили лучшую цену.</p>
+        <ul class="service-steps">
+          <li>Бесплатная консультация и подбор объектов</li>
+          <li>Организация просмотров в удобное время</li>
+          <li>Юридическая проверка и оценка рисков</li>
+          <li>Переговоры о цене в ваших интересах</li>
+          <li>Оформление сделки и регистрация права</li>
+        </ul>
+        <p class="price-note">Стоимость услуги обсуждается индивидуально. Первая консультация — бесплатно.</p>
+      </div>
+      <div class="service-visual"><svg viewBox="0 0 400 300" style="width:100%;height:100%" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#14233F"/><rect x="70" y="120" width="260" height="140" fill="#2C3E5A"/><path d="M60 120 L200 50 L340 120 Z" fill="#233350"/><rect x="180" y="190" width="45" height="70" fill="#C9A227" opacity="0.7"/><rect x="100" y="150" width="45" height="45" fill="#C9A227" opacity="0.45"/><rect x="255" y="150" width="45" height="45" fill="#C9A227" opacity="0.45"/></svg></div>
+    </div>
+
+    <div class="service-row reveal">
+      <div>
+        <span class="eyebrow">Продажа недвижимости</span>
+        <h2 style="font-size:clamp(1.5rem,3vw,2.1rem);margin:0.6rem 0 0.8rem;">Продайте быстро и по максимальной цене</h2>
+        <p style="color:var(--text-secondary);">Правильная оценка, качественная реклама и наша база покупателей позволяют продавать объекты в среднем за 3–4 недели.</p>
+        <ul class="service-steps">
+          <li>Рыночная оценка и стратегия продажи</li>
+          <li>Профессиональная фото- и видеосъёмка</li>
+          <li>Размещение на всех площадках и в нашей базе</li>
+          <li>Организация показов и работа с покупателями</li>
+          <li>Сопровождение сделки до получения денег</li>
+        </ul>
+        <p class="price-note">Комиссия только по факту успешной сделки.</p>
+      </div>
+      <div class="service-visual"><svg viewBox="0 0 400 300" style="width:100%;height:100%" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#1F3A2E"/><rect x="80" y="130" width="240" height="130" fill="#F0EDE4"/><path d="M70 130 L200 60 L330 130 Z" fill="#8A6A3A"/><rect x="120" y="160" width="50" height="90" fill="#3A4E6E"/><rect x="230" y="160" width="50" height="90" fill="#3A4E6E"/><rect x="180" y="170" width="40" height="90" fill="#C9A227" opacity="0.7"/></svg></div>
+    </div>
+
+    <div class="service-row reveal">
+      <div>
+        <span class="eyebrow">Ипотека под ключ</span>
+        <h2 style="font-size:clamp(1.5rem,3vw,2.1rem);margin:0.6rem 0 0.8rem;">Одобрим ипотеку на выгодных условиях</h2>
+        <p style="color:var(--text-secondary);">Мы аккредитованы в 50+ банках и подберём программу с минимальной ставкой. Возьмём на себя всю бумажную работу.</p>
+        <ul class="service-steps">
+          <li>Анализ вашей ситуации и подбор банка</li>
+          <li>Помощь со сбором и подготовкой документов</li>
+          <li>Подача заявок в несколько банков одновременно</li>
+          <li>Сопровождение до подписания кредитного договора</li>
+          <li>Помощь с получением налогового вычета</li>
+        </ul>
+        <p class="price-note">Одобряем даже сложные заявки. Ставки от партнёров ниже рыночных.</p>
+      </div>
+      <div class="service-visual"><svg viewBox="0 0 400 300" style="width:100%;height:100%" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#233350"/><rect x="90" y="110" width="220" height="150" fill="#2C3E5A"/><path d="M80 110 L200 70 L320 110 Z" fill="#C9A227" opacity="0.5"/><rect x="120" y="140" width="30" height="120" fill="#3A4E6E"/><rect x="185" y="140" width="30" height="120" fill="#3A4E6E"/><rect x="250" y="140" width="30" height="120" fill="#3A4E6E"/><text x="200" y="205" text-anchor="middle" font-family="Georgia,serif" font-size="40" fill="#C9A227" opacity="0.8">%</text></svg></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+  <div class="section-inner">
+    <div class="cta-band reveal">
+      <h2>Не знаете, с чего начать?</h2>
+      <p>Оставьте заявку — эксперт подскажет, какая услуга подходит именно вам, и составит план действий.</p>
+      <div class="hero-actions">
+        <a href="contacts.html" class="btn btn-primary">Получить консультацию</a>
+        <a href="catalog.html" class="btn btn-outline">Смотреть объекты</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">GOLDEN<span>KEY</span></a>
+        <p>Надёжное агентство недвижимости с опытом более 10 лет. Помогаем покупать, продавать и арендовать недвижимость безопасно и выгодно.</p>
+        <ul class="footer-contacts">
+          <li>📞 <a href="tel:+78001234567">8 (800) 123-45-67</a></li>
+          <li>✉ <a href="mailto:info@goldenkey.ru">info@goldenkey.ru</a></li>
+          <li>📍 г. Москва, ул. Тверская, 18, офис 401</li>
+        </ul>
+      </div>
+      <div class="footer-col"><h4>Компания</h4><ul><li><a href="about.html">О компании</a></li><li><a href="team.html">Наша команда</a></li><li><a href="cases.html">Кейсы</a></li><li><a href="reviews.html">Отзывы</a></li></ul></div>
+      <div class="footer-col"><h4>Услуги</h4><ul><li><a href="services.html">Покупка</a></li><li><a href="services.html">Продажа</a></li><li><a href="services.html">Аренда</a></li><li><a href="services.html">Ипотека</a></li></ul></div>
+      <div class="footer-col"><h4>Контакты</h4><ul><li><a href="tel:+78001234567">8 (800) 123-45-67</a></li><li><a href="mailto:info@goldenkey.ru">info@goldenkey.ru</a></li><li><a href="contacts.html">Написать нам</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Golden Key. Все права защищены.</span>
+      <span>Информация на сайте не является публичной офертой.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

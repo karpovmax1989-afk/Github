@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Каталог недвижимости — Golden Key | Квартиры, дома, коммерция</title>
+<meta name="description" content="Актуальный каталог недвижимости Golden Key: квартиры, дома, коммерческая недвижимость и участки. Удобные фильтры по цене, типу и району.">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .catalog-layout { display: grid; grid-template-columns: 280px 1fr; gap: 2.5rem; align-items: start; }
+  .filters {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg); padding: 1.75rem; position: sticky; top: 92px;
+  }
+  .filters h3 { font-size: 1.1rem; margin-bottom: 1.25rem; }
+  .filter-group { margin-bottom: 1.25rem; }
+  .filter-group label { display:block; font-size:0.72rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-light); margin-bottom:0.4rem; }
+  .filter-group select, .filter-group input {
+    width:100%; padding:0.7rem 0.9rem; border:1.5px solid var(--input-border);
+    border-radius:var(--radius); background:var(--input-bg); color:var(--text); font-size:0.9rem; font-family:inherit; outline:none;
+  }
+  .filter-group select:focus, .filter-group input:focus { border-color: var(--gold); }
+  .catalog-toolbar { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem; }
+  .catalog-count { color: var(--text-secondary); font-size:0.92rem; }
+  @media (max-width: 860px) { .catalog-layout { grid-template-columns: 1fr; } .filters { position: static; } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo" aria-label="Golden Key — на главную">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="11" cy="11" r="7" stroke="#C9A227" stroke-width="2.4"/><circle cx="11" cy="11" r="2.4" fill="#C9A227"/><path d="M16 16 L27 27 M23 23 L26 20 M20 20 L23 17" stroke="#C9A227" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      GOLDEN<span>KEY</span>
+    </a>
+    <button class="nav-toggle" data-nav-toggle aria-label="Открыть меню">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <nav class="main-nav">
+      <a href="index.html">Главная</a>
+      <a href="about.html">О компании</a>
+      <a href="catalog.html" class="active">Каталог</a>
+      <a href="services.html">Услуги</a>
+      <a href="cases.html">Кейсы</a>
+      <a href="reviews.html">Отзывы</a>
+      <a href="team.html">Команда</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+    <div class="header-cta">
+      <button class="theme-toggle" data-theme-toggle aria-label="Сменить тему">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"/><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"/><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"/></svg>
+      </button>
+      <a href="contacts.html" class="btn btn-primary">Консультация</a>
+    </div>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <span class="eyebrow">Каталог</span>
+    <h1>Недвижимость Golden Key</h1>
+    <p>Более 5000 проверенных объектов. Выберите то, что подходит именно вам.</p>
+    <div class="breadcrumb"><a href="index.html">Главная</a> / <span>Каталог</span></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="catalog-layout">
+
+      <!-- Filters -->
+      <aside class="filters">
+        <h3>Фильтры</h3>
+        <form>
+          <div class="filter-group">
+            <label for="f-deal">Тип сделки</label>
+            <select id="f-deal"><option>Все</option><option>Покупка</option><option>Аренда</option></select>
+          </div>
+          <div class="filter-group">
+            <label for="f-type">Тип недвижимости</label>
+            <select id="f-type"><option>Все</option><option>Квартира</option><option>Дом / коттедж</option><option>Коммерческая</option><option>Участок</option></select>
+          </div>
+          <div class="filter-group">
+            <label for="f-area">Район</label>
+            <select id="f-area"><option>Все районы</option><option>Центральный</option><option>Северный</option><option>Западный</option><option>Приморский</option></select>
+          </div>
+          <div class="filter-group">
+            <label for="f-rooms">Комнат</label>
+            <select id="f-rooms"><option>Не важно</option><option>1</option><option>2</option><option>3</option><option>4+</option></select>
+          </div>
+          <div class="filter-group">
+            <label for="f-pmin">Цена от, ₽</label>
+            <input id="f-pmin" type="text" placeholder="0" inputmode="numeric">
+          </div>
+          <div class="filter-group">
+            <label for="f-pmax">Цена до, ₽</label>
+            <input id="f-pmax" type="text" placeholder="100 000 000" inputmode="numeric">
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;">Применить</button>
+        </form>
+      </aside>
+
+      <!-- Listings -->
+      <div>
+        <div class="catalog-toolbar">
+          <span class="catalog-count">Найдено <strong>6</strong> объектов</span>
+          <select style="padding:0.6rem 0.9rem;border:1.5px solid var(--input-border);border-radius:var(--radius);background:var(--input-bg);color:var(--text);font-family:inherit;">
+            <option>Сначала популярные</option><option>Сначала дешёвые</option><option>Сначала дорогие</option><option>Сначала новые</option>
+          </select>
+        </div>
+
+        <div class="property-grid">
+
+          <article class="property-card reveal">
+            <div class="property-image"><span class="property-badge">Продажа</span><button class="property-fav" aria-label="В избранное"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+              <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#2C3E5A"/><rect x="60" y="90" width="280" height="150" fill="#3A4E6E"/><rect x="80" y="120" width="50" height="50" fill="#C9A227" opacity="0.5"/><rect x="150" y="120" width="50" height="50" fill="#C9A227" opacity="0.35"/><rect x="220" y="120" width="50" height="50" fill="#C9A227" opacity="0.5"/><path d="M60 90 L200 30 L340 90 Z" fill="#233350"/></svg>
+            </div>
+            <div class="property-body"><div class="property-price">12 500 000 ₽</div><h3 class="property-title">3-комн. квартира, 92 м²</h3><p class="property-address">📍 ул. Пушкина, 12, Центральный</p><div class="property-features"><span>🛏 3</span><span>📐 92 м²</span><span>🏢 7/16</span></div></div>
+          </article>
+
+          <article class="property-card reveal">
+            <div class="property-image"><span class="property-badge">Продажа</span><button class="property-fav" aria-label="В избранное"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+              <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#1F3A2E"/><rect x="70" y="140" width="260" height="110" fill="#F0EDE4"/><path d="M60 140 L200 60 L340 140 Z" fill="#8A6A3A"/><rect x="110" y="170" width="45" height="80" fill="#3A4E6E"/><rect x="245" y="170" width="45" height="80" fill="#3A4E6E"/><rect x="175" y="180" width="50" height="70" fill="#C9A227" opacity="0.6"/></svg>
+            </div>
+            <div class="property-body"><div class="property-price">28 900 000 ₽</div><h3 class="property-title">Дом с участком, 210 м²</h3><p class="property-address">📍 КП «Приморский»</p><div class="property-features"><span>🛏 5</span><span>📐 210 м²</span><span>🌳 12 сот</span></div></div>
+          </article>
+
+          <article class="property-card reveal">
+            <div class="property-image"><span class="property-badge rent">Аренда</span><button class="property-fav" aria-label="В избранное"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+              <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#3A2E44"/><rect x="90" y="70" width="220" height="180" fill="#4A3E58"/><rect x="115" y="100" width="60" height="60" fill="#C9A227" opacity="0.45"/><rect x="225" y="100" width="60" height="60" fill="#C9A227" opacity="0.6"/><rect x="115" y="180" width="60" height="60" fill="#C9A227" opacity="0.6"/><rect x="225" y="180" width="60" height="60" fill="#C9A227" opacity="0.45"/></svg>
+            </div>
+            <div class="property-body"><div class="property-price">85 000 ₽<span style="font-size:0.9rem;color:var(--text-light);font-weight:400;"> /мес</span></div><h3 class="property-title">2-комн. квартира, 64 м²</h3><p class="property-address">📍 пр. Мира, 45, Западный</p><div class="property-features"><span>🛏 2</span><span>📐 64 м²</span><span>🏢 4/9</span></div></div>
+          </article>
+
+          <article class="property-card reveal">
+            <div class="property-image"><span class="property-badge">Продажа</span><button class="property-fav" aria-label="В избранное"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+              <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#233350"/><rect x="100" y="60" width="200" height="200" fill="#2C3E5A"/><rect x="120" y="80" width="70" height="70" fill="#C9A227" opacity="0.5"/><rect x="210" y="80" width="70" height="70" fill="#C9A227" opacity="0.4"/><rect x="120" y="170" width="70" height="70" fill="#C9A227" opacity="0.4"/><rect x="210" y="170" width="70" height="70" fill="#C9A227" opacity="0.55"/></svg>
+            </div>
+            <div class="property-body"><div class="property-price">7 200 000 ₽</div><h3 class="property-title">1-комн. квартира, 42 м²</h3><p class="property-address">📍 ул. Садовая, 8, Северный</p><div class="property-features"><span>🛏 1</span><span>📐 42 м²</span><span>🏢 12/22</span></div></div>
+          </article>
+
+          <article class="property-card reveal">
+            <div class="property-image"><span class="property-badge">Продажа</span><button class="property-fav" aria-label="В избранное"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+              <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#3A3524"/><rect x="50" y="110" width="300" height="140" fill="#4A4530"/><rect x="70" y="130" width="40" height="40" fill="#C9A227" opacity="0.5"/><rect x="130" y="130" width="40" height="40" fill="#C9A227" opacity="0.4"/><rect x="190" y="130" width="40" height="40" fill="#C9A227" opacity="0.5"/><rect x="250" y="130" width="40" height="40" fill="#C9A227" opacity="0.4"/><rect x="180" y="190" width="50" height="60" fill="#233350"/></svg>
+            </div>
+            <div class="property-body"><div class="property-price">18 000 000 ₽</div><h3 class="property-title">Коммерческое помещение, 120 м²</h3><p class="property-address">📍 ул. Ленина, 30, Центральный</p><div class="property-features"><span>🏬 Street-retail</span><span>📐 120 м²</span><span>🚪 2 входа</span></div></div>
+          </article>
+
+          <article class="property-card reveal">
+            <div class="property-image"><span class="property-badge rent">Аренда</span><button class="property-fav" aria-label="В избранное"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
+              <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="300" fill="#2E3A44"/><rect x="80" y="80" width="240" height="170" fill="#3E4E5A"/><rect x="105" y="105" width="80" height="55" fill="#C9A227" opacity="0.5"/><rect x="215" y="105" width="80" height="55" fill="#C9A227" opacity="0.4"/><rect x="160" y="185" width="80" height="65" fill="#233350"/></svg>
+            </div>
+            <div class="property-body"><div class="property-price">150 000 ₽<span style="font-size:0.9rem;color:var(--text-light);font-weight:400;"> /мес</span></div><h3 class="property-title">Офис в бизнес-центре, 95 м²</h3><p class="property-address">📍 БЦ «Гранд», Западный</p><div class="property-features"><span>🏢 Класс A</span><span>📐 95 м²</span><span>🅿 Паркинг</span></div></div>
+          </article>
+
+        </div>
+
+        <div style="text-align:center;margin-top:3rem;">
+          <a href="contacts.html" class="btn btn-ghost">Не нашли подходящее? Оставьте заявку →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">GOLDEN<span>KEY</span></a>
+        <p>Надёжное агентство недвижимости с опытом более 10 лет. Помогаем покупать, продавать и арендовать недвижимость безопасно и выгодно.</p>
+        <ul class="footer-contacts">
+          <li>📞 <a href="tel:+78001234567">8 (800) 123-45-67</a></li>
+          <li>✉ <a href="mailto:info@goldenkey.ru">info@goldenkey.ru</a></li>
+          <li>📍 г. Москва, ул. Тверская, 18, офис 401</li>
+        </ul>
+      </div>
+      <div class="footer-col"><h4>Компания</h4><ul><li><a href="about.html">О компании</a></li><li><a href="team.html">Наша команда</a></li><li><a href="cases.html">Кейсы</a></li><li><a href="reviews.html">Отзывы</a></li></ul></div>
+      <div class="footer-col"><h4>Услуги</h4><ul><li><a href="services.html">Покупка</a></li><li><a href="services.html">Продажа</a></li><li><a href="services.html">Аренда</a></li><li><a href="services.html">Ипотека</a></li></ul></div>
+      <div class="footer-col"><h4>Контакты</h4><ul><li><a href="tel:+78001234567">8 (800) 123-45-67</a></li><li><a href="mailto:info@goldenkey.ru">info@goldenkey.ru</a></li><li><a href="contacts.html">Написать нам</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Golden Key. Все права защищены.</span>
+      <span>Информация на сайте не является публичной офертой.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
