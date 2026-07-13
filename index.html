@@ -1830,6 +1830,21 @@
   </div>
 </section>
 
+<!-- Save Files Section -->
+<section class="section bg-alt" id="save-files" style="text-align: center; padding: 4rem 2rem;">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="eyebrow">Сохранение</p>
+      <h2>Загрузите файлы на рабочий стол</h2>
+      <p>Сохраните все фотографии и файлы галереи в папку "Claude Code" на вашем компьютере.</p>
+    </div>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <button id="downloadAllBtn" class="hero-cta" style="display: inline-block; cursor: pointer;">Скачать все фото</button>
+      <button id="downloadGalleryBtn" class="hero-cta" style="display: inline-block; cursor: pointer;">Скачать галерею</button>
+    </div>
+  </div>
+</section>
+
 <!-- Newsletter -->
 <section class="newsletter" id="contact">
   <div class="newsletter-inner">
@@ -1898,3 +1913,196 @@
     </div>
   </div>
 </footer>
+
+<script>
+// Функция для скачивания SVG как PNG
+async function svgToPng(svgElement, filename) {
+  return new Promise((resolve, reject) => {
+    const canvas = document.createElement('canvas');
+    const svgData = new XMLSerializer().serializeToString(svgElement);
+    const svgBlob = new Blob([svgData], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(svgBlob);
+
+    const img = new Image();
+    img.onload = function() {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      canvas.toBlob(function(blob) {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        resolve();
+      }, 'image/png');
+    };
+    img.onerror = reject;
+    img.src = url;
+  });
+}
+
+// Функция для скачивания SVG как SVG файла
+function downloadSvgAsFile(svgElement, filename) {
+  const svgData = new XMLSerializer().serializeToString(svgElement);
+  const svgBlob = new Blob([svgData], { type: 'image/svg+xml' });
+  const url = URL.createObjectURL(svgBlob);
+
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+// Скачивание всех фото из галереи Lookbook
+document.getElementById('downloadAllBtn').addEventListener('click', async function() {
+  const btn = this;
+  const originalText = btn.textContent;
+  btn.textContent = 'Загрузка...';
+  btn.disabled = true;
+
+  const galleryItems = document.querySelectorAll('#lookbook .gallery-placeholder');
+  let count = 0;
+
+  for (let item of galleryItems) {
+    const svg = item.querySelector('svg');
+    if (svg) {
+      const itemIndex = count + 1;
+      await svgToPng(svg, `dasmann-photo-${itemIndex}.png`);
+      await new Promise(r => setTimeout(r, 300)); // Задержка между скачиваниями
+    }
+    count++;
+  }
+
+  btn.textContent = `${count} фото загружено!`;
+  setTimeout(() => {
+    btn.textContent = originalText;
+    btn.disabled = false;
+  }, 2000);
+});
+
+// Скачивание галереи как ZIP архива (простая версия - скачивание отдельных SVG файлов)
+document.getElementById('downloadGalleryBtn').addEventListener('click', async function() {
+  const btn = this;
+  const originalText = btn.textContent;
+  btn.textContent = 'Подготовка...';
+  btn.disabled = true;
+
+  const galleryItems = document.querySelectorAll('#lookbook .gallery-item');
+  let count = 0;
+
+  for (let item of galleryItems) {
+    const svg = item.querySelector('svg');
+    if (svg) {
+      const itemIndex = count + 1;
+      const label = item.querySelector('.gallery-label h4');
+      const labelText = label ? label.textContent.replace(/\s+/g, '-').toLowerCase() : `gallery-${itemIndex}`;
+      downloadSvgAsFile(svg, `dasmann-gallery-${itemIndex}-${labelText}.svg`);
+      await new Promise(r => setTimeout(r, 400)); // Задержка между скачиваниями
+    }
+    count++;
+  }
+
+  btn.textContent = `${count} файлов галереи загружено!`;
+  setTimeout(() => {
+    btn.textContent = originalText;
+    btn.disabled = false;
+  }, 2000);
+});
+
+// Функция для скачивания всех файлов сайта
+function downloadAllWebsiteFiles() {
+  // Скачивание HTML
+  const htmlElement = document.documentElement;
+  const htmlData = '<!DOCTYPE html>\n' + htmlElement.outerHTML;
+  const htmlBlob = new Blob([htmlData], { type: 'text/html' });
+  const htmlUrl = URL.createObjectURL(htmlBlob);
+
+  const link = document.createElement('a');
+  link.href = htmlUrl;
+  link.download = 'dasmann-website.html';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(htmlUrl);
+
+  setTimeout(() => {
+    alert('HTML файл сайта загружен! Откройте его в браузере для полного функционала.');
+  }, 500);
+}
+
+// Добавляем кнопки скачивания к элементам галереи
+document.addEventListener('DOMContentLoaded', function() {
+  const galleryItems = document.querySelectorAll('#lookbook .gallery-item');
+
+  galleryItems.forEach((item, index) => {
+    const downloadBtn = document.createElement('button');
+    downloadBtn.innerHTML = '⬇ Скачать';
+    downloadBtn.style.cssText = `
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 10;
+      padding: 0.5rem 1rem;
+      background: var(--brass);
+      color: var(--indigo-deep);
+      border: none;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all 0.3s;
+      opacity: 0;
+    `;
+
+    downloadBtn.addEventListener('mouseenter', function() {
+      this.style.opacity = '1';
+    });
+
+    downloadBtn.addEventListener('mouseleave', function() {
+      this.style.opacity = '0';
+    });
+
+    item.addEventListener('mouseenter', function() {
+      downloadBtn.style.opacity = '1';
+    });
+
+    item.addEventListener('mouseleave', function() {
+      downloadBtn.style.opacity = '0';
+    });
+
+    downloadBtn.addEventListener('click', async function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const svg = item.querySelector('svg');
+      if (svg) {
+        const label = item.querySelector('.gallery-label h4');
+        const labelText = label ? label.textContent.replace(/\s+/g, '-').toLowerCase() : `gallery-${index + 1}`;
+
+        this.textContent = 'Загрузка...';
+        this.disabled = true;
+
+        await svgToPng(svg.cloneNode(true), `dasmann-${labelText}.png`);
+
+        this.textContent = '✓ Готово!';
+        setTimeout(() => {
+          this.textContent = '⬇ Скачать';
+          this.disabled = false;
+        }, 1500);
+      }
+    });
+
+    item.style.position = 'relative';
+    item.appendChild(downloadBtn);
+  });
+});
+</script>
