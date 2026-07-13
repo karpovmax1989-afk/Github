@@ -222,15 +222,16 @@ h1, h2, h3, h4 {
 }
 .logo span { color: var(--gold); }
 
-nav.main-nav { display: flex; gap: 1.75rem; align-items: center; }
+nav.main-nav { display: flex; gap: 1.25rem; align-items: center; }
 nav.main-nav a {
   color: rgba(255,255,255,0.78);
-  font-size: 0.82rem;
-  letter-spacing: 0.06em;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
   font-weight: 500;
   transition: color 0.2s;
   position: relative;
   padding: 0.4rem 0;
+  white-space: nowrap;
 }
 nav.main-nav a:hover,
 nav.main-nav a.active { color: var(--gold); }
@@ -256,7 +257,7 @@ nav.main-nav a:focus-visible { outline: 2px solid var(--gold); outline-offset: 4
 .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
 
 /* ── Mobile nav ── */
-@media (max-width: 940px) {
+@media (max-width: 1040px) {
   nav.main-nav {
     display: none;
     position: absolute;

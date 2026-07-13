@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Блог — Golden Key | Полезное о недвижимости</title>
+<meta name="description" content="Блог агентства Golden Key: советы по покупке и продаже недвижимости, ипотека, инвестиции, юридические тонкости и тренды рынка.">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .blog-featured { display:grid; grid-template-columns:1.2fr 1fr; gap:0; background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius-lg); overflow:hidden; margin-bottom:3rem; }
+  .blog-featured .bf-visual { min-height:320px; }
+  .blog-featured .bf-visual svg { width:100%; height:100%; }
+  .blog-featured .bf-body { padding:2.5rem; display:flex; flex-direction:column; justify-content:center; }
+  .blog-cat { display:inline-block; align-self:flex-start; background:rgba(201,162,39,0.14); color:var(--gold-deep); font-size:0.7rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:0.3rem 0.8rem; border-radius:6px; margin-bottom:1rem; }
+  .blog-featured h2 { font-size:clamp(1.5rem,3vw,2rem); margin-bottom:1rem; }
+  .blog-featured p { color:var(--text-secondary); margin-bottom:1.5rem; }
+  .blog-meta { font-size:0.82rem; color:var(--text-light); display:flex; gap:1rem; }
+
+  .blog-filters { display:flex; gap:0.6rem; flex-wrap:wrap; justify-content:center; margin-bottom:2.5rem; }
+  .blog-filter { padding:0.5rem 1.2rem; border:1.5px solid var(--card-border); border-radius:100px; background:transparent; color:var(--text-secondary); font-size:0.82rem; font-family:inherit; cursor:pointer; transition:all 0.25s; }
+  .blog-filter:hover { border-color:var(--gold); color:var(--gold); }
+  .blog-filter.active { background:var(--gold); border-color:var(--gold); color:var(--navy-deep); font-weight:600; }
+
+  .blog-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
+  .blog-card { background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius-lg); overflow:hidden; display:flex; flex-direction:column; transition:transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease; }
+  .blog-card:hover { transform:translateY(-6px); box-shadow:var(--shadow-lg); }
+  .blog-card .bc-visual { aspect-ratio:16/10; overflow:hidden; }
+  .blog-card .bc-visual svg { width:100%; height:100%; transition:transform 0.6s cubic-bezier(0.22,1,0.36,1); }
+  .blog-card:hover .bc-visual svg { transform:scale(1.06); }
+  .blog-card .bc-body { padding:1.5rem; display:flex; flex-direction:column; flex:1; }
+  .blog-card h3 { font-size:1.12rem; margin-bottom:0.6rem; }
+  .blog-card p { font-size:0.9rem; color:var(--text-secondary); margin-bottom:1.25rem; flex:1; }
+  .blog-readmore { color:var(--gold-deep); font-size:0.82rem; font-weight:600; letter-spacing:0.04em; }
+  @media (max-width:900px){ .blog-grid{ grid-template-columns:1fr 1fr; } .blog-featured{ grid-template-columns:1fr; } .blog-featured .bf-visual{ min-height:220px; } }
+  @media (max-width:600px){ .blog-grid{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo" aria-label="Golden Key — на главную">
+      <svg class="logo-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="11" cy="11" r="7" stroke="#C9A227" stroke-width="2.4"/><circle cx="11" cy="11" r="2.4" fill="#C9A227"/><path d="M16 16 L27 27 M23 23 L26 20 M20 20 L23 17" stroke="#C9A227" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      GOLDEN<span>KEY</span>
+    </a>
+    <button class="nav-toggle" data-nav-toggle aria-label="Открыть меню">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <nav class="main-nav">
+      <a href="index.html">Главная</a>
+      <a href="about.html">О компании</a>
+      <a href="catalog.html">Каталог</a>
+      <a href="services.html">Услуги</a>
+      <a href="cases.html">Кейсы</a>
+      <a href="reviews.html">Отзывы</a>
+      <a href="team.html">Команда</a>
+      <a href="blog.html" class="active">Блог</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+    <div class="header-cta">
+      <button class="theme-toggle" data-theme-toggle aria-label="Сменить тему">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"/><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"/><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"/></svg>
+      </button>
+      <a href="contacts.html" class="btn btn-primary">Консультация</a>
+    </div>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <span class="eyebrow">Блог</span>
+    <h1>Полезное о недвижимости</h1>
+    <p>Экспертные советы, разбор законов и тренды рынка — простым языком от команды Golden Key.</p>
+    <div class="breadcrumb"><a href="index.html">Главная</a> / <span>Блог</span></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner">
+
+    <!-- Featured article -->
+    <article class="blog-featured reveal">
+      <div class="bf-visual"><svg viewBox="0 0 500 380" xmlns="http://www.w3.org/2000/svg"><rect width="500" height="380" fill="#14233F"/><rect x="70" y="150" width="130" height="180" fill="#2C3E5A"/><rect x="220" y="90" width="140" height="240" fill="#3A4E6E"/><rect x="380" y="180" width="90" height="150" fill="#2C3E5A"/><rect x="95" y="175" width="35" height="35" fill="#C9A227" opacity="0.6"/><rect x="150" y="175" width="35" height="35" fill="#C9A227" opacity="0.4"/><rect x="245" y="115" width="40" height="40" fill="#C9A227" opacity="0.6"/><rect x="300" y="115" width="40" height="40" fill="#C9A227" opacity="0.45"/><rect x="245" y="185" width="40" height="40" fill="#C9A227" opacity="0.45"/><rect x="300" y="185" width="40" height="40" fill="#C9A227" opacity="0.6"/><circle cx="410" cy="70" r="30" fill="#C9A227" opacity="0.25"/></svg></div>
+      <div class="bf-body">
+        <span class="blog-cat">Гид покупателя</span>
+        <h2>Как выбрать квартиру в 2026 году: чек-лист из 12 пунктов</h2>
+        <p>Рынок изменился: новые ставки, эскроу-счета и цифровые сделки. Мы собрали пошаговый чек-лист, который поможет не упустить важное — от проверки застройщика до оценки инфраструктуры района. Сохраните перед первым просмотром.</p>
+        <div class="blog-meta"><span>📅 10 июля 2026</span><span>⏱ 8 мин чтения</span><span>✍ Мария Дорошенко</span></div>
+      </div>
+    </article>
+
+    <!-- Filters -->
+    <div class="blog-filters reveal">
+      <button class="blog-filter active">Все</button>
+      <button class="blog-filter">Покупка</button>
+      <button class="blog-filter">Продажа</button>
+      <button class="blog-filter">Ипотека</button>
+      <button class="blog-filter">Инвестиции</button>
+      <button class="blog-filter">Право</button>
+    </div>
+
+    <!-- Grid -->
+    <div class="blog-grid">
+
+      <article class="blog-card reveal">
+        <div class="bc-visual"><svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="250" fill="#233350"/><rect x="120" y="70" width="160" height="150" fill="#2C3E5A"/><path d="M110 70 L200 30 L290 70 Z" fill="#C9A227" opacity="0.5"/><rect x="150" y="100" width="45" height="45" fill="#C9A227" opacity="0.5"/><rect x="205" y="100" width="45" height="45" fill="#C9A227" opacity="0.4"/><text x="200" y="180" text-anchor="middle" font-family="Georgia,serif" font-size="34" fill="#C9A227" opacity="0.8">%</text></svg></div>
+        <div class="bc-body">
+          <span class="blog-cat">Ипотека</span>
+          <h3>Ипотека 2026: какие программы реально работают</h3>
+          <p>Разбираем семейную, IT- и льготную ипотеку: кому подходит, какие ставки и как повысить шанс одобрения.</p>
+          <span class="blog-readmore">Читать далее →</span>
+        </div>
+      </article>
+
+      <article class="blog-card reveal">
+        <div class="bc-visual"><svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="250" fill="#1F3A2E"/><rect x="90" y="120" width="220" height="100" fill="#F0EDE4"/><path d="M80 120 L200 55 L320 120 Z" fill="#8A6A3A"/><rect x="120" y="145" width="45" height="75" fill="#3A4E6E"/><rect x="235" y="145" width="45" height="75" fill="#3A4E6E"/><rect x="180" y="155" width="40" height="65" fill="#C9A227" opacity="0.7"/></svg></div>
+        <div class="bc-body">
+          <span class="blog-cat">Продажа</span>
+          <h3>Как продать квартиру дороже: 7 приёмов предпродажной подготовки</h3>
+          <p>Хоумстейджинг, правильные фото и грамотное объявление способны добавить к цене до 10%. Показываем как.</p>
+          <span class="blog-readmore">Читать далее →</span>
+        </div>
+      </article>
+
+      <article class="blog-card reveal">
+        <div class="bc-visual"><svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="250" fill="#3A3524"/><rect x="60" y="90" width="280" height="130" fill="#4A4530"/><rect x="80" y="110" width="40" height="40" fill="#C9A227" opacity="0.5"/><rect x="135" y="110" width="40" height="40" fill="#C9A227" opacity="0.4"/><rect x="190" y="110" width="40" height="40" fill="#C9A227" opacity="0.5"/><rect x="245" y="110" width="40" height="40" fill="#C9A227" opacity="0.4"/><path d="M70 200 L130 160 L190 185 L250 150 L320 190" stroke="#C9A227" stroke-width="3" fill="none" opacity="0.8"/></svg></div>
+        <div class="bc-body">
+          <span class="blog-cat">Инвестиции</span>
+          <h3>Доходная недвижимость: как выйти на 12–15% годовых</h3>
+          <p>Сравниваем аренду жилья, апартаменты и street-retail. Где риски ниже, а доход стабильнее.</p>
+          <span class="blog-readmore">Читать далее →</span>
+        </div>
+      </article>
+
+      <article class="blog-card reveal">
+        <div class="bc-visual"><svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="250" fill="#3A2E44"/><rect x="130" y="55" width="140" height="160" fill="#4A3E58"/><rect x="150" y="80" width="100" height="14" rx="3" fill="#C9A227" opacity="0.6"/><rect x="150" y="105" width="100" height="10" rx="3" fill="#fff" opacity="0.25"/><rect x="150" y="125" width="80" height="10" rx="3" fill="#fff" opacity="0.25"/><rect x="150" y="145" width="90" height="10" rx="3" fill="#fff" opacity="0.25"/><circle cx="240" cy="185" r="14" fill="#C9A227" opacity="0.7"/></svg></div>
+        <div class="bc-body">
+          <span class="blog-cat">Право</span>
+          <h3>Юридическая проверка квартиры: что смотреть перед сделкой</h3>
+          <p>История переходов права, обременения, права третьих лиц. Разбираем, какие документы спасают от потери денег.</p>
+          <span class="blog-readmore">Читать далее →</span>
+        </div>
+      </article>
+
+      <article class="blog-card reveal">
+        <div class="bc-visual"><svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="250" fill="#2E3A44"/><rect x="90" y="70" width="220" height="150" fill="#3E4E5A"/><rect x="115" y="95" width="75" height="50" fill="#C9A227" opacity="0.5"/><rect x="215" y="95" width="75" height="50" fill="#C9A227" opacity="0.4"/><rect x="160" y="165" width="80" height="55" fill="#233350"/></svg></div>
+        <div class="bc-body">
+          <span class="blog-cat">Покупка</span>
+          <h3>Новостройка или вторичка: честное сравнение</h3>
+          <p>Цена, сроки, ремонт, риски и ликвидность. Таблица плюсов и минусов, которая упростит выбор.</p>
+          <span class="blog-readmore">Читать далее →</span>
+        </div>
+      </article>
+
+      <article class="blog-card reveal">
+        <div class="bc-visual"><svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg"><rect width="400" height="250" fill="#14233F"/><path d="M0 180 H400 M0 120 H400 M120 0 V250 M280 0 V250" stroke="#2C3E5A" stroke-width="5"/><path d="M0 150 H400" stroke="#C9A227" stroke-width="3" opacity="0.5"/><circle cx="200" cy="150" r="16" fill="#C9A227"/><path d="M200 136 a11 11 0 0 1 11 11 c0 9 -11 20 -11 20 s-11 -11 -11 -20 a11 11 0 0 1 11 -11z" fill="#14233F"/></svg></div>
+        <div class="bc-body">
+          <span class="blog-cat">Инвестиции</span>
+          <h3>Как выбрать район: 6 факторов, влияющих на цену через 5 лет</h3>
+          <p>Транспорт, застройка, инфраструктура и планы города. Учимся прогнозировать рост стоимости недвижимости.</p>
+          <span class="blog-readmore">Читать далее →</span>
+        </div>
+      </article>
+
+    </div>
+
+    <div style="text-align:center;margin-top:3rem;">
+      <a href="#" class="btn btn-ghost">Показать ещё статьи →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- Newsletter CTA -->
+<section class="section bg-alt">
+  <div class="section-inner">
+    <div class="cta-band reveal">
+      <h2>Подпишитесь на дайджест Golden Key</h2>
+      <p>Раз в неделю — свежие статьи, аналитика рынка и лучшие объекты. Без спама.</p>
+      <form data-demo-form style="display:flex;gap:0.75rem;max-width:480px;margin:0 auto;flex-wrap:wrap;justify-content:center;">
+        <input type="email" placeholder="Ваш e-mail" required aria-label="E-mail" style="flex:1;min-width:220px;padding:0.9rem 1.2rem;border:1.5px solid rgba(255,255,255,0.25);border-radius:var(--radius);background:rgba(255,255,255,0.08);color:#fff;font-family:inherit;outline:none;">
+        <button type="submit" class="btn btn-primary">Подписаться</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">GOLDEN<span>KEY</span></a>
+        <p>Надёжное агентство недвижимости с опытом более 10 лет. Помогаем покупать, продавать и арендовать недвижимость безопасно и выгодно.</p>
+        <ul class="footer-contacts">
+          <li>📞 <a href="tel:+78001234567">8 (800) 123-45-67</a></li>
+          <li>✉ <a href="mailto:info@goldenkey.ru">info@goldenkey.ru</a></li>
+          <li>📍 г. Москва, ул. Тверская, 18, офис 401</li>
+        </ul>
+      </div>
+      <div class="footer-col"><h4>Компания</h4><ul><li><a href="about.html">О компании</a></li><li><a href="team.html">Наша команда</a></li><li><a href="cases.html">Кейсы</a></li><li><a href="blog.html">Блог</a></li><li><a href="reviews.html">Отзывы</a></li></ul></div>
+      <div class="footer-col"><h4>Услуги</h4><ul><li><a href="services.html">Покупка</a></li><li><a href="services.html">Продажа</a></li><li><a href="services.html">Аренда</a></li><li><a href="services.html">Ипотека</a></li></ul></div>
+      <div class="footer-col"><h4>Контакты</h4><ul><li><a href="tel:+78001234567">8 (800) 123-45-67</a></li><li><a href="mailto:info@goldenkey.ru">info@goldenkey.ru</a></li><li><a href="contacts.html">Написать нам</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Golden Key. Все права защищены.</span>
+      <span>Информация на сайте не является публичной офертой.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+  // Демо-фильтр статей (визуальное переключение)
+  document.querySelectorAll('.blog-filter').forEach(btn => {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.blog-filter').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
