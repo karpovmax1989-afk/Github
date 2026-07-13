@@ -3,11 +3,293 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Golden Key — Люксовая недвижимость | Найдите дом своей мечты</title>
-<meta name="description" content="Golden Key — премиальное агентство недвижимости. Эксклюзивные объекты в лучших локациях. Более 10 лет опыта, 550+ люксовых объектов, 1200+ довольных клиентов.">
+<title>Golden Key — Люксовая недвижимость | Полная платформа</title>
+<meta name="description" content="Golden Key — премиальное агентство недвижимости. Эксклюзивные объекты, интерактивные туры, 3D визуализация.">
 <link rel="stylesheet" href="styles.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
+/* View Switcher */
+.view-switcher {
+  position: fixed;
+  top: 70px;
+  right: 30px;
+  display: flex;
+  gap: 8px;
+  z-index: 1000;
+  background: rgba(11,14,19,0.95);
+  padding: 12px 16px;
+  border-radius: 25px;
+  border: 1px solid #232A35;
+}
+.view-btn {
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid #C9A24B;
+  color: #C9A24B;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+.view-btn:hover {
+  background: rgba(201,162,75,0.1);
+}
+.view-btn.active {
+  background: #C9A24B;
+  color: #17130A;
+}
+
+/* View Sections */
+.view-section {
+  display: none;
+}
+.view-section.active {
+  display: block;
+}
+#view-main { display: block; }
+
+/* Portfolio View */
+#portfolio-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0B0E13;
+  overflow: hidden;
+}
+.gallery {
+  position: relative;
+  width: 90%;
+  max-width: 1200px;
+  height: 85vh;
+  background: #12171F;
+  border: 2px solid #232A35;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+}
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  text-align: center;
+}
+.slide.active {
+  opacity: 1;
+  z-index: 10;
+}
+.slide h1 {
+  font-size: 3.5rem;
+  color: #C9A24B;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+.slide h2 {
+  font-size: 2.5rem;
+  color: #F2EEE6;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+.slide p {
+  font-family: 'Jost', sans-serif;
+  font-size: 1.1rem;
+  color: #A9B0BC;
+  line-height: 1.8;
+  max-width: 800px;
+  margin-bottom: 30px;
+}
+.slide-image {
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+  border-radius: 12px;
+  margin: 20px 0;
+  object-fit: cover;
+}
+.navigation {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  z-index: 20;
+}
+.portfolio-btn {
+  background: #C9A24B;
+  color: #17130A;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Jost', sans-serif;
+}
+.portfolio-btn:hover {
+  background: #E4C777;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(201,162,75,0.3);
+}
+.counter {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-family: 'Jost', sans-serif;
+  font-size: 1.1rem;
+  color: #C9A24B;
+  background: rgba(201,162,75,0.1);
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid #C9A24B;
+}
+.dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #A9B0BC;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.dot.active {
+  background: #C9A24B;
+  transform: scale(1.3);
+}
+.hero-content {
+  font-size: 1.3rem;
+  line-height: 2;
+}
+.features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-top: 40px;
+  text-align: left;
+}
+.feature {
+  padding: 30px;
+  background: rgba(201,162,75,0.05);
+  border: 1px solid #232A35;
+  border-radius: 10px;
+}
+.feature h3 {
+  font-size: 1.4rem;
+  color: #C9A24B;
+  margin-bottom: 15px;
+}
+.feature p {
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+/* Design Showcase */
+#showcase-container {
+  background: #0B0E13;
+}
+.showcase-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(11,14,19,0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #232A35;
+  padding: 1.5rem 2rem;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+.showcase-navbar h1 {
+  font-size: 1.5rem;
+  color: #C9A24B;
+}
+.showcase-navbar a {
+  color: #A9B0BC;
+  text-decoration: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+  cursor: pointer;
+}
+.showcase-navbar a:hover { color: #C9A24B; }
+#showcase-container { padding-top: 80px; }
+.showcase-section {
+  min-height: 100vh;
+  padding: 80px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-margin-top: 80px;
+}
+.showcase-section:nth-child(even) { background: #0F131A; }
+.showcase-section:nth-child(odd) { background: #0B0E13; }
+.showcase-content {
+  max-width: 1200px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.showcase-content.full { grid-template-columns: 1fr; text-align: center; }
+.showcase-text h2 {
+  font-size: 3rem;
+  margin-bottom: 30px;
+  color: #F2EEE6;
+}
+.showcase-text p {
+  font-family: 'Jost', sans-serif;
+  font-size: 1.1rem;
+  color: #A9B0BC;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+.showcase-visual {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+  border: 1px solid #232A35;
+  aspect-ratio: 4/3;
+}
+.showcase-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.badge {
+  display: inline-block;
+  background: rgba(201,162,75,0.15);
+  color: #C9A24B;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem;
+  border: 1px solid #C9A24B;
+  margin-bottom: 15px;
+}
+
+/* 3D Tour */
 #canvas-3d {
   display: block;
   width: 100%;
@@ -44,6 +326,121 @@
   margin-bottom: 15px;
 }
 .info-3d p {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.95rem;
+  color: #A9B0BC;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+.controls-3d {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(11,14,19,0.9);
+  border: 1px solid #232A35;
+  padding: 20px 30px;
+  border-radius: 30px;
+  backdrop-filter: blur(10px);
+  display: flex;
+  gap: 15px;
+  z-index: 10;
+}
+.control-btn-3d {
+  background: linear-gradient(135deg, #E4C777, #C9A24B);
+  color: #17130A;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-family: 'Jost', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+}
+.control-btn-3d:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(201,162,75,0.3);
+}
+.control-btn-3d.active {
+  background: #C9A24B;
+}
+.top-right-3d {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  background: rgba(11,14,19,0.9);
+  border: 1px solid #232A35;
+  padding: 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  z-index: 10;
+  text-align: center;
+}
+.top-right-3d p {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.85rem;
+  color: #A9B0BC;
+  margin-top: 10px;
+}
+
+@media (max-width: 1024px) {
+  .showcase-content { grid-template-columns: 1fr; gap: 40px; }
+  .showcase-text h2 { font-size: 2.2rem; }
+  .showcase-section { padding: 60px 30px; }
+  .features { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- View Switcher -->
+<div class="view-switcher">
+  <button class="view-btn active" onclick="switchView('main')">🏠 Сайт</button>
+  <button class="view-btn" onclick="switchView('portfolio')">📋 Портфолио</button>
+  <button class="view-btn" onclick="switchView('showcase')">🎨 Витрина</button>
+  <button class="view-btn" onclick="switchView('3d')">✨ 3D</button>
+</div>
+
+<!-- MAIN WEBSITE VIEW -->
+<div id="view-main" class="view-section active">
+<!-- Header -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="#hero" class="logo" aria-label="Golden Key — на главную">
+      <svg class="logo-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+        <rect x="6" y="4" width="28" height="32" rx="2" stroke="#C9A24B" stroke-width="1.5"/>
+        <path d="M13 36 V16 L20 11 L27 16 V36" stroke="#C9A24B" stroke-width="1.5"/>
+        <line x1="20" y1="11" x2="20" y2="36" stroke="#C9A24B" stroke-width="1.5"/>
+        <line x1="16.5" y1="14" x2="16.5" y2="36" stroke="#C9A24B" stroke-width="1"/>
+        <line x1="23.5" y1="14" x2="23.5" y2="36" stroke="#C9A24B" stroke-width="1"/>
+      </svg>
+      <span class="logo-text"><span class="lt-name">GOLDEN KEY</span><span class="lt-sub">Luxury Estate Group</span></span>
+    </a>
+    <button class="nav-toggle" data-nav-toggle aria-label="Открыть меню">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C9A24B" stroke-width="1.6"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <nav class="main-nav" data-nav>
+      <a href="#hero" class="active">Главная</a>
+      <a href="#catalog">Объекты</a>
+      <a href="#about">О нас</a>
+      <a href="#services">Услуги</a>
+      <a href="#3d-tour">3D Тур</a>
+      <a href="#blog">Блог</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <div class="header-cta">
+      <button class="theme-toggle" data-theme-toggle aria-label="Сменить тему">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"/><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"/><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"/></svg>
+      </button>
+      <a href="#contacts" class="btn btn-primary">Консультация</a>
+    </div>
+  </div>
+</header>
+
+<!-- Основная часть main website (первые 600+ строк) -->
+<!-- Героическая секция, каталог, команда, о нас, услуги, блог, контакты, 3D тур -->
+<!-- Вставлю содержимое из оригинального index.html сюда -->
   font-family: 'Jost', sans-serif;
   font-size: 0.95rem;
   color: #A9B0BC;
@@ -1051,6 +1448,597 @@ if (container3D) {
 
   animate();
 }
+</script>
+
+</body>
+</html>
+
+</div>
+
+<!-- PORTFOLIO VIEW -->
+<div id="view-portfolio" class="view-section">
+<div id="portfolio-container">
+  <div class="gallery">
+    <div class="counter"><span id="current">1</span> / <span id="total">8</span></div>
+
+    <!-- Слайд 1: Титульная страница -->
+    <div class="slide active">
+      <h1>GOLDEN KEY</h1>
+      <p style="font-size: 1.5rem; color: #C9A24B; margin-bottom: 40px;">Luxury Estate Group</p>
+      <p>Премиальное агентство недвижимости</p>
+      <p style="margin-top: 30px; font-size: 0.95rem; color: #6C7481;">Эксклюзивные объекты | Профессиональный сервис | Надежность</p>
+    </div>
+
+    <!-- Слайд 2: Главная страница -->
+    <div class="slide">
+      <h2>Главная страница</h2>
+      <p>Впечатляющий героический баннер с архитектурой люксового дома, золотыми акцентами и ночной атмосферой</p>
+      <img src="https://images.pexels.com/photos/29453302/pexels-photo-29453302.jpeg?auto=format&cs=srgb&w=1600&q=80" alt="Главная" class="slide-image">
+      <p style="margin-top: 30px; font-size: 0.9rem; color: #6C7481;">Рекламный баннер + поисковая система объектов</p>
+    </div>
+
+    <!-- Слайд 3: Каталог объектов -->
+    <div class="slide">
+      <h2>Каталог недвижимости</h2>
+      <p>Карточки люксовых объектов с реальными фотографиями, детальными характеристиками и ценами</p>
+      <img src="https://images.pexels.com/photos/31817155/pexels-photo-31817155.jpeg?auto=format&cs=srgb&w=1600&q=80" alt="Каталог" class="slide-image">
+      <p style="margin-top: 30px; font-size: 0.9rem;">🛏 4+ спальни | 🛁 4+ ванные | 📐 500+ м² | 💰 от $2M</p>
+    </div>
+
+    <!-- Слайд 4: О компании -->
+    <div class="slide">
+      <h2>О компании</h2>
+      <p>История успеха, опыт и достижения агентства</p>
+      <img src="https://images.pexels.com/photos/1350789/pexels-photo-1350789.jpeg?auto=format&cs=srgb&w=1600&q=80" alt="О компании" class="slide-image">
+      <div class="features">
+        <div class="feature">
+          <h3>10+ лет</h3>
+          <p>Опыт на рынке люксовой недвижимости</p>
+        </div>
+        <div class="feature">
+          <h3>550+ объектов</h3>
+          <p>Эксклюзивный портфель недвижимости</p>
+        </div>
+        <div class="feature">
+          <h3>1200+ клиентов</h3>
+          <p>Более 1200 довольных покупателей</p>
+        </div>
+        <div class="feature">
+          <h3>25+ премий</h3>
+          <p>Признание в индустрии недвижимости</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Слайд 5: Команда агентов -->
+    <div class="slide">
+      <h2>Наши лучшие агенты</h2>
+      <p>Профессиональная команда экспертов по люксовой недвижимости</p>
+      <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=format&cs=srgb&w=1600&q=80" alt="Команда" class="slide-image">
+      <p style="margin-top: 30px; font-size: 0.9rem; color: #6C7481;">Реальные фотографии агентов | Специализация | Контакты</p>
+    </div>
+
+    <!-- Слайд 6: Услуги -->
+    <div class="slide">
+      <h2>Полный спектр услуг</h2>
+      <div class="features" style="max-width: 900px; margin: 40px auto;">
+        <div class="feature">
+          <h3>🛡️ Безопасность</h3>
+          <p>Полная юридическая проверка каждого объекта</p>
+        </div>
+        <div class="feature">
+          <h3>💎 Эксклюзивность</h3>
+          <p>Виллы и пентхаусы вне открытого рынка</p>
+        </div>
+        <div class="feature">
+          <h3>👤 Персонал</h3>
+          <p>Личный консультант на каждом этапе</p>
+        </div>
+        <div class="feature">
+          <h3>📊 Аналитика</h3>
+          <p>Инвестиционная оценка и прогнозы</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Слайд 7: Виртуальный тур -->
+    <div class="slide">
+      <h2>Виртуальный тур 360°</h2>
+      <p>Изучите объекты со всех сторон не выходя из дома</p>
+      <img src="https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=format&cs=srgb&w=1600&q=80" alt="Тур" class="slide-image">
+      <p style="margin-top: 30px; font-size: 0.9rem; color: #6C7481;">Полное погружение | Все комнаты | Высокое разрешение</p>
+    </div>
+
+    <!-- Слайд 8: Блог и контакты -->
+    <div class="slide">
+      <h2>Блог и контакты</h2>
+      <img src="https://images.pexels.com/photos/1370500/pexels-photo-1370500.jpeg?auto=format&cs=srgb&w=1600&q=80" alt="Блог" class="slide-image">
+      <div class="features" style="max-width: 900px; margin: 40px auto;">
+        <div class="feature">
+          <h3>📖 Экспертные советы</h3>
+          <p>Статьи о рынке недвижимости и инвестициях</p>
+        </div>
+        <div class="feature">
+          <h3>📞 Консультация</h3>
+          <p>Связь с менеджером одним кликом</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Навигация -->
+    <div class="navigation">
+      <button class="portfolio-btn" onclick="previousSlide()">← Назад</button>
+      <button class="portfolio-btn" onclick="nextSlide()">Вперед →</button>
+    </div>
+
+    <!-- Точки навигации -->
+    <div class="dots" id="dots"></div>
+  </div>
+</div>
+</div>
+
+<!-- DESIGN SHOWCASE VIEW -->
+<div id="view-showcase" class="view-section">
+<nav class="showcase-navbar">
+  <h1>GOLDEN KEY</h1>
+  <a onclick="switchShowcaseSection('hero')">Главная</a>
+  <a onclick="switchShowcaseSection('properties')">Объекты</a>
+  <a onclick="switchShowcaseSection('about')">О нас</a>
+  <a onclick="switchShowcaseSection('services')">Услуги</a>
+  <a onclick="switchShowcaseSection('team')">Команда</a>
+  <a onclick="switchShowcaseSection('footer')">Контакты</a>
+</nav>
+
+<div id="showcase-container">
+<!-- HERO SECTION -->
+<section class="showcase-section" id="hero">
+  <div class="showcase-content full">
+    <div class="badge">PREMIUM LUXURY REAL ESTATE</div>
+    <h2 style="font-size: 4rem; margin-bottom: 20px;">Golden Key</h2>
+    <p style="font-size: 1.4rem; margin-bottom: 30px;">Премиальное агентство люксовой недвижимости</p>
+    <p>Эксклюзивные объекты в лучших локациях. Более 10 лет опыта, 550+ люксовых объектов, 1200+ довольных клиентов.</p>
+  </div>
+</section>
+
+<!-- PROPERTIES -->
+<section class="showcase-section" id="properties">
+  <div class="showcase-content">
+    <div class="showcase-visual">
+      <img src="https://images.pexels.com/photos/29453302/pexels-photo-29453302.jpeg?auto=format&cs=srgb&w=1600&q=80" alt="Люксовая вилла">
+    </div>
+    <div class="showcase-text">
+      <div class="badge">ЭКСКЛЮЗИВНЫЙ ПОРТФЕЛЬ</div>
+      <h2>Каталог люксовой недвижимости</h2>
+      <p>Каждый объект в нашем портфеле — это воплощение мечты о идеальном доме. Мы предлагаем лучшие виллы, пентхаусы и особняки в самых престижных локациях.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="showcase-section" id="about">
+  <div class="showcase-content">
+    <div class="showcase-text">
+      <div class="badge">О КОМПАНИИ</div>
+      <h2>С 2015 года — стандарт роскоши</h2>
+      <p>Golden Key начинался как бутик-агентство с одной идеей: сделать премиальную недвижимость доступной для тех, кто ценит качество и безупречный сервис.</p>
+    </div>
+    <div class="showcase-visual">
+      <img src="https://images.pexels.com/photos/1350789/pexels-photo-1350789.jpeg?auto=format&cs=srgb&w=1600&q=80" alt="Архитектура">
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="showcase-section" id="services">
+  <div class="showcase-content full">
+    <div class="badge">ПОЛНЫЙ СПЕКТР УСЛУГ</div>
+    <h2>Почему Golden Key</h2>
+    <p style="margin-bottom: 50px;">Мы сопровождаем каждую сделку от первого показа до вручения ключей — безупречно и конфиденциально.</p>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="showcase-section" id="team">
+  <div class="showcase-content">
+    <div class="showcase-visual">
+      <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=format&cs=srgb&w=1600&q=80" alt="Команда">
+    </div>
+    <div class="showcase-text">
+      <div class="badge">ЭКСПЕРТНАЯ ПОДДЕРЖКА</div>
+      <h2>Наши лучшие агенты</h2>
+      <p>Каждый агент Golden Key — это профессионал с глубоким знанием рынка люксовой недвижимости, готовый найти вам идеальный объект.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<section class="showcase-section" id="footer">
+  <div class="showcase-content full">
+    <div class="badge">КОНТАКТЫ</div>
+    <h2>Связаться с нами</h2>
+    <p>Готовы найти дом вашей мечты? Оставьте заявку и наша команда свяжется с вами в течение часа.</p>
+  </div>
+</section>
+</div>
+</div>
+
+<!-- 3D TOUR VIEW -->
+<div id="view-3d" class="view-section">
+<section id="3d-tour" style="margin: 0; padding: 0;">
+  <div class="section-inner" style="padding: 0; height: 100vh;">
+    <div id="canvas-3d"></div>
+    <div class="info-3d">
+      <h3>Люксовая вилла</h3>
+      <p>🏠 Современный архитектурный стиль</p>
+      <p>💎 Эксклюзивный дизайн с панорамными окнами</p>
+      <p>💡 Интерактивное 3D представление объекта</p>
+      <p style="margin-top: 20px; font-size: 0.85rem; color: #6C7481;">Используй мышь для вращения • Колесо для масштабирования</p>
+    </div>
+    <div class="top-right-3d">
+      <span style="color: #C9A24B; font-weight: bold;">$12,500,000</span>
+      <p>Стоимость объекта</p>
+    </div>
+    <div class="controls-3d">
+      <button class="control-btn-3d active" onclick="toggleAnimation()">▶ Анимация</button>
+      <button class="control-btn-3d" onclick="toggleWireframe()">⚡ Каркас</button>
+      <button class="control-btn-3d" onclick="resetView()">🔄 Сброс</button>
+      <button class="control-btn-3d" onclick="toggleLighting()">💡 Свет</button>
+    </div>
+  </div>
+</section>
+</div>
+
+<script src="main.js"></script>
+
+<script>
+// View Switching
+function switchView(viewName) {
+  // Hide all views
+  document.querySelectorAll('.view-section').forEach(view => {
+    view.classList.remove('active');
+  });
+  
+  // Remove active from all buttons
+  document.querySelectorAll('.view-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  
+  // Show selected view
+  document.getElementById('view-' + viewName).classList.add('active');
+  
+  // Activate button
+  event.target.classList.add('active');
+  
+  // Trigger necessary initializations
+  if (viewName === 'portfolio') {
+    initPortfolio();
+  } else if (viewName === '3d') {
+    init3DScene();
+  }
+}
+
+// Portfolio functionality
+let currentSlide = 0;
+let slides = [];
+let portfolioInitialized = false;
+
+function initPortfolio() {
+  if (portfolioInitialized) return;
+  
+  slides = document.querySelectorAll('#view-portfolio .slide');
+  const totalSlides = slides.length;
+  
+  document.getElementById('total').textContent = totalSlides;
+  
+  const dotsContainer = document.getElementById('dots');
+  dotsContainer.innerHTML = '';
+  
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goToSlide(i);
+    dotsContainer.appendChild(dot);
+  }
+  
+  portfolioInitialized = true;
+}
+
+function showSlide(n) {
+  if (slides.length === 0) initPortfolio();
+  
+  slides.forEach(slide => slide.classList.remove('active'));
+  document.querySelectorAll('#view-portfolio .dot').forEach(dot => dot.classList.remove('active'));
+  
+  slides[n].classList.add('active');
+  document.querySelectorAll('#view-portfolio .dot')[n].classList.add('active');
+  document.getElementById('current').textContent = n + 1;
+}
+
+function nextSlide() {
+  if (slides.length === 0) initPortfolio();
+  currentSlide = (currentSlide + 1) % slides.length;
+  showSlide(currentSlide);
+}
+
+function previousSlide() {
+  if (slides.length === 0) initPortfolio();
+  currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+  showSlide(currentSlide);
+}
+
+function goToSlide(n) {
+  currentSlide = n;
+  showSlide(currentSlide);
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (document.getElementById('view-portfolio').classList.contains('active')) {
+    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === 'ArrowLeft') previousSlide();
+  }
+});
+
+// Design Showcase
+function switchShowcaseSection(sectionId) {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+// 3D Scene
+let scene3D = null;
+
+function init3DScene() {
+  if (scene3D) return;
+  
+  const container3D = document.getElementById('canvas-3d');
+  if (!container3D || container3D.children.length > 0) return;
+  
+  scene3D = new THREE.Scene();
+  scene3D.background = new THREE.Color(0x0B0E13);
+  scene3D.fog = new THREE.Fog(0x0B0E13, 100, 200);
+
+  const camera = new THREE.PerspectiveCamera(75, container3D.clientWidth / container3D.clientHeight, 0.1, 1000);
+  camera.position.set(15, 12, 15);
+  camera.lookAt(0, 3, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(container3D.clientWidth, container3D.clientHeight);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFShadowShadowMap;
+  renderer.outputEncoding = THREE.sRGBColorSpace;
+  container3D.appendChild(renderer.domElement);
+
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  scene3D.add(ambientLight);
+
+  const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+  directionalLight.position.set(20, 25, 15);
+  directionalLight.castShadow = true;
+  directionalLight.shadow.mapSize.width = 2048;
+  directionalLight.shadow.mapSize.height = 2048;
+  directionalLight.shadow.camera.far = 100;
+  directionalLight.shadow.camera.left = -50;
+  directionalLight.shadow.camera.right = 50;
+  directionalLight.shadow.camera.top = 50;
+  directionalLight.shadow.camera.bottom = -50;
+  scene3D.add(directionalLight);
+
+  const pointLight = new THREE.PointLight(0xC9A24B, 1.5, 50);
+  pointLight.position.set(-15, 8, -15);
+  scene3D.add(pointLight);
+
+  const groundGeometry = new THREE.PlaneGeometry(60, 60);
+  const groundMaterial = new THREE.MeshStandardMaterial({
+    color: 0x1a1f2e,
+    roughness: 0.8,
+    metalness: 0.1
+  });
+  const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+  ground.rotation.x = -Math.PI / 2;
+  ground.receiveShadow = true;
+  scene3D.add(ground);
+
+  const mainWallGeometry = new THREE.BoxGeometry(12, 8, 10);
+  const mainWallMaterial = new THREE.MeshStandardMaterial({
+    color: 0x3a4556,
+    roughness: 0.6,
+    metalness: 0.2
+  });
+  const mainWall = new THREE.Mesh(mainWallGeometry, mainWallMaterial);
+  mainWall.position.y = 4;
+  mainWall.castShadow = true;
+  mainWall.receiveShadow = true;
+  scene3D.add(mainWall);
+
+  const roofGeometry = new THREE.ConeGeometry(8.5, 3, 4);
+  const roofMaterial = new THREE.MeshStandardMaterial({
+    color: 0x2a3344,
+    roughness: 0.7,
+    metalness: 0.3
+  });
+  const roof = new THREE.Mesh(roofGeometry, roofMaterial);
+  roof.position.set(0, 11.5, 0);
+  roof.castShadow = true;
+  roof.receiveShadow = true;
+  scene3D.add(roof);
+
+  const leftWingGeometry = new THREE.BoxGeometry(4, 7, 8);
+  const leftWing = new THREE.Mesh(leftWingGeometry, mainWallMaterial);
+  leftWing.position.set(-5, 3.5, 0);
+  leftWing.castShadow = true;
+  leftWing.receiveShadow = true;
+  scene3D.add(leftWing);
+
+  const rightWingGeometry = new THREE.BoxGeometry(4, 7, 8);
+  const rightWing = new THREE.Mesh(rightWingGeometry, mainWallMaterial);
+  rightWing.position.set(5, 3.5, 0);
+  rightWing.castShadow = true;
+  rightWing.receiveShadow = true;
+  scene3D.add(rightWing);
+
+  const windowMaterial = new THREE.MeshStandardMaterial({
+    color: 0xFDD89C,
+    emissive: 0xE4C777,
+    emissiveIntensity: 0.8,
+    roughness: 0.1,
+    metalness: 0.9
+  });
+
+  function addWindows(parent, positions) {
+    positions.forEach(pos => {
+      const windowGeometry = new THREE.BoxGeometry(1.2, 1.5, 0.2);
+      const window = new THREE.Mesh(windowGeometry, windowMaterial);
+      window.position.copy(pos);
+      window.castShadow = true;
+      parent.add(window);
+    });
+  }
+
+  const mainWindowPositions = [
+    new THREE.Vector3(-3, 6, 5.2),
+    new THREE.Vector3(0, 6, 5.2),
+    new THREE.Vector3(3, 6, 5.2),
+    new THREE.Vector3(-3, 3, 5.2),
+    new THREE.Vector3(0, 3, 5.2),
+    new THREE.Vector3(3, 3, 5.2),
+  ];
+  addWindows(mainWall, mainWindowPositions);
+
+  const leftWindowPositions = [
+    new THREE.Vector3(0, 6, 4),
+    new THREE.Vector3(0, 3, 4),
+  ];
+  addWindows(leftWing, leftWindowPositions);
+
+  const rightWindowPositions = [
+    new THREE.Vector3(0, 6, 4),
+    new THREE.Vector3(0, 3, 4),
+  ];
+  addWindows(rightWing, rightWindowPositions);
+
+  const poolGeometry = new THREE.BoxGeometry(10, 0.5, 6);
+  const poolMaterial = new THREE.MeshStandardMaterial({
+    color: 0x1a4d6d,
+    roughness: 0.2,
+    metalness: 0.8,
+    emissive: 0x0d2d4d,
+    emissiveIntensity: 0.3
+  });
+  const pool = new THREE.Mesh(poolGeometry, poolMaterial);
+  pool.position.set(0, 0.25, -8);
+  pool.castShadow = true;
+  pool.receiveShadow = true;
+  scene3D.add(pool);
+
+  let isDragging = false;
+  let previousMousePosition = { x: 0, y: 0 };
+  let rotation = { x: 0, y: 0 };
+  let animationEnabled = true;
+  let wireframeMode = false;
+  let lightingMode = true;
+  let windowAnimationTime = 0;
+
+  renderer.domElement.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    previousMousePosition = { x: e.clientX, y: e.clientY };
+  });
+
+  renderer.domElement.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+      const deltaX = e.clientX - previousMousePosition.x;
+      const deltaY = e.clientY - previousMousePosition.y;
+      rotation.y += deltaX * 0.005;
+      rotation.x += deltaY * 0.005;
+      mainWall.rotation.y = rotation.y;
+      mainWall.rotation.x = rotation.x;
+      leftWing.rotation.y = rotation.y;
+      leftWing.rotation.x = rotation.x;
+      rightWing.rotation.y = rotation.y;
+      rightWing.rotation.x = rotation.x;
+      roof.rotation.y = rotation.y;
+      roof.rotation.x = rotation.x;
+      pool.rotation.y = rotation.y;
+      pool.rotation.x = rotation.x;
+      previousMousePosition = { x: e.clientX, y: e.clientY };
+    }
+  });
+
+  renderer.domElement.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
+
+  renderer.domElement.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    camera.position.z += e.deltaY * 0.01;
+    camera.position.z = Math.max(5, Math.min(50, camera.position.z));
+  });
+
+  window.toggleAnimation = function() {
+    animationEnabled = !animationEnabled;
+    document.querySelectorAll('.control-btn-3d')[0].classList.toggle('active');
+  }
+
+  window.toggleWireframe = function() {
+    wireframeMode = !wireframeMode;
+    mainWall.material.wireframe = wireframeMode;
+    leftWing.material.wireframe = wireframeMode;
+    rightWing.material.wireframe = wireframeMode;
+    document.querySelectorAll('.control-btn-3d')[1].classList.toggle('active');
+  }
+
+  window.resetView = function() {
+    rotation = { x: 0, y: 0 };
+    mainWall.rotation.set(0, 0, 0);
+    leftWing.rotation.set(0, 0, 0);
+    rightWing.rotation.set(0, 0, 0);
+    roof.rotation.set(0, 0, 0);
+    pool.rotation.set(0, 0, 0);
+    camera.position.set(15, 12, 15);
+    camera.lookAt(0, 3, 0);
+  }
+
+  window.toggleLighting = function() {
+    lightingMode = !lightingMode;
+    directionalLight.intensity = lightingMode ? 1.2 : 0.3;
+    pointLight.intensity = lightingMode ? 1.5 : 0.3;
+    document.querySelectorAll('.control-btn-3d')[3].classList.toggle('active');
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+    if (animationEnabled) {
+      const autoRotation = 0.0005;
+      mainWall.rotation.y += autoRotation;
+      leftWing.rotation.y += autoRotation;
+      rightWing.rotation.y += autoRotation;
+      roof.rotation.y += autoRotation;
+      pool.rotation.y += autoRotation;
+      rotation.y += autoRotation;
+    }
+    windowAnimationTime += 0.03;
+    const windowIntensity = 0.6 + Math.sin(windowAnimationTime) * 0.2;
+    windowMaterial.emissiveIntensity = windowIntensity;
+    renderer.render(scene3D, camera);
+  }
+
+  window.addEventListener('resize', () => {
+    const w = container3D.clientWidth;
+    const h = container3D.clientHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+
+  animate();
+}
+
+// Initialize portfolio on first load
+document.addEventListener('DOMContentLoaded', function() {
+  initPortfolio();
+});
 </script>
 
 </body>
