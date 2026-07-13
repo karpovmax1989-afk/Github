@@ -607,10 +607,129 @@ nav.main-nav a:focus-visible { outline: 2px solid var(--gold); outline-offset: 4
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
 @media (max-width: 820px) { .grid-2 { grid-template-columns: 1fr; gap: 2rem; } }
 
-/* Reveal on scroll */
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+/* ============================================
+   АНИМАЦИИ — премиальная динамика элементов
+   ============================================ */
+
+/* Reveal on scroll (появление при прокрутке) */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0s);
+  will-change: opacity, transform;
+}
 .reveal.visible { opacity: 1; transform: none; }
+
+/* Варианты направления появления */
+.reveal-left  { transform: translateX(-40px); }
+.reveal-right { transform: translateX(40px); }
+.reveal-scale { transform: scale(0.92); }
+.reveal-left.visible,
+.reveal-right.visible,
+.reveal-scale.visible { transform: none; }
+
+/* Ступенчатое появление карточек в сетках (stagger) */
+.feature-grid > .reveal,
+.property-grid > .reveal,
+.testimonial-grid > .reveal,
+.team-grid > .reveal {
+  transition-delay: calc(var(--i, 0) * 0.09s);
+}
+
+/* Вход Hero при загрузке страницы */
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: none; }
+}
+.hero-content > * { opacity: 0; animation: heroFadeUp 0.8s cubic-bezier(0.22,1,0.36,1) forwards; }
+.hero-content > *:nth-child(1) { animation-delay: 0.05s; }
+.hero-content > *:nth-child(2) { animation-delay: 0.18s; }
+.hero-content > *:nth-child(3) { animation-delay: 0.31s; }
+.hero-content > *:nth-child(4) { animation-delay: 0.44s; }
+.hero-search { opacity: 0; animation: heroFadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.4s forwards; }
+
+/* Плавающий акцент в hero */
+@keyframes floatGlow {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.9; }
+  50%      { transform: translate(2%, -3%) scale(1.05); opacity: 1; }
+}
+.hero::before { animation: floatGlow 12s ease-in-out infinite; }
+
+/* Пульсация золотого слова в заголовке */
+@keyframes goldPulse {
+  0%, 100% { text-shadow: 0 0 0 rgba(201,162,39,0); }
+  50%      { text-shadow: 0 0 24px rgba(201,162,39,0.35); }
+}
+.hero h1 span { animation: goldPulse 3.5s ease-in-out infinite; }
+
+/* Анимированное золотое подчёркивание заголовков секций */
+.section-header h2 { position: relative; display: inline-block; }
+.section-header h2::after {
+  content: '';
+  position: absolute;
+  left: 50%; bottom: -0.6rem;
+  width: 0; height: 3px;
+  background: linear-gradient(90deg, var(--gold-deep), var(--gold-light));
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition: width 0.8s cubic-bezier(0.22,1,0.36,1) 0.2s;
+}
+.section-header.visible h2::after,
+.reveal.visible .section-header h2::after { width: 64px; }
+
+/* Карточки: мягкий подъём + золотое свечение по границе */
+.feature-card, .property-card, .testimonial-card, .team-card, .case-card {
+  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.feature-icon { transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), background 0.3s ease; }
+.feature-card:hover .feature-icon { transform: translateY(-4px) scale(1.08) rotate(-3deg); }
+
+/* Свечение и «блик» на кнопках */
+.btn { position: relative; overflow: hidden; }
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -75%;
+  width: 50%; height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+}
+.btn:hover::after { left: 130%; }
+
+/* Плавный зум изображений в карточках объектов */
+.property-image svg, .property-image img { transition: transform 0.6s cubic-bezier(0.22,1,0.36,1); }
+.property-card:hover .property-image svg,
+.property-card:hover .property-image img { transform: scale(1.06); }
+
+/* Мягкое покачивание иконки-ключа в логотипе при наведении */
+.logo:hover .logo-mark { animation: keyWiggle 0.6s ease; }
+@keyframes keyWiggle {
+  0%, 100% { transform: rotate(0); }
+  30% { transform: rotate(-12deg); }
+  60% { transform: rotate(8deg); }
+}
+
+/* Появление заголовка внутренних страниц */
+.page-hero-inner > * { opacity: 0; animation: heroFadeUp 0.75s cubic-bezier(0.22,1,0.36,1) forwards; }
+.page-hero-inner > *:nth-child(1) { animation-delay: 0.05s; }
+.page-hero-inner > *:nth-child(2) { animation-delay: 0.16s; }
+.page-hero-inner > *:nth-child(3) { animation-delay: 0.27s; }
+.page-hero-inner > *:nth-child(4) { animation-delay: 0.38s; }
+
+/* Заполнение полос рейтинга (reviews) */
+.rating-bar .bar-fill { width: 0 !important; transition: width 1s cubic-bezier(0.22,1,0.36,1) 0.3s; }
+.rating-summary.visible .bar-fill { width: var(--w) !important; }
+
+/* Уважение к настройкам пользователя */
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
+  .reveal, .reveal-left, .reveal-right, .reveal-scale { opacity: 1; transform: none; transition: none; }
+  .hero-content > *, .hero-search, .page-hero-inner > * { opacity: 1; animation: none; }
+  .hero::before, .hero h1 span { animation: none; }
+  .section-header h2::after { transition: none; width: 64px; }
+  .btn::after { display: none; }
+  .rating-bar .bar-fill { transition: none; width: var(--w) !important; }
   html { scroll-behavior: auto; }
 }
