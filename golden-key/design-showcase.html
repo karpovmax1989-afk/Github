@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golden Key — Визуальный дизайн сайта</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Playfair Display', Georgia, serif;
+  background: #0B0E13;
+  color: #F2EEE6;
+}
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(11,14,19,0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #232A35;
+  padding: 1.5rem 2rem;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+.navbar h1 {
+  font-size: 1.5rem;
+  color: #C9A24B;
+}
+.navbar a {
+  color: #A9B0BC;
+  text-decoration: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.9rem;
+  transition: color 0.3s;
+  cursor: pointer;
+}
+.navbar a:hover { color: #C9A24B; }
+body { padding-top: 80px; }
+.section {
+  min-height: 100vh;
+  padding: 80px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-margin-top: 80px;
+}
+.section:nth-child(even) { background: #0F131A; }
+.section:nth-child(odd) { background: #0B0E13; }
+.content {
+  max-width: 1200px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.content.full { grid-template-columns: 1fr; text-align: center; }
+.text h2 {
+  font-size: 3rem;
+  margin-bottom: 30px;
+  color: #F2EEE6;
+}
+.text .number {
+  font-size: 4rem;
+  color: #C9A24B;
+  font-weight: 700;
+  line-height: 1;
+}
+.text p {
+  font-family: 'Jost', sans-serif;
+  font-size: 1.1rem;
+  color: #A9B0BC;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+.text ul {
+  list-style: none;
+  margin: 30px 0;
+}
+.text li {
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem;
+  color: #A9B0BC;
+  padding: 12px 0;
+  border-bottom: 1px solid #232A35;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.text li::before {
+  content: '✓';
+  color: #C9A24B;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+.visual {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+  border: 1px solid #232A35;
+  aspect-ratio: 4/3;
+}
+.visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.visual-mock {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a2438 0%, #2d3648 50%, #1a2030 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  color: #A9B0BC;
+  font-family: 'Jost', sans-serif;
+}
+.badge {
+  display: inline-block;
+  background: rgba(201,162,75,0.15);
+  color: #C9A24B;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem;
+  border: 1px solid #C9A24B;
+  margin-bottom: 15px;
+}
+.btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #E4C777, #C9A24B);
+  color: #17130A;
+  padding: 15px 40px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-family: 'Jost', sans-serif;
+  font-weight: 600;
+  margin-top: 30px;
+  transition: all 0.3s;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(201,162,75,0.3);
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  margin-top: 50px;
+}
+.stat {
+  text-align: center;
+  padding: 30px;
+  background: rgba(201,162,75,0.05);
+  border: 1px solid #232A35;
+  border-radius: 12px;
+}
+.stat .value {
+  font-size: 2.5rem;
+  color: #C9A24B;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.stat .label {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.95rem;
+  color: #A9B0BC;
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+}
+.feature-box {
+  padding: 30px;
+  background: rgba(201,162,75,0.05);
+  border: 1px solid #232A35;
+  border-radius: 12px;
+  transition: all 0.3s;
+}
+.feature-box:hover {
+  border-color: #C9A24B;
+  background: rgba(201,162,75,0.1);
+}
+.feature-box h3 {
+  font-size: 1.4rem;
+  color: #C9A24B;
+  margin-bottom: 15px;
+}
+.feature-box p {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.95rem;
+  color: #A9B0BC;
+}
+@media (max-width: 1024px) {
+  .content { grid-template-columns: 1fr; gap: 40px; }
+  .text h2 { font-size: 2.2rem; }
+  .section { padding: 60px 30px; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .features-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <h1>GOLDEN KEY</h1>
+  <a onclick="document.getElementById('hero').scrollIntoView()">Главная</a>
+  <a onclick="document.getElementById('properties').scrollIntoView()">Объекты</a>
+  <a onclick="document.getElementById('about').scrollIntoView()">О нас</a>
+  <a onclick="document.getElementById('services').scrollIntoView()">Услуги</a>
+  <a onclick="document.getElementById('team').scrollIntoView()">Команда</a>
+  <a onclick="document.getElementById('footer').scrollIntoView()">Контакты</a>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="section" id="hero">
+  <div class="content full">
+    <div class="badge">PREMIUM LUXURY REAL ESTATE</div>
+    <h2 style="font-size: 4rem; margin-bottom: 20px;">Golden Key</h2>
+    <p style="font-size: 1.4rem; margin-bottom: 30px;">Премиальное агентство люксовой недвижимости</p>
+    <p>Эксклюзивные объекты в лучших локациях. Более 10 лет опыта, 550+ люксовых объектов, 1200+ довольных клиентов.</p>
+    <div class="stats">
+      <div class="stat">
+        <div class="value">10+</div>
+        <div class="label">Лет опыта</div>
+      </div>
+      <div class="stat">
+        <div class="value">550+</div>
+        <div class="label">Объектов</div>
+      </div>
+      <div class="stat">
+        <div class="value">1200+</div>
+        <div class="label">Клиентов</div>
+      </div>
+      <div class="stat">
+        <div class="value">25+</div>
+        <div class="label">Премий</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROPERTIES -->
+<section class="section" id="properties">
+  <div class="content">
+    <div class="visual">
+      <img src="https://images.pexels.com/photos/29453302/pexels-photo-29453302.jpeg?auto=format&cs=srgb&w=1600&q=80" alt="Люксовая вилла">
+    </div>
+    <div class="text">
+      <div class="badge">ЭКСКЛЮЗИВНЫЙ ПОРТФЕЛЬ</div>
+      <h2>Каталог люксовой недвижимости</h2>
+      <p>Каждый объект в нашем портфеле — это воплощение мечты о идеальном доме. Мы предлагаем лучшие виллы, пентхаусы и особняки в самых престижных локациях.</p>
+      <ul>
+        <li>Реальные фотографии всех объектов</li>
+        <li>Детальные характеристики (спальни, ванные, площадь)</li>
+        <li>Актуальные цены от $2M до $50M+</li>
+        <li>Быстрое добавление новых объектов</li>
+        <li>Фильтр по районам, типам, цене</li>
+      </ul>
+      <button class="btn">Посмотреть все объекты</button>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="content">
+    <div class="text">
+      <div class="badge">О КОМПАНИИ</div>
+      <h2>С 2015 года — стандарт роскоши</h2>
+      <p>Golden Key начинался как бутик-агентство с одной идеей: сделать премиальную недвижимость доступной для тех, кто ценит качество и безупречный сервис.</p>
+      <p>Сегодня мы — одно из ведущих люкс-агентств региона. Более 40 экспертов, эксклюзивный портфель объектов и репутация, которой доверяют.</p>
+      <div class="features-grid">
+        <div class="feature-box">
+          <h3>40+ экспертов</h3>
+          <p>Профессиональная команда специалистов</p>
+        </div>
+        <div class="feature-box">
+          <h3>7 из 10</h3>
+          <p>Клиентов приходят по рекомендациям</p>
+        </div>
+      </div>
+    </div>
+    <div class="visual">
+      <img src="https://images.pexels.com/photos/1350789/pexels-photo-1350789.jpeg?auto=format&cs=srgb&w=1600&q=80" alt="Архитектура">
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="content full">
+    <div class="badge">ПОЛНЫЙ СПЕКТР УСЛУГ</div>
+    <h2>Почему Golden Key</h2>
+    <p style="margin-bottom: 50px;">Мы сопровождаем каждую сделку от первого показа до вручения ключей — безупречно и конфиденциально.</p>
+    <div class="features-grid" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="feature-box">
+        <h3>🛡️ Безопасность</h3>
+        <p>Полная юридическая проверка и сопровождение через защищённые эскроу-счета</p>
+      </div>
+      <div class="feature-box">
+        <h3>💎 Эксклюзивность</h3>
+        <p>Виллы и пентхаусы в самых востребованных локациях, многие вне открытого рынка</p>
+      </div>
+      <div class="feature-box">
+        <h3>👤 Персональный эксперт</h3>
+        <p>Личный консультант, который знает рынок и сопровождает на каждом этапе</p>
+      </div>
+      <div class="feature-box">
+        <h3>📊 Инвестиционная аналитика</h3>
+        <p>Точная оценка доходности и перспектив роста для инвестиций</p>
+      </div>
+      <div class="feature-box">
+        <h3>🏦 Ипотека под ключ</h3>
+        <p>Индивидуальные программы с банками-партнёрами и ставки ниже рыночных</p>
+      </div>
+      <div class="feature-box">
+        <h3>💬 Поддержка после сделки</h3>
+        <p>Помощь с переоформлением, дизайном, страхованием и управлением</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section" id="team">
+  <div class="content">
+    <div class="visual">
+      <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=format&cs=srgb&w=1600&q=80" alt="Команда">
+    </div>
+    <div class="text">
+      <div class="badge">ЭКСПЕРТНАЯ ПОДДЕРЖКА</div>
+      <h2>Наши лучшие агенты</h2>
+      <p>Каждый агент Golden Key — это профессионал с глубоким знанием рынка люксовой недвижимости, готовый найти вам идеальный объект.</p>
+      <ul>
+        <li>Реальные фото и профили агентов</li>
+        <li>Специализация по типам объектов</li>
+        <li>Опыт работы 5-15+ лет</li>
+        <li>Прямой контакт (телефон, email, LinkedIn)</li>
+        <li>Персональный подход к каждому клиенту</li>
+      </ul>
+      <button class="btn">Связаться с агентом</button>
+    </div>
+  </div>
+</section>
+
+<!-- TOUR -->
+<section class="section">
+  <div class="content full">
+    <div class="badge">ИММЕРСИВНЫЙ ОПЫТ</div>
+    <h2>Виртуальный тур 360°</h2>
+    <p>Изучите эксклюзивные объекты со всех сторон, не выходя из дома. Полное погружение с 360°-турами по каждой комнате.</p>
+    <div class="visual" style="margin-top: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
+      <img src="https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=format&cs=srgb&w=1600&q=80" alt="Виртуальный тур">
+    </div>
+    <button class="btn">Начать виртуальный тур</button>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section class="section" id="footer">
+  <div class="content full">
+    <div class="badge">ЭКСПЕРТНЫЕ СОВЕТЫ</div>
+    <h2>Блог о недвижимости</h2>
+    <p>Полезные советы, разбор трендов и юридические тонкости — простым языком от команды Golden Key.</p>
+    <div class="features-grid" style="margin-top: 50px; grid-template-columns: repeat(3, 1fr);">
+      <div class="feature-box">
+        <h3>📖 Покупка</h3>
+        <p>Как выбрать виллу, чек-листы, советы по проверке документов</p>
+      </div>
+      <div class="feature-box">
+        <h3>📊 Инвестиции</h3>
+        <p>Топ-районы, ROI, анализ рынка аренды и перспективы</p>
+      </div>
+      <div class="feature-box">
+        <h3>⚖️ Право</h3>
+        <p>Юридические тонкости, налоги, оформление документов</p>
+      </div>
+    </div>
+    <h2 style="margin-top: 80px; margin-bottom: 40px;">Связаться с нами</h2>
+    <p>Готовы найти дом вашей мечты?</p>
+    <button class="btn">Получить консультацию</button>
+  </div>
+</section>
+
+</body>
+</html>
