@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golden Key — Портфолио дизайна</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Playfair Display', Georgia, serif;
+  background: #0B0E13;
+  color: #F2EEE6;
+  overflow: hidden;
+}
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gallery {
+  position: relative;
+  width: 90%;
+  max-width: 1200px;
+  height: 85vh;
+  background: #12171F;
+  border: 2px solid #232A35;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+}
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  text-align: center;
+}
+.slide.active {
+  opacity: 1;
+  z-index: 10;
+}
+.slide h1 {
+  font-size: 3.5rem;
+  color: #C9A24B;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+.slide h2 {
+  font-size: 2.5rem;
+  color: #F2EEE6;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+.slide p {
+  font-family: 'Jost', sans-serif;
+  font-size: 1.1rem;
+  color: #A9B0BC;
+  line-height: 1.8;
+  max-width: 800px;
+  margin-bottom: 30px;
+}
+.slide-image {
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+  border-radius: 12px;
+  margin: 20px 0;
+  object-fit: cover;
+}
+.navigation {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  z-index: 20;
+}
+button {
+  background: #C9A24B;
+  color: #17130A;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Jost', sans-serif;
+}
+button:hover {
+  background: #E4C777;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(201,162,75,0.3);
+}
+.counter {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-family: 'Jost', sans-serif;
+  font-size: 1.1rem;
+  color: #C9A24B;
+  background: rgba(201,162,75,0.1);
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid #C9A24B;
+}
+.dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #A9B0BC;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.dot.active {
+  background: #C9A24B;
+  transform: scale(1.3);
+}
+.hero-content {
+  font-size: 1.3rem;
+  line-height: 2;
+}
+.features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-top: 40px;
+  text-align: left;
+}
+.feature {
+  padding: 30px;
+  background: rgba(201,162,75,0.05);
+  border: 1px solid #232A35;
+  border-radius: 10px;
+}
+.feature h3 {
+  font-size: 1.4rem;
+  color: #C9A24B;
+  margin-bottom: 15px;
+}
+.feature p {
+  font-size: 0.95rem;
+  text-align: left;
+}
+@media (max-width: 768px) {
+  .slide { padding: 40px 30px; }
+  .slide h1 { font-size: 2.5rem; }
+  .slide h2 { font-size: 1.8rem; }
+  .features { grid-template-columns: 1fr; gap: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="gallery">
+    <div class="counter"><span id="current">1</span> / <span id="total">8</span></div>
+
+    <!-- Слайд 1: Титульная страница -->
+    <div class="slide active">
+      <h1>GOLDEN KEY</h1>
+      <p style="font-size: 1.5rem; color: #C9A24B; margin-bottom: 40px;">Luxury Estate Group</p>
+      <p>Премиальное агентство недвижимости</p>
+      <p style="margin-top: 30px; font-size: 0.95rem; color: #6C7481;">Эксклюзивные объекты | Профессиональный сервис | Надежность</p>
+    </div>
+
+    <!-- Слайд 2: Главная страница -->
+    <div class="slide">
+      <h2>Главная страница</h2>
+      <p>Впечатляющий героический баннер с архитектурой люксового дома, золотыми акцентами и ночной атмосферой</p>
+      <img src="https://images.pexels.com/photos/29453302/pexels-photo-29453302.jpeg?auto=format&cs=srgb&w=1600&q=80" alt="Главная" class="slide-image">
+      <p style="margin-top: 30px; font-size: 0.9rem; color: #6C7481;">Рекламный баннер + поисковая система объектов</p>
+    </div>
+
+    <!-- Слайд 3: Каталог объектов -->
+    <div class="slide">
+      <h2>Каталог недвижимости</h2>
+      <p>Карточки люксовых объектов с реальными фотографиями, детальными характеристиками и ценами</p>
+      <img src="https://images.pexels.com/photos/31817155/pexels-photo-31817155.jpeg?auto=format&cs=srgb&w=1600&q=80" alt="Каталог" class="slide-image">
+      <p style="margin-top: 30px; font-size: 0.9rem;">🛏 4+ спальни | 🛁 4+ ванные | 📐 500+ м² | 💰 от $2M</p>
+    </div>
+
+    <!-- Слайд 4: О компании -->
+    <div class="slide">
+      <h2>О компании</h2>
+      <p>История успеха, опыт и достижения агентства</p>
+      <img src="https://images.pexels.com/photos/1350789/pexels-photo-1350789.jpeg?auto=format&cs=srgb&w=1600&q=80" alt="О компании" class="slide-image">
+      <div class="features">
+        <div class="feature">
+          <h3>10+ лет</h3>
+          <p>Опыт на рынке люксовой недвижимости</p>
+        </div>
+        <div class="feature">
+          <h3>550+ объектов</h3>
+          <p>Эксклюзивный портфель недвижимости</p>
+        </div>
+        <div class="feature">
+          <h3>1200+ клиентов</h3>
+          <p>Более 1200 довольных покупателей</p>
+        </div>
+        <div class="feature">
+          <h3>25+ премий</h3>
+          <p>Признание в индустрии недвижимости</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Слайд 5: Команда агентов -->
+    <div class="slide">
+      <h2>Наши лучшие агенты</h2>
+      <p>Профессиональная команда экспертов по люксовой недвижимости</p>
+      <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=format&cs=srgb&w=1600&q=80" alt="Команда" class="slide-image">
+      <p style="margin-top: 30px; font-size: 0.9rem; color: #6C7481;">Реальные фотографии агентов | Специализация | Контакты</p>
+    </div>
+
+    <!-- Слайд 6: Услуги -->
+    <div class="slide">
+      <h2>Полный спектр услуг</h2>
+      <div class="features" style="max-width: 900px; margin: 40px auto;">
+        <div class="feature">
+          <h3>🛡️ Безопасность</h3>
+          <p>Полная юридическая проверка каждого объекта</p>
+        </div>
+        <div class="feature">
+          <h3>💎 Эксклюзивность</h3>
+          <p>Виллы и пентхаусы вне открытого рынка</p>
+        </div>
+        <div class="feature">
+          <h3>👤 Персонал</h3>
+          <p>Личный консультант на каждом этапе</p>
+        </div>
+        <div class="feature">
+          <h3>📊 Аналитика</h3>
+          <p>Инвестиционная оценка и прогнозы</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Слайд 7: Виртуальный тур -->
+    <div class="slide">
+      <h2>Виртуальный тур 360°</h2>
+      <p>Изучите объекты со всех сторон не выходя из дома</p>
+      <img src="https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=format&cs=srgb&w=1600&q=80" alt="Тур" class="slide-image">
+      <p style="margin-top: 30px; font-size: 0.9rem; color: #6C7481;">Полное погружение | Все комнаты | Высокое разрешение</p>
+    </div>
+
+    <!-- Слайд 8: Блог и контакты -->
+    <div class="slide">
+      <h2>Блог и контакты</h2>
+      <img src="https://images.pexels.com/photos/1370500/pexels-photo-1370500.jpeg?auto=format&cs=srgb&w=1600&q=80" alt="Блог" class="slide-image">
+      <div class="features" style="max-width: 900px; margin: 40px auto;">
+        <div class="feature">
+          <h3>📖 Экспертные советы</h3>
+          <p>Статьи о рынке недвижимости и инвестициях</p>
+        </div>
+        <div class="feature">
+          <h3>📞 Консультация</h3>
+          <p>Связь с менеджером одним кликом</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Навигация -->
+    <div class="navigation">
+      <button onclick="previousSlide()">← Назад</button>
+      <button onclick="nextSlide()">Вперед →</button>
+    </div>
+
+    <!-- Точки навигации -->
+    <div class="dots" id="dots"></div>
+  </div>
+</div>
+
+<script>
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+
+// Создаем точки навигации
+const dotsContainer = document.getElementById('dots');
+for (let i = 0; i < totalSlides; i++) {
+  const dot = document.createElement('div');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => goToSlide(i);
+  dotsContainer.appendChild(dot);
+}
+
+function showSlide(n) {
+  slides.forEach(slide => slide.classList.remove('active'));
+  document.querySelectorAll('.dot').forEach(dot => dot.classList.remove('active'));
+
+  slides[n].classList.add('active');
+  document.querySelectorAll('.dot')[n].classList.add('active');
+
+  document.getElementById('current').textContent = n + 1;
+}
+
+function nextSlide() {
+  currentSlide = (currentSlide + 1) % totalSlides;
+  showSlide(currentSlide);
+}
+
+function previousSlide() {
+  currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+  showSlide(currentSlide);
+}
+
+function goToSlide(n) {
+  currentSlide = n;
+  showSlide(currentSlide);
+}
+
+// Горячие клавиши
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') nextSlide();
+  if (e.key === 'ArrowLeft') previousSlide();
+});
+</script>
+
+</body>
+</html>
