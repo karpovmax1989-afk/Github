@@ -1,0 +1,196 @@
+<meta charset="utf-8">
+<!--
+  INSTAGRAM CAROUSEL TEMPLATE
+  ===========================
+  Canvas: 1080 x 1350 px (Instagram portrait). Each <div class="slide"> is one card.
+  Render with render.js -> slide-1.png, slide-2.png, ... (one PNG per .slide, in order).
+
+  HOW TO ADAPT FOR A NEW TOPIC
+  1. Pick a palette preset below (uncomment ONE :root block) or tweak the hex values.
+  2. Edit the text inside each slide. Keep the three slide *types*:
+       cover (.s1)  -> hook headline + one highlighted word (<em>)
+       numbers (.s2)-> 2-3 big stats, each: .num + .txt(b + span)
+       grid  (.s3)  -> 4 capability cards + call-to-action
+  3. Keep numbers honest. If a figure isn't verified, soften it or add a
+     "ориентир" note in the footer, and flag it to the user in chat.
+  4. Add/remove slides freely — render.js handles any count.
+  5. Background second-plane motif (Claude sunburst + circles + dots) is drawn
+     from the <svg data-burst> elements and the JS at the bottom — keep at least
+     one per slide, recolor via data-color / data-op.
+-->
+<style>
+  /* ============================================================
+     PALETTE PRESETS — uncomment exactly ONE :root block.
+     ============================================================ */
+
+  /* PRESET A — "VIVID ELECTRIC" (bright, saturated, high energy) */
+  :root{
+    --p1a:#B4188A; --p1b:#FF3D6E; --p1c:#FF8A2B;   /* cover gradient: magenta->coral->tangerine */
+    --p2a:#3A1170; --p2b:#26085A; --p2c:#16043D;   /* numbers gradient: dark indigo/violet */
+    --p3a:#12B7A6; --p3b:#0E86C4; --p3c:#1B4FD0;   /* grid gradient: teal->blue */
+    --accent:#FFD84D;   /* recurring bright yellow accent */
+    --n1:#FFD84D; --n2:#2CE0CE; --n3:#FF5E86;      /* the three stat-number colors */
+    --ink-lite:#F3EAFF; --ink-mute:#C7B6E8;        /* text on dark slide 2 */
+  }
+
+  /* PRESET B — "WARM CLAY" (soft, editorial, brand-warm). To use: comment out
+     PRESET A above and uncomment this block.
+  :root{
+    --p1a:#3a2c22; --p1b:#2B211B; --p1c:#201812;
+    --p2a:#FBF6EE; --p2b:#F4EBDD; --p2c:#EDE1CF;
+    --p3a:#C96442; --p3b:#BE5A38; --p3c:#A6472A;
+    --accent:#E9A489;
+    --n1:#C96442; --n2:#6E7B58; --n3:#2B211B;
+    --ink-lite:#2B211B; --ink-mute:#8A7C6E;
+  }
+  */
+
+  :root{
+    --serif:"DejaVu Serif", Georgia, serif;   /* display / numbers */
+    --sans:"Liberation Sans","DejaVu Sans", system-ui, sans-serif; /* labels */
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#111}
+  .slide{position:relative;width:1080px;height:1350px;overflow:hidden;
+    font-family:var(--sans);display:flex;flex-direction:column}
+  .bg-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  .kicker{font-size:26px;font-weight:800;letter-spacing:.32em;text-transform:uppercase}
+  .content{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;padding:96px 92px}
+  .footer{position:relative;z-index:2;display:flex;align-items:center;gap:16px;
+    padding:0 92px 70px;font-size:24px;font-weight:700;letter-spacing:.02em}
+  .dot{width:12px;height:12px;border-radius:50%}
+
+  /* ---------- SLIDE TYPE 1: cover ---------- */
+  .s1{background:linear-gradient(150deg,var(--p1a) 0%,var(--p1b) 46%,var(--p1c) 100%);color:#FFF9F0}
+  .s1 .kicker{color:var(--accent)}
+  .s1 h1{font-family:var(--serif);font-weight:700;font-size:132px;line-height:.98;
+    letter-spacing:-.01em;margin-top:auto;color:#fff}
+  .s1 h1 em{font-style:italic;color:var(--accent)}
+  .s1 .sub{margin-top:40px;font-size:36px;line-height:1.4;color:#FFE7D6;max-width:760px;font-weight:500}
+  .s1 .footer{color:#FFEAD9}
+  .s1 .footer .dot{background:var(--accent)}
+
+  /* ---------- SLIDE TYPE 2: numbers ---------- */
+  .s2{background:radial-gradient(130% 100% at 15% 0%,var(--p2a) 0%,var(--p2b) 55%,var(--p2c) 100%);color:var(--ink-lite)}
+  .s2 .kicker{color:var(--accent)}
+  .s2 h2{font-family:var(--serif);font-size:60px;line-height:1.04;font-weight:700;
+    margin-top:24px;letter-spacing:-.01em;max-width:720px;color:#fff}
+  .stats{margin-top:96px;display:flex;flex-direction:column;gap:56px}
+  .stat{display:flex;align-items:baseline;gap:40px}
+  .stat .num{font-family:var(--serif);font-weight:700;line-height:.82;letter-spacing:-.02em;
+    font-size:150px;min-width:360px;text-align:left;font-variant-numeric:tabular-nums;color:var(--n1)}
+  .stat:nth-child(2) .num{color:var(--n2)}
+  .stat:nth-child(3) .num{color:var(--n3)}
+  .stat .txt{padding-bottom:18px}
+  .stat .txt b{display:block;font-size:34px;font-weight:800;letter-spacing:.01em;color:#fff}
+  .stat .txt span{display:block;font-size:27px;color:var(--ink-mute);margin-top:8px;
+    font-weight:500;line-height:1.35;max-width:360px}
+  .s2 .footer{color:var(--ink-mute)}
+  .s2 .footer .dot{background:var(--accent)}
+
+  /* ---------- SLIDE TYPE 3: capability grid + CTA ---------- */
+  .s3{background:linear-gradient(150deg,var(--p3a) 0%,var(--p3b) 52%,var(--p3c) 100%);color:#F2FBFF}
+  .s3 .kicker{color:var(--accent)}
+  .s3 h2{font-family:var(--serif);font-size:70px;line-height:1.05;font-weight:700;
+    margin-top:26px;letter-spacing:-.01em;max-width:820px;color:#fff}
+  .grid{margin-top:64px;display:grid;grid-template-columns:1fr 1fr;gap:26px}
+  .cap{background:rgba(255,255,255,.16);border:1.5px solid rgba(255,255,255,.34);
+    border-radius:28px;padding:38px 40px;backdrop-filter:blur(2px)}
+  .cap .ic{font-size:52px;line-height:1}
+  .cap b{display:block;font-size:36px;font-weight:800;margin-top:20px;color:#fff}
+  .cap span{display:block;font-size:25px;color:#E4F6FF;margin-top:10px;line-height:1.4}
+  .s3 .cta{margin-top:auto;font-family:var(--serif);font-size:46px;line-height:1.25;
+    font-weight:700;max-width:820px;color:#fff}
+  .s3 .cta em{font-style:italic;color:var(--accent)}
+  .s3 .footer{color:#DCF3FF}
+  .s3 .footer .dot{background:var(--accent)}
+</style>
+
+<!-- ============ SLIDE 1 — COVER ============ -->
+<div class="slide s1">
+  <svg class="bg-svg" viewBox="0 0 1080 1350" data-burst="1" data-cx="880" data-cy="1120" data-r="640" data-color="#FFD84D" data-op="0.18"></svg>
+  <svg class="bg-svg" viewBox="0 0 1080 1350">
+    <g fill="none" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="2">
+      <circle cx="150" cy="240" r="60"/><circle cx="150" cy="240" r="110"/>
+    </g>
+    <g fill="#FFD84D" fill-opacity="0.22">
+      <circle cx="120" cy="1120" r="7"/><circle cx="185" cy="1120" r="7"/><circle cx="250" cy="1120" r="7"/>
+      <circle cx="120" cy="1185" r="7"/><circle cx="185" cy="1185" r="7"/><circle cx="120" cy="1250" r="7"/>
+    </g>
+  </svg>
+  <div class="content">
+    <div class="kicker">AI · обновление</div>
+    <h1>Claude стал<br><em>заметно</em> умнее</h1>
+    <div class="sub">Собрал коротко: что нового в моделях и чем занят Anthropic прямо сейчас.</div>
+  </div>
+  <div class="footer"><span class="dot"></span>листай&nbsp;→</div>
+</div>
+
+<!-- ============ SLIDE 2 — NUMBERS ============ -->
+<div class="slide s2">
+  <svg class="bg-svg" viewBox="0 0 1080 1350" data-burst="1" data-cx="1010" data-cy="120" data-r="540" data-color="#2CE0CE" data-op="0.16"></svg>
+  <svg class="bg-svg" viewBox="0 0 1080 1350">
+    <g fill="#FFD84D" fill-opacity="0.20">
+      <circle cx="70" cy="560" r="6"/><circle cx="120" cy="560" r="6"/><circle cx="170" cy="560" r="6"/>
+      <circle cx="70" cy="610" r="6"/><circle cx="120" cy="610" r="6"/><circle cx="70" cy="660" r="6"/>
+    </g>
+    <circle cx="120" cy="120" r="150" fill="none" stroke="#FF5E86" stroke-opacity="0.22" stroke-width="2"/>
+  </svg>
+  <div class="content">
+    <div class="kicker">Anthropic · в цифрах</div>
+    <h2>Пара фактов<br>для контекста</h2>
+    <div class="stats">
+      <div class="stat"><div class="num">2021</div>
+        <div class="txt"><b>Год основания</b><span>Команда выросла из исследователей, которым важна безопасность ИИ</span></div></div>
+      <div class="stat"><div class="num">3</div>
+        <div class="txt"><b>Линейки моделей</b><span>Haiku, Sonnet и Opus — от быстрой до самой мощной</span></div></div>
+      <div class="stat"><div class="num">200K</div>
+        <div class="txt"><b>Токенов контекста</b><span>Это как целая книга, которую модель держит в голове разом</span></div></div>
+    </div>
+  </div>
+  <div class="footer"><span class="dot"></span>цифры — ориентир, детали уточняй у источника</div>
+</div>
+
+<!-- ============ SLIDE 3 — GRID + CTA ============ -->
+<div class="slide s3">
+  <svg class="bg-svg" viewBox="0 0 1080 1350" data-burst="1" data-cx="150" data-cy="180" data-r="580" data-color="#FFFFFF" data-op="0.16"></svg>
+  <svg class="bg-svg" viewBox="0 0 1080 1350">
+    <g fill="#FFD84D" fill-opacity="0.24">
+      <circle cx="960" cy="250" r="7"/><circle cx="1010" cy="250" r="7"/>
+      <circle cx="960" cy="300" r="7"/><circle cx="1010" cy="300" r="7"/><circle cx="1060" cy="300" r="7"/>
+    </g>
+  </svg>
+  <div class="content">
+    <div class="kicker">Зачем это тебе</div>
+    <h2>Где Claude реально выручает</h2>
+    <div class="grid">
+      <div class="cap"><div class="ic">✍️</div><b>Тексты</b><span>Письма, посты, резюме — черновик за минуту</span></div>
+      <div class="cap"><div class="ic">💻</div><b>Код</b><span>Пишет, чинит и объясняет понятным языком</span></div>
+      <div class="cap"><div class="ic">📊</div><b>Анализ</b><span>Разбирает таблицы и длинные документы</span></div>
+      <div class="cap"><div class="ic">💡</div><b>Идеи</b><span>Помогает думать, а не просто отвечает</span></div>
+    </div>
+    <div class="cta">Уже пробовал новую версию?<br><em>Расскажи в комментариях</em>, для чего используешь ИИ.</div>
+  </div>
+  <div class="footer"><span class="dot"></span>сохрани, чтобы не потерять</div>
+</div>
+
+<script>
+// Claude-style radial sunburst — second-plane decoration.
+document.querySelectorAll('svg[data-burst]').forEach(function(svg){
+  var cx=+svg.dataset.cx, cy=+svg.dataset.cy, R=+svg.dataset.r;
+  var color=svg.dataset.color, op=+svg.dataset.op;
+  var rays=28, inner=R*0.16, ns="http://www.w3.org/2000/svg";
+  var g=document.createElementNS(ns,'g');
+  g.setAttribute('fill',color); g.setAttribute('fill-opacity',op);
+  for(var i=0;i<rays;i++){
+    var a=(i/rays)*Math.PI*2, wBase=0.055;
+    var p1=[cx+Math.cos(a-wBase)*inner, cy+Math.sin(a-wBase)*inner];
+    var tip=[cx+Math.cos(a)*R, cy+Math.sin(a)*R];
+    var p2=[cx+Math.cos(a+wBase)*inner, cy+Math.sin(a+wBase)*inner];
+    var path=document.createElementNS(ns,'path');
+    path.setAttribute('d','M'+p1[0]+' '+p1[1]+' Q'+cx+' '+cy+' '+p2[0]+' '+p2[1]+' L'+tip[0]+' '+tip[1]+' Z');
+    g.appendChild(path);
+  }
+  svg.appendChild(g);
+});
+</script>
